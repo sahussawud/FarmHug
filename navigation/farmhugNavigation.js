@@ -1,16 +1,19 @@
 
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
+
 import firstPageScreen from "../screens/auth/firstpagescreen";
 import loginScreen from "../screens/auth/loginscreen";
-// import Screen3 from "../screens/MealDetailScreen";
+import registrarScreen from "../screens/auth/registrarscreen";
+import cattleSetupScreen from "../screens/welcome/cattlesetupscreen"
 
 const FarmHugNavigator = createStackNavigator(
   {
     // กำหนด RouteConfigs (Slide 14)
     FirstPageScreen: firstPageScreen,
     loginScreen: loginScreen,
-    // MealDetailScreen: Screen3,
+    registrarScreen: registrarScreen,
+    cattleSetupScreen: cattleSetupScreen
 
   },
   {

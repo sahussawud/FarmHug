@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     View,
     Text,
@@ -15,6 +15,10 @@ import logo from "../../assets/logo.png"
 import theme from "../../themes/default"
 
 const LoginScreen = (props) => {
+    const [loginDetail, setLoginDetail] = useState({ username: null, password: null })
+    const LoginSubmit = () => {
+        props.navigation.navigate("cattleSetupScreen")
+    }
 
     return (
 
@@ -24,16 +28,16 @@ const LoginScreen = (props) => {
                 <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>เข้าสู่ระบบ</Text>
             </View>
             <View style={styles.inputArea}>
-                <TextInput placeholder="อีเมล" style={styles.input} />
-                <TextInput placeholder="รหัสผ่าน" style={styles.input} />
-                <Text style={{ textDecorationLine: 'underline', ...theme.font}}
+                <TextInput placeholder="อีเมล" style={[styles.input, theme.font]} />
+                <TextInput placeholder="รหัสผ่าน" style={[styles.input, theme.font]} />
+                <Text style={{ textDecorationLine: 'underline', ...theme.font }}
                     onPress={() => Linking.openURL('http://google.com')}>
                     ลืมรหัสผ่าน?
                 </Text>
             </View>
             <View style={styles.buttonArea}>
-                <TouchableOpacity style={[styles.button, theme.defaultButton ]}>
-                    <Text style={{ ...theme.font  }}>เข้าสู่ระบบ</Text>
+                <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={LoginSubmit}>
+                    <Text style={{ ...theme.font, textAlign: 'center' }}>เข้าสู่ระบบ</Text>
                 </TouchableOpacity>
             </View>
 
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
         height: 100,
         marginBottom: 20
     },
-    topArea:{
+    topArea: {
         flex: 3,
         marginBottom: 20,
         alignItems: 'center'
@@ -89,8 +93,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: '10%',
         paddingVertical: '3%',
-        backgroundColor: theme.defaultButton.backgroundColor,
-        color: theme.defaultButton.color
     }
 });
 

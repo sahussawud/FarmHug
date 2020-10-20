@@ -27,10 +27,12 @@ const FirstPageScreen = (props) => {
                 <TouchableOpacity style={ styles.button} onPress={()=>{
                     props.navigation.navigate("loginScreen")
                 }}>
-                    <Text style={{ ...theme.font }}>เข้าสู่ระบบ</Text>
+                    <Text style={{ ...theme.font, textAlign: 'center' }}>เข้าสู่ระบบ</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={ styles.button}>
-                    <Text style={{ ...theme.font }}>สมัครสมาชิก</Text>
+                <TouchableOpacity style={ styles.button } onPress={()=>{
+                    props.navigation.navigate("registrarScreen")
+                }}>
+                    <Text style={{ ...theme.font, textAlign: 'center' }}>สมัครสมาชิก</Text>
                 </TouchableOpacity>
             </View>
 
@@ -56,7 +58,6 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     button:{
-        textAlign: 'center',
         marginBottom: 20,
         borderColor: 'black',
         borderWidth: 1,
