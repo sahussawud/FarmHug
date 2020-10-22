@@ -6,6 +6,7 @@ import firstPageScreen from "../screens/auth/firstpagescreen";
 import loginScreen from "../screens/auth/loginscreen";
 import registrarScreen from "../screens/auth/registrarscreen";
 import cattleSetupScreen from "../screens/welcome/cattlesetupscreen"
+import employeescreen from "../screens/welcome/employeescreen"
 
 const FarmHugNavigator = createStackNavigator(
   {
@@ -13,8 +14,8 @@ const FarmHugNavigator = createStackNavigator(
     FirstPageScreen: firstPageScreen,
     loginScreen: loginScreen,
     registrarScreen: registrarScreen,
-    cattleSetupScreen: cattleSetupScreen
-
+    cattleSetupScreen: cattleSetupScreen,
+    employeescreen: employeescreen
   },
   {
     // กำหนด defaultNavigationOptions (Slide 23-24)
