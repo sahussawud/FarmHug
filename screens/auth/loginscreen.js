@@ -17,7 +17,7 @@ import theme from "../../themes/default"
 const LoginScreen = (props) => {
     const [loginDetail, setLoginDetail] = useState({ username: null, password: null })
     const LoginSubmit = () => {
-        props.navigation.navigate("cattleSetupScreen")
+        props.navigation.navigate("nameScreen")
     }
 
     return (

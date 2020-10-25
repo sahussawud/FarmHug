@@ -12,6 +12,8 @@ import {
     ScrollView,
     Platform
 } from "react-native";
+
+import { Picker } from '@react-native-community/picker';
 import logo from "../../assets/logo.png"
 import style from "../../themes/default";
 import theme from "../../themes/default"
@@ -21,6 +23,8 @@ import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
 const cattleSetupScreen = (props) => {
     const [image, setImage] = useState(preview);
+    const [name, setName] = useState("");
+    const [type, setType] = useState("คุณเป็นใครในฟาร์ม")
 
     useEffect(() => {
         (async () => {
@@ -35,16 +39,16 @@ const cattleSetupScreen = (props) => {
 
     const pickImage = async (event) => {
         let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
         });
 
         if (!result.cancelled) {
-          setImage({uri:result.uri});
+            setImage({ uri: result.uri });
         }
-      };
+    };
 
     const submitForm = () => {
         //simple validate
@@ -64,10 +68,20 @@ const cattleSetupScreen = (props) => {
                     </View>
                     <View style={styles.inputArea}>
                         <TouchableOpacity onPress={pickImage}>
-                            <Image style={styles.uploadImg} source={image}/>
+                            <Image style={styles.uploadImg} source={image} />
                         </TouchableOpacity>
                         <TextInput placeholder="ชื่อฟาร์ม" style={[styles.input, theme.font]} />
-                        <TextInput placeholder="ประเภทฟาร์ม" style={[styles.input, theme.font]} />
+                        <Picker
+                            selectedValue={type}
+                            style={[styles.input, theme.font]}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setType(itemValue)
+                            }>
+                            <Picker.Item  label="คุณเป็นใครในฟาร์ม" value="" />
+                            <Picker.Item  label="เจ้าของ" value="owner" />
+                            <Picker.Item  label="พนักงาน" value="employee" />
+                        </Picker>
+                        {/* <TextInput placeholder="ประเภทฟาร์ม" style={[styles.input, theme.font]} /> */}
                     </View>
                     <View style={styles.buttonArea}>
                         <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm}>
@@ -88,7 +102,7 @@ const styles = StyleSheet.create({
     uploadImg: {
         borderRadius: 200,
         height: 150,
-        width:150,
+        width: 150,
         marginBottom: '5%'
 
     },
