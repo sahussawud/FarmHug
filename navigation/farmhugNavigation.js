@@ -9,7 +9,8 @@ import cattleSetupScreen from "../screens/welcome/cattlesetupscreen"
 import nameScreen from "../screens/welcome/namescreen";
 import employeeScreen from "../screens/welcome/employeescreen";
 import ownerScreen from "../screens/welcome/ownerscreen"
-import farmLocationScreen from "../screens/welcome/farmlocationscreen"
+import farmLocationScreen from "../screens/welcome/farmlocationscreen";
+import stallSetupScreen from "../screens/welcome/stallsetupscreen";
 
 const FarmHugNavigator = createStackNavigator(
   {
@@ -21,7 +22,8 @@ const FarmHugNavigator = createStackNavigator(
     employeeScreen: employeeScreen,
     ownerScreen: ownerScreen,
     farmLocationScreen: farmLocationScreen,
-    cattleSetupScreen: cattleSetupScreen
+    cattleSetupScreen: cattleSetupScreen,
+    stallSetupScreen: stallSetupScreen
   },
   {
     // กำหนด defaultNavigationOptions (Slide 23-24)

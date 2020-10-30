@@ -10,18 +10,20 @@ import {
     Linking,
     SafeAreaView,
     ScrollView,
+    ActivityIndicator
 } from "react-native";
 
 import logo from "../../assets/logo.png"
 import theme from "../../themes/default"
 
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 import MapView, { Marker, animateToRegion } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 const farmLocationScreen = (props) => {
-    const [address, setAddress] = useState("")
-    const [location, setLocation] = useState({
+    const [ address, setAddress] = useState("")
+    const [ loading, setLoading] = useState(false)
+    const [ location, setLocation] = useState({
         latitude: 13.736717,
         longitude: 100.523186,
         latitudeDelta: 1,
@@ -34,6 +36,7 @@ const farmLocationScreen = (props) => {
     const [errorMsg, setErrorMsg] = useState(null);
 
     const getCurrentPos = async () => {
+        setLoading(true);
         let { status } = await Location.requestPermissionsAsync();
         if (status !== 'granted') {
             setErrorMsg('Permission to access location was denied');
@@ -42,10 +45,11 @@ const farmLocationScreen = (props) => {
         let location = await Location.getCurrentPositionAsync({});
         console.log(location);
         setLocation(prev=> ({ ...prev, latitude:location.coords.latitude, longitude: location.coords.longitude}));
+        setLoading(false);
     }
 
     const submitForm = () => {
-        props.navigation.navigate("farmLocationScreen")
+        props.navigation.navigate("stallSetupScreen")
     }
 
     let text = 'Waiting..';
@@ -70,18 +74,20 @@ const farmLocationScreen = (props) => {
                             zoomEnabled={true}
                             minZoomLevel={10}
                             style={{ width: '80%', height: 300 }}
-                            initialRegion={location}
+                            // initialRegion={location}
                             region={location}
                             mapRef={ref => this.mapView = ref}
                         >
+                            <ActivityIndicator size="large" color="#0000ff" animating={loading}/>
                             <Marker draggable
                                 coordinate={location}
-                                onDragEnd={(e) => setLocation({ x: e.nativeEvent.coordinate })}
+                                onDragEnd={(e) => setLocation(e.nativeEvent.coordinate)}
                             />
+                            
                         </MapView>
-                        <Text>{text}</Text>
-                        <TouchableOpacity onPress={getCurrentPos}>
-                            <Text>หมุดตำเเหน่งปัจจุบัน</Text>
+                        <TouchableOpacity style={[styles.button, theme.successButton, {width: '80%', marginBottom: 20}]} onPress={getCurrentPos}>
+
+                            <Text style={{ ...theme.font, textAlign: 'center' }}><Entypo name="location" size={24} color="black" /> หมุดตำเเหน่งปัจจุบัน</Text>
                         </TouchableOpacity>
                         <TextInput placeholder="รายละเอียด"
                             multiline={true}
