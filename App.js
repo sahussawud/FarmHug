@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View , StatusBar} from 'react-native';
 import { useFonts } from 'expo-font';
 import { AppLoading } from 'expo'
-import Constants from 'expo-constants';
+// import Constants from 'expo-constants';
 //import NetInfo from '@react-native-community/netinfo';
 
 import FarmHugNavigation from './navigation/farmhugNavigation'
