@@ -32,7 +32,7 @@ const stallSetupScreen = (props) => {
         //simple validate
         //sent form
         //wait response
-        props.navigation.navigate("loginScreen")
+        props.navigation.navigate("homeScreen")
     }
 
     const renderFarmList = (itemData) => (
