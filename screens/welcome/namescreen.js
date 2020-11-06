@@ -68,7 +68,7 @@ const nameScreen = (props) => {
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
                     <View style={styles.topArea}>
-                        <Image source={logo} style={styles.logo} />
+                        {/* <Image source={logo} style={styles.logo} /> */}
                         <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ยินดีต้อนรับครั้งเเรก</Text>
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับตัวคุณให้เราฟังหน่อย</Text>
                     </View>

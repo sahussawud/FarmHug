@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
     View,
     Text,
@@ -11,7 +11,7 @@ import {
     SafeAreaView,
     ScrollView,
     Platform,
-    FlatList
+    FlatList,KeyboardAvoidingView
 } from "react-native";
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 
@@ -22,80 +22,59 @@ import theme from "../../themes/default"
 
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
+import farm from "../../models/farms";
 const preview = require('../../assets/farm_profile.jpg');
 
-import { FARMS } from '../../data/data-dummy'
+// import StallList from '../../components/stallList'
 const stallSetupScreen = (props) => {
-    const [farms, setFarms] = useState([]);
+    const [stall, setstall] = useState({});
 
     const submitForm = () => {
         //simple validate
         //sent form
         //wait response
-        props.navigation.navigate("loginScreen")
+        props.navigation.navigate("animaladdscreen")
     }
 
-    const renderFarmList = (itemData) => (
-        <View style={{ marginBottom: 10 }}>
-            <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10 }}>
-                <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', position: "absolute", top: 0, left: 0 }}>#1</Text>
-                <View style={{ flexDirection: 'column', alignContent: 'center' }}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 20 }}>ความจุ</Text>
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 20 }}>0</Text>
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 20 }}>ตัว</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 20 }}>พื้นที่</Text>
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 20 }}>0</Text>
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 20 }}>ตร.ม</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row'}}>
-                        {/* <TouchableOpacity style={[styles.button, theme.successButton, {  marginBottom: 20 }]}>
-                            <Text style={{ ...theme.font, textAlign: 'center' }}><Ionicons name="ios-add-circle-outline" size={24} color="black" /> เพิ่ม</Text>
-                        </TouchableOpacity> */}
-                        <TouchableOpacity style={[styles.button, theme.dangerButton, {  marginBottom: 20 , alignContent: 'center', width:'40%'}]}>
-                            <Text style={{ ...theme.font, textAlign: 'center' }}> ยกเลิก</Text>
-                        </TouchableOpacity>
+    return (
+        // <SafeAreaView style={[styles.screen, { backgroundColor: 'white' }]}>
+            <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={styles.screen}>
+            <ScrollView style={{ width: '100%' }}>
+                <View style={styles.topArea}>
+                    <Image source={logo} style={styles.logo} />
+                    <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ยินดีต้อนรับ</Text>
+                    <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับคุณให้เราฟังหน่อย</Text>
+                </View>
+                <View style={styles.inputArea}>
+                    <Text style={{ ...theme.font, fontSize: 16, fontWeight: 'bold' }}>คอกเลี้ยง</Text>
+                    <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10 }}>
+                        <View style={{ flex: 1, flexDirection: 'row', paddingVertical:'6%' }}>
+                            <View style={{width:'33%', alignItems: 'center'}}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>จำนวนคอก</Text></View>
+                            <View style={{width:'33%'}}><TextInput  keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold',borderWidth:1, borderColor:'black', textAlign:'center'}} /></View>
+                            <View style={{width:'33%', alignItems: 'center'}}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>คอกเลี้ยง</Text></View>
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'row', paddingVertical:'6%' }}>
+                            <View style={{width:'33%', alignItems: 'center'}}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>พื้นที่</Text></View>
+                            <View style={{width:'33%'}}><TextInput  keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth:1, borderColor:'black', textAlign:'center' }} /></View>
+                            <View style={{width:'33%', alignItems: 'center'}}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ตร.เมตร</Text></View>
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'row', paddingVertical:'6%' }}>
+                            <View style={{width:'33%', alignItems: 'center'}}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ความจุ</Text></View>
+                            <View style={{width:'33%'}}><TextInput  keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold',borderWidth:1, borderColor:'black', textAlign:'center' }} /></View>
+                            <View style={{width:'33%', alignItems: 'center'}}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ตัว/คอก</Text></View>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </View>
-    )
 
-    return (
-        <SafeAreaView>
-            <ScrollView style={{ backgroundColor: 'white' }}>
-                <View style={styles.screen}>
-                    <View style={styles.topArea}>
-                        <Image source={logo} style={styles.logo} />
-                        <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ยินดีต้อนรับ</Text>
-                        <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับคุณให้เราฟังหน่อย</Text>
-                    </View>
-                    <View style={styles.inputArea}>
-                        <Text style={{ ...theme.font, fontSize: 16, fontWeight: 'bold' }}>เพิ่มคอก</Text>
-                    </View>
-
-                    <View style={styles.buttonArea}>
-                        <FlatList
-                            data={FARMS}
-                            renderItem={renderFarmList}
-                            keyExtractor={item => item.id}
-                        />
-                        <TouchableOpacity style={[styles.button, theme.successButton]} onPress={submitForm}>
-                            <Text style={{ ...theme.font, textAlign: 'center' }}>เพิ่มคอก</Text>
-                        </TouchableOpacity>
-                        
-                        <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm}>
-                            <Text style={{ ...theme.font, textAlign: 'center' }}>ถัดไป</Text>
-                        </TouchableOpacity>
-                    </View>
-
+                <View style={styles.buttonArea}>
+                    <TouchableOpacity style={[styles.button, theme.defaultButton, { width: '100%' }]} onPress={submitForm}>
+                        <Text style={{ ...theme.font, textAlign: 'center' }}>ถัดไป</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
-        </SafeAreaView>
-
-
+            </KeyboardAvoidingView>
+        // </SafeAreaView>
     );
 };
 
@@ -129,21 +108,23 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     topArea: {
-        flex: 3,
+        flex: 1,
         marginBottom: 20,
         alignItems: 'center'
     },
     buttonArea: {
-        flex: 3,
+        flex: 1,
         flexDirection: 'column',
-        width: '80%',
-        marginBottom: '25%',
+        marginHorizontal: '5%',
+        // width: '80%',
+        alignItems: 'center',
+        marginTop: '10%'
     },
     inputArea: {
-        flex: 3,
-        width: '100%',
-        flexDirection: 'column',
+        flex: 1,
+        // width: '80%',
         alignItems: 'center',
+        marginHorizontal: '5%',
         marginBottom: '5%'
     },
     button: {

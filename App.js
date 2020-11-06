@@ -11,23 +11,7 @@ import FarmHugNavigation from './navigation/farmhugNavigation'
 
 
 export default function App() {
-  // const [state, setState] = useState({
-  //   isConnected: null,
-  // })
 
-  // const handleChange = ({ isConnected }) => {
-  //   setState({ isConnected });
-  // };
-
-  // const subscription = await NetInfo.addEventListener(handleChange);
-
-  // useEffect(() => {
-  //   const { isConnected } = await NetInfo.fetch();
-  //   setState({ isConnected });
-  //   return () => {
-  //     subscription()
-  //   }
-  // },[])
   let [fontsLoaded] = useFonts({
     'Kanit': require('./assets/fonts/Kanit-Light.ttf'),
   });

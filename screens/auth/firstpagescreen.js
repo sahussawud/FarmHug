@@ -21,8 +21,8 @@ const FirstPageScreen = (props) => {
 
         <View style={styles.screen}>
             <Image source={logo} style={styles.logo} />
-            <Text style={{ fontSize: 45, fontWeight: 'bold', fontFamily: 'inherit'}}>FarmHug</Text>
-            <Text style={{ fontFamily: 'inherit'}}>Grow farm with love</Text>
+            <Text style={{ fontSize: 45, fontWeight: 'bold', fontFamily: 'Kanit'}}>FarmHug</Text>
+            <Text style={{ fontFamily: 'Kanit'}}>Grow farm with love</Text>
             <View style={styles.buttonArea}>
                 <TouchableOpacity style={ styles.button} onPress={()=>{
                     props.navigation.navigate("loginScreen")
