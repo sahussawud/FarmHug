@@ -1,5 +1,7 @@
 import Farm from "../models/farms";
 import User from "../models/user";
+import Animal from "../models/animal";
+import Stall from "../models/stall";
 
 export const FARMS = [
     new Farm("f1", "ฟาร์มสุขใจ1", "0.1", 35.4,"168/65 ต.หนองวัว อ.ดอเราะ จ.สงขลา","https://www.organicfarmthailand.com/wp-content/uploads/2016/09/Farm-from-a-Box-SMA.jpg", [101,50], "Fri Oct 23 2020 12:47:26 GMT+0700 (Indochina Time)"),
@@ -8,4 +10,11 @@ export const FARMS = [
     new Farm("f4", "ฟาร์มสุขใจ4", "0.2", 35.4,"168/65 ต.หนองวัว อ.ดอเราะ จ.สงขลา","https://www.organicfarmthailand.com/wp-content/uploads/2016/09/Farm-from-a-Box-SMA.jpg", [101,50], "Fri Oct 23 2020 12:47:26 GMT+0700 (Indochina Time)"),
     new Farm("f5", "ฟาร์มสุขใจ5", "0.1", 35.4,"168/65 ต.หนองวัว อ.ดอเราะ จ.สงขลา","https://www.organicfarmthailand.com/wp-content/uploads/2016/09/Farm-from-a-Box-SMA.jpg", [101,50], "Fri Oct 23 2020 12:47:26 GMT+0700 (Indochina Time)"),
     new Farm("f6", "ฟาร์มสุขใจ6", "0.2", 35.4,"168/65 ต.หนองวัว อ.ดอเราะ จ.สงขลา","https://www.organicfarmthailand.com/wp-content/uploads/2016/09/Farm-from-a-Box-SMA.jpg", [101,50], "Fri Oct 23 2020 12:47:26 GMT+0700 (Indochina Time)"),
+  ];
+
+  export const STALLS = [
+    new Stall(1, 'คอก 1', 'f1', 0, 10),
+    new Stall(2, 'คอก 2', 'f1', 0, 10),
+    new Stall(3, 'คอก 3', 'f1', 0, 10),
+    new Stall(4, 'คอก 4', 'f1', 0, 10),
   ];

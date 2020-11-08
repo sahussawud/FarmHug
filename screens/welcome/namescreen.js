@@ -1,32 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
     View,
     Text,
     TextInput,
     StyleSheet,
     TouchableOpacity,
-    Switch,
     Image,
-    Linking,
     SafeAreaView,
     ScrollView,
     Platform
 } from "react-native";
 
-import DropDownPicker from 'react-native-dropdown-picker';
 import logo from "../../assets/logo.png"
-import style from "../../themes/default";
 import theme from "../../themes/default"
 
 import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
+
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { profile_update } from '../../store/actions/userAction'
 
 import { Ionicons } from '@expo/vector-icons';
 const nameScreen = (props) => {
-    const [image, setImage] = useState(preview);
-    const [name, setName] = useState("");
-    const [type, setType] = useState("")
+    
+    const profile = useSelector(state => state.profile)
+    // const { username, imageURL, role } = profile
+    const [ image, setImage ] = useState(preview);
+    const [ name, setName] = useState('');
+    const [ type, setType] = useState('');
+
+    const dispatch = useDispatch()
+
+    const toggleNextHandler = useCallback(() => {
+        dispatch(profile_update(profile))
+    }, [dispatch]);
+    
+
 
     useEffect(() => {
         (async () => {
@@ -64,11 +74,11 @@ const nameScreen = (props) => {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
                     <View style={styles.topArea}>
-                        {/* <Image source={logo} style={styles.logo} /> */}
+
                         <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ยินดีต้อนรับครั้งเเรก</Text>
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับตัวคุณให้เราฟังหน่อย</Text>
                     </View>
@@ -78,7 +88,7 @@ const nameScreen = (props) => {
                         </TouchableOpacity>
                         <TextInput placeholder="ชื่อผู้ใช้" style={[styles.input, theme.font]} />
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>คุณเป็นใครในฟาร์ม</Text>
-                        <View style={{ flex:1 , flexDirection:'row'}}>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
                             <TouchableOpacity
                                 style={styles.gridItem}
                                 onPress={() => {
@@ -98,7 +108,7 @@ const nameScreen = (props) => {
                                 }}
                             >
                                 <View style={{ ...styles.container, backgroundColor: (type === 'employee' ? '#FAD683' : 'white') }}>
-                                <Ionicons name="ios-people" size={50} color="black" />
+                                    <Ionicons name="ios-people" size={50} color="black" />
                                     <Text style={styles.title} numberOfLines={2}>พนักงาน</Text>
                                 </View>
                             </TouchableOpacity>

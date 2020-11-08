@@ -5,12 +5,18 @@ import { useFonts } from 'expo-font';
 import { AppLoading } from 'expo'
 import Constants from 'expo-constants';
 //import NetInfo from '@react-native-community/netinfo';
-
+import { createStore, combineReducers } from 'redux';
+import { Provider } from "react-redux";
+import farmHugReducer from './store/reducers/farmhugReducer'
 import FarmHugNavigation from './navigation/farmhugNavigation'
 
-
-
 export default function App() {
+
+  const rootReducer = combineReducers({
+    meals: farmHugReducer
+  })
+
+  const store = createStore(rootReducer);
 
   let [fontsLoaded] = useFonts({
     'Kanit': require('./assets/fonts/Kanit-Light.ttf'),
@@ -20,7 +26,9 @@ export default function App() {
     return (<AppLoading />)
   } else {
     return (
+      <Provider store={store}>
         <FarmHugNavigation />
+      </Provider>
     );
   }
 

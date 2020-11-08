@@ -2,11 +2,14 @@ class farm {
     constructor(
       id,
       name,
-      distance,
       area,
       address,
       imgUrl,
+      type,
       location,
+      capacity,
+      cow,
+      distance,
       createdAt
     ) {
       this.id = id;
@@ -15,8 +18,12 @@ class farm {
       this.address = address;
       this.imgUrl = imgUrl;
       this.area = area;
+      //location = { latitude, longitude }
+      this.type = type;
       this.location = location;
       this.createdAt = createdAt;
+      this.capacity = capacity;
+      this.cow = cow;
     }
   }
   

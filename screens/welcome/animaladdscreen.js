@@ -12,26 +12,53 @@ import {
     ScrollView,
     Platform,
     FlatList,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Button
 } from "react-native";
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 
-import { Picker } from '@react-native-community/picker';
-import logo from "../../assets/logo.png"
-import style from "../../themes/default";
+// import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
+
 import theme from "../../themes/default"
 
 import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
-import farm from "../../models/farms";
+
 const preview = require('../../assets/farm_profile.jpg');
+import moment from 'moment';
+import 'moment/locale/th'  // without this line it didn't work
+moment.locale('th')
 
 // import StallList from '../../components/stallList'
 const animaladdscreen = (props) => {
     // const [stall, setstall] = useState({});
     const [image, setImage] = useState(preview);
-    const [name, setName] = useState("");
+    const [name, setName] = useState("วัวเนื้อ");
+    const [cage, setCage] = useState("")
     const [description, setDescription] = useState("")
+    const [date, setDate] = useState(moment().format('DD MMMM YYYY'));
+
+    useEffect(()=>{
+            const stall_name = props.navigation.getParam("stall_name")
+            setCage(stall_name)
+    },[])
+
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        // console.warn("A date has been picked: ", date);
+        setDate(moment(date).format('DD MMMM YYYY'));
+        hideDatePicker();
+    };
 
     useEffect(() => {
         (async () => {
@@ -58,17 +85,15 @@ const animaladdscreen = (props) => {
     };
 
     const submitForm = () => {
-        //simple validate
-        //sent form
-        //wait response
-        props.navigation.navigate("loginScreen")
+
+        props.navigation.navigate("selectstallscreen")
     }
 
     return (
         // <SafeAreaView style={[styles.screen, { backgroundColor: 'white' }]}>
         <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}
             style={styles.screen}>
-            <ScrollView style={{ width: '100%' }}>
+            <ScrollView style={{ width: '100%' }} >
                 {/* <View style={styles.topArea}>
                     <Image source={logo} style={styles.logo} />
                     <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ยินดีต้อนรับ</Text>
@@ -78,47 +103,67 @@ const animaladdscreen = (props) => {
                     {/* <Text style={{ ...theme.font, fontSize: 16, fontWeight: 'bold' }}>เพิ่มสัตว์</Text> */}
                     <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10 }}>
                         <View style={{ flexDirection: 'row', paddingVertical: '6%' }}>
-                            <TouchableOpacity onPress={pickImage} style={{ flex: 0.7, alignItems:'center'}}>
+                            <TouchableOpacity onPress={pickImage} style={{ flex: 0.7, alignItems: 'center' }}>
                                 <Image style={styles.uploadImg} source={image} />
                             </TouchableOpacity>
-                            <View style={{ flex:1, flexDirection: 'column', justifyContent:'center'}}>
-                                <View style={{ flexDirection: 'row', padding: 8}}>
-                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ความจุ</Text></View>
-                                    <View style={{ width: '50%' }}><TextInput keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
+                            <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+                            <View style={{ flexDirection: 'row', padding: 8 }}>
+                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>คอก</Text></View>
+                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{cage}</Text></View>
                                 </View>
-                                <View style={{ flexDirection: 'row', padding: 8}}>
-                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ความจุ</Text></View>
-                                    <View style={{ width: '50%' }}><TextInput keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
+                                <View style={{ flexDirection: 'row', padding: 8 }}>
+                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>สัตว์</Text></View>
+                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{name}</Text></View>
                                 </View>
+                    
                             </View>
 
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: '6%' }}>
-                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>จำนวนคอก</Text></View>
-                            <View style={{ width: '33%' }}><TextInput keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
-                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>คอกเลี้ยง</Text></View>
+                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>สายพันธ์ุ</Text></View>
+                            <View style={{ width: '66%' }}><TextInput style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
+                            {/* <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>คอกเลี้ยง</Text></View> */}
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: '6%' }}>
-                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>พื้นที่</Text></View>
-                            <View style={{ width: '33%' }}><TextInput keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
-                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ตร.เมตร</Text></View>
+                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>วันเกิด</Text></View>
+                            {/* <View style={{ width: '66%' }}></View> */}
+                            <View style={{ width: '66%' }}>
+
+                                {/* <TextInput  style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} onPress={showDatepicker}/> */}
+                                {/* <Button title={'selecDate'} onPress={showTimepicker} /> */}
+
+                                <TouchableOpacity onPress={showDatePicker} style={{ flexDirection: 'row' }}>
+                                    <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{date}</Text>
+                                    <AntDesign name="calendar" size={24} color="black" style={{ marginLeft: 10 }} />
+                                </TouchableOpacity>
+
+                                <DateTimePickerModal
+                                    isVisible={isDatePickerVisible}
+                                    mode="date"
+                                    onConfirm={handleConfirm}
+                                    onCancel={hideDatePicker}
+                                    isDarkModeEnabled={false}
+                                />
+                            </View>
+
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: '6%' }}>
-                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ความจุ</Text></View>
+                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>น้ำหนัก</Text></View>
                             <View style={{ width: '33%' }}><TextInput keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
-                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ตัว/คอก</Text></View>
+                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>กก.</Text></View>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: '6%' }}>
-                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ความจุ</Text></View>
+                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>สูง</Text></View>
                             <View style={{ width: '33%' }}><TextInput keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
-                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ตัว/คอก</Text></View>
+                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ซม.</Text></View>
                         </View>
                     </View>
                 </View>
 
                 <View style={styles.buttonArea}>
-                    <TouchableOpacity style={[styles.button, theme.defaultButton, { width: '100%' }]} onPress={submitForm}>
-                        <Text style={{ ...theme.font, textAlign: 'center' }}>ถัดไป</Text>
+
+                    <TouchableOpacity style={[styles.button, theme.successButton, { width: '100%' }]} onPress={submitForm}>
+                        <Text style={{ ...theme.font, textAlign: 'center' }}>เพิ่ม</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -167,7 +212,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '5%',
         // width: '80%',
         alignItems: 'center',
-        marginTop: '10%'
+        marginTop: '10%',
     },
     inputArea: {
         flex: 1,
@@ -193,6 +238,7 @@ const styles = StyleSheet.create({
 });
 
 animaladdscreen.navigationOptions = {
+    headerTitle: 'เพิ่มสัตว์',
     headerStyle: {
         elevation: 0,
         shadowOpacity: 0,
