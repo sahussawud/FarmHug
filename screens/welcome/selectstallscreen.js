@@ -18,12 +18,14 @@ import logo from "../../assets/logo.png"
 import style from "../../themes/default";
 import theme from "../../themes/default"
 
-import { STALLS } from '../../data/data-dummy'
-const SelectStallScreen = (props) => {
-    const [stall, setStall] = useState(STALLS);
-    
-    const selectStall = (stall_id, currentAnimal, name) => {
+// import { STALLS } from '../../data/data-dummy'
+import { useSelector } from 'react-redux';
 
+const SelectStallScreen = (props) => {
+    // const [stall, setStall] = useState(STALLS);
+    
+    const stall = useSelector(state => state.Farm.stall)
+    const selectStall = (stall_id, currentAnimal, name) => {
         props.navigation.navigate("animaladdscreen", { stall_id:stall_id, currentAnimal: currentAnimal, stall_name:name  })
     }
 
@@ -36,7 +38,7 @@ const SelectStallScreen = (props) => {
     const renderStallList = (itemData) => {
         const colorstatus = colorStatus(itemData.item.currentAnimal, itemData.item.maximumAnimal);
         return (
-        <TouchableOpacity style={{ marginBottom: 10 }} onPress={()=>selectStall(itemData.item.stall_id, itemData.item.currentAnimal,itemData.item.name )}>
+        <TouchableOpacity style={{ marginBottom: 10 }} onPress={()=>selectStall(itemData.item.id, itemData.item.currentAnimal,itemData.item.name )}>
             <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10, borderRadius: 10 }}>
                 {/* <View style={styles.uploadImg}>
                     <Image style={styles.uploadImg} source={{ uri: itemData.item.imgUrl }} />

@@ -8,7 +8,10 @@ class animal {
       gene,
       height,
       weight,
-      breed
+      breed,
+      sex,
+      dob,
+      imageUrl
 
     ) {
       this.id = id;
@@ -21,6 +24,8 @@ class animal {
       this.weight = weight;
       this.breed = breed;
       this.dob = dob;
+      this.sex = sex;
+      this.imageUrl=imageUrl;
       
     }
   }

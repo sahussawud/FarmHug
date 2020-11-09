@@ -2,6 +2,7 @@ class farm {
     constructor(
       id,
       name,
+      description,
       area,
       address,
       imgUrl,
@@ -14,6 +15,7 @@ class farm {
     ) {
       this.id = id;
       this.name = name;
+      this.description = description;
       this.distance = distance;
       this.address = address;
       this.imgUrl = imgUrl;

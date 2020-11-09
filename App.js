@@ -7,13 +7,15 @@ import Constants from 'expo-constants';
 //import NetInfo from '@react-native-community/netinfo';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from "react-redux";
-import farmHugReducer from './store/reducers/farmhugReducer'
+import userReducer from './store/reducers/userReducer';
+import farmReducer from './store/reducers/farmReducer';
 import FarmHugNavigation from './navigation/farmhugNavigation'
 
 export default function App() {
 
   const rootReducer = combineReducers({
-    meals: farmHugReducer
+    User: userReducer,
+    Farm: farmReducer
   })
 
   const store = createStore(rootReducer);

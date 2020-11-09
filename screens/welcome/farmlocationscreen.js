@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
     View,
     Text,
@@ -10,28 +10,55 @@ import {
     Linking,
     SafeAreaView,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    KeyboardAvoidingView
 } from "react-native";
 
 import logo from "../../assets/logo.png"
 import theme from "../../themes/default"
 
-import { Ionicons, Entypo } from '@expo/vector-icons';
+import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import MapView, { Marker, animateToRegion } from 'react-native-maps';
 import * as Location from 'expo-location';
 
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { create_farm } from '../../store/actions/farmAction'
+
 const farmLocationScreen = (props) => {
+    const dispatch = useDispatch()
+    const farm = useSelector(state => state.Farm.farm)
+
     const [ address, setAddress] = useState("")
     const [ loading, setLoading] = useState(false)
-    const [ location, setLocation] = useState({
+    const [ location, setLocation ] = useState({
         latitude: 13.736717,
         longitude: 100.523186,
         latitudeDelta: 1,
         longitudeDelta: 1,
     });
-    // useEffect(()=>{
-    //     MapView.ref.animateToRegion(location, 1000);
-    // }, [location])
+    
+    useEffect(() => {
+        if (farm.location) {
+            setLocation(farm.location)
+        }
+        if (farm.address) {
+            setAddress(farm.address)
+        }
+
+    }, [farm])
+
+    const updateValueHandle =  useCallback(()=>{
+        console.log(farm)
+        dispatch(create_farm({
+            location: location,
+            address: address
+        }))
+    })
+
+    useEffect(()=>{
+        updateValueHandle()
+      },[dispatch,location, address]);
 
     const [errorMsg, setErrorMsg] = useState(null);
 
@@ -48,6 +75,13 @@ const farmLocationScreen = (props) => {
         setLoading(false);
     }
 
+    const updateLocation = useCallback(({latitude, longitude})=>{
+        console.log('updateLocation');
+        setLoading(true);
+        setLocation({latitude, longitude, latitudeDelta: 2, longitudeDelta:2 })
+        setLoading(false);
+    })
+
     const submitForm = () => {
         props.navigation.navigate("stallSetupScreen")
     }
@@ -60,7 +94,8 @@ const farmLocationScreen = (props) => {
     }
 
     return (
-        <SafeAreaView>
+        // <SafeAreaView style={{flex: 1}}>
+            <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={{flex: 1}}>
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
                     <View style={styles.topArea}>
@@ -69,26 +104,30 @@ const farmLocationScreen = (props) => {
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับฟาร์มของคุณให้เราฟังหน่อย</Text>
                     </View>
                     <View style={styles.inputArea}>
-                        <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}>สถานที่ตั้ง</Text>
+                        <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}>เเตะเเผนที่เพื่อให้ <FontAwesome5 name="map-marker-alt" size={24} color="red" style={{ textAlign:'center', top: '2%',left:'2%'}} /> เเสดงสถานที่ตั้งของฟาร์ม  </Text>
                         <MapView
+                            provider={"google"}
+                            showsUserLocation={loading} //to show user current location when given access
+                            loadingEnabled
+                            showsMyLocationButton={loading}
                             zoomEnabled={true}
-                            minZoomLevel={10}
-                            style={{ width: '80%', height: 300 }}
-                            // initialRegion={location}
-                            region={location}
-                            mapRef={ref => this.mapView = ref}
+                            userLocationPriority={'passive'}
+                            minZoomLevel={1}
+                            style={{ width: '90%', height: 300 }}
+                            initialRegion={location}
+                            onUserLocationChange={(e) => updateLocation(e.nativeEvent.coordinate)}
+                            onPress={(e)=> updateLocation(e.nativeEvent.coordinate) }
+                            // region={location}
+                            // mapRef={ref => this.mapView = ref}
                         >
                             <ActivityIndicator size="large" color="#0000ff" animating={loading}/>
                             <Marker draggable
                                 coordinate={location}
-                                onDragEnd={(e) => setLocation(e.nativeEvent.coordinate)}
+                                onDragEnd={(e) => updateLocation(e.nativeEvent.coordinate)}
                             />
                             
                         </MapView>
-                        <TouchableOpacity style={[styles.button, theme.successButton, {width: '80%', marginBottom: 20}]} onPress={getCurrentPos}>
-
-                            <Text style={{ ...theme.font, textAlign: 'center' }}><Entypo name="location" size={24} color="black" /> หมุดตำเเหน่งปัจจุบัน</Text>
-                        </TouchableOpacity>
+                        
                         <TextInput placeholder="รายละเอียด"
                             multiline={true}
                             numberOfLines={4}
@@ -107,7 +146,8 @@ const farmLocationScreen = (props) => {
 
                 </View>
             </ScrollView>
-        </SafeAreaView>
+            </KeyboardAvoidingView>
+        // </SafeAreaView>
 
 
     );
@@ -153,9 +193,9 @@ const styles = StyleSheet.create({
     input: {
         borderColor: 'black',
         borderWidth: 1,
-        width: '80%',
+        width: '90%',
         textAlign: 'center',
-        marginBottom: '5%',
+        marginVertical: '5%',
         // paddingHorizontal: 40,
         paddingVertical: 10,
     },

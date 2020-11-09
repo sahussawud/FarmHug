@@ -15,7 +15,7 @@ import logo from "../../assets/logo.png"
 import theme from "../../themes/default"
 
 import * as ImagePicker from 'expo-image-picker';
-const preview = require('../../assets/farm_profile.jpg');
+import preview from '../../assets/farm_profile.jpg';
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -24,19 +24,28 @@ import { profile_update } from '../../store/actions/userAction'
 import { Ionicons } from '@expo/vector-icons';
 const nameScreen = (props) => {
     
-    const profile = useSelector(state => state.profile)
+    
     // const { username, imageURL, role } = profile
-    const [ image, setImage ] = useState(preview);
-    const [ name, setName] = useState('');
-    const [ type, setType] = useState('');
+    const [ image, setImage ] = useState('');
+    const [ name, setName ] = useState('');
+    const [ type, setType ] = useState('');
+    // const image = useSelector(state => state.profile.imageURL)
+    // const name = useSelector(state => state.profile.username)
+    // const type = useSelector(state => state.profile.role)
 
     const dispatch = useDispatch()
 
-    const toggleNextHandler = useCallback(() => {
-        dispatch(profile_update(profile))
-    }, [dispatch]);
-    
+    const profile = useSelector(state => state.User.profile)
 
+
+    useEffect(()=>{
+        const updateProfile = {
+            imageURL: image,
+            username: name,
+            role: type,
+        };
+        dispatch(profile_update(updateProfile))
+      },[image, name, type]);
 
     useEffect(() => {
         (async () => {
@@ -58,7 +67,7 @@ const nameScreen = (props) => {
         });
 
         if (!result.cancelled) {
-            setImage({ uri: result.uri });
+            setImage(result.uri);
         }
     };
 
@@ -78,15 +87,14 @@ const nameScreen = (props) => {
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
                     <View style={styles.topArea}>
-
                         <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ยินดีต้อนรับครั้งเเรก</Text>
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับตัวคุณให้เราฟังหน่อย</Text>
                     </View>
                     <View style={styles.inputArea}>
                         <TouchableOpacity onPress={pickImage}>
-                            <Image style={styles.uploadImg} source={image} />
+                            <Image style={styles.uploadImg} source={image?{uri:image}:require('../../assets/farm_profile.jpg')} />
                         </TouchableOpacity>
-                        <TextInput placeholder="ชื่อผู้ใช้" style={[styles.input, theme.font]} />
+                        <TextInput placeholder="ชื่อผู้ใช้" style={[styles.input, theme.font]} onChangeText={setName} value={name}/>
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>คุณเป็นใครในฟาร์ม</Text>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <TouchableOpacity

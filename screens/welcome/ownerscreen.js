@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
     View,
     Text,
@@ -18,14 +18,43 @@ import style from "../../themes/default";
 import theme from "../../themes/default"
 
 import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
 
-import { Ionicons } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { create_farm } from '../../store/actions/farmAction'
+
 const ownerScreen = (props) => {
-    const [image, setImage] = useState(preview);
+
+    const dispatch = useDispatch()
+    const farm = useSelector(state => state.Farm.farm)
+
+    const [image, setImage] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("")
+
+    useEffect(() => {
+        console.log(farm);
+        if (farm.name) {
+            setName(farm.name)
+        }
+        if (farm.imgUrl) {
+            setImage(farm.imgUrl)
+        }
+        if (farm.description) {
+            setDescription(farm.description)
+        }
+    }, [farm])
+
+    useEffect(()=>{
+        console.log(image, name, description);
+        dispatch(create_farm({
+            imgUrl: image,
+            name: name,
+            description: description,
+        }))
+      },[image, name, description]);
+
 
     useEffect(() => {
         (async () => {
@@ -47,16 +76,17 @@ const ownerScreen = (props) => {
         });
 
         if (!result.cancelled) {
-            setImage({ uri: result.uri });
+            setImage(result.uri);
         }
     };
 
     const submitForm = () => {
-            props.navigation.navigate("farmLocationScreen")
+        console.log('submitForm : ',farm);
+        props.navigation.navigate("farmLocationScreen")
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
                     <View style={styles.topArea}>
@@ -66,17 +96,17 @@ const ownerScreen = (props) => {
                     </View>
                     <View style={styles.inputArea}>
                         <TouchableOpacity onPress={pickImage}>
-                            <Image style={styles.uploadImg} source={image} />
+                            <Image style={styles.uploadImg} source={image ? { uri: image } : require('../../assets/farm_profile.jpg')} />
                         </TouchableOpacity>
-                        <TextInput placeholder="ชื่อฟาร์ม" style={[styles.input, theme.font]} value={name} onChangeText={setName}  maxLength={25} />
-                        <TextInput placeholder="รายละเอียด" 
+                        <TextInput placeholder="ชื่อฟาร์ม" style={[styles.input, theme.font]} value={name} onChangeText={setName} maxLength={25} />
+                        <TextInput placeholder="รายละเอียด"
                             multiline={true}
-                            numberOfLines={4} 
-                            style={[styles.input, theme.font]} 
-                            value={description} 
+                            numberOfLines={4}
+                            style={[styles.input, theme.font]}
+                            value={description}
                             onChangeText={setDescription}
-                            maxLength={255} 
-                             />
+                            maxLength={255}
+                        />
 
                     </View>
                     <View style={styles.buttonArea}>

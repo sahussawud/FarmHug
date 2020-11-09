@@ -8,17 +8,19 @@ class stall {
       food,
       water,
       manure,
-      updatedAt
+      updatedAt,
+      area
     ) {
       this.id = id;
       this.name = name;
       this.farm_id = farm_id;
       this.currentAnimal = currentAnimal;
       this.maximumAnimal = maximumAnimal;
-      this.food = food;
-      this.water = water;
-      this.manure = manure;
+      this.food = food || 0;
+      this.water = water || 0;
+      this.manure = manure || 0;
       this.updatedAt = updatedAt;
+      this.area = area
     }
   }
   

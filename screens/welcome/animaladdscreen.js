@@ -24,25 +24,24 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import theme from "../../themes/default"
 
 import * as ImagePicker from 'expo-image-picker';
+import ANIMAL from '../../models/animal'
 
 const preview = require('../../assets/farm_profile.jpg');
 import moment from 'moment';
 import 'moment/locale/th'  // without this line it didn't work
 moment.locale('th')
 
-// import StallList from '../../components/stallList'
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { create_stall } from '../../store/actions/farmAction'
 const animaladdscreen = (props) => {
     // const [stall, setstall] = useState({});
-    const [image, setImage] = useState(preview);
-    const [name, setName] = useState("วัวเนื้อ");
-    const [cage, setCage] = useState("")
-    const [description, setDescription] = useState("")
-    const [date, setDate] = useState(moment().format('DD MMMM YYYY'));
+    const stall_id = props.navigation.getParam("stall_id")
+    const SelectedStall = useSelector(state => state.Farm.stall.find(stall => stall.id === stall_id))
+    const MaxIdAnimal = useSelector(state => state.Farm.animal.lenght)
 
-    useEffect(()=>{
-            const stall_name = props.navigation.getParam("stall_name")
-            setCage(stall_name)
-    },[])
+    const [animal, setAnimal] = useState(new ANIMAL('', '', 'โคเนื้อ', stall_id, '', '', 0, 0, '', 'M', moment().format('DD MMMM YYYY'), undefined))
+
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -56,7 +55,8 @@ const animaladdscreen = (props) => {
 
     const handleConfirm = (date) => {
         // console.warn("A date has been picked: ", date);
-        setDate(moment(date).format('DD MMMM YYYY'));
+        const selectDate = moment(date).format('DD MMMM YYYY')
+        setAnimal(prev => ({ ...prev, dob: selectDate }))
         hideDatePicker();
     };
 
@@ -80,7 +80,7 @@ const animaladdscreen = (props) => {
         });
 
         if (!result.cancelled) {
-            setImage({ uri: result.uri });
+            setAnimal(prev => ({ ...prev, imageUrl: result.uri }));
         }
     };
 
@@ -88,6 +88,10 @@ const animaladdscreen = (props) => {
 
         props.navigation.navigate("selectstallscreen")
     }
+
+    const changeSexhandle = () => setAnimal(prev => ({...prev, sex: animal.sex === 'M' ? 'F' : 'M'}))
+       
+
 
     return (
         // <SafeAreaView style={[styles.screen, { backgroundColor: 'white' }]}>
@@ -104,24 +108,27 @@ const animaladdscreen = (props) => {
                     <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10 }}>
                         <View style={{ flexDirection: 'row', paddingVertical: '6%' }}>
                             <TouchableOpacity onPress={pickImage} style={{ flex: 0.7, alignItems: 'center' }}>
-                                <Image style={styles.uploadImg} source={image} />
+                                <Image style={styles.uploadImg} source={animal.imageUrl ? { uri: animal.imageUrl } : require('../../assets/farm_profile.jpg')} />
                             </TouchableOpacity>
                             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
-                            <View style={{ flexDirection: 'row', padding: 8 }}>
-                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>คอก</Text></View>
-                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{cage}</Text></View>
+                                <View style={{ flexDirection: 'row', padding: 8 }}>
+                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>รหัสคอก</Text></View>
+                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{animal.cage_id}</Text></View>
                                 </View>
                                 <View style={{ flexDirection: 'row', padding: 8 }}>
                                     <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>สัตว์</Text></View>
-                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{name}</Text></View>
+                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{animal.type}</Text></View>
                                 </View>
-                    
+
                             </View>
 
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: '6%' }}>
                             <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>สายพันธ์ุ</Text></View>
-                            <View style={{ width: '66%' }}><TextInput style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
+                            <View style={{ width: '66%' }}><TextInput value={animal.gene}
+                                onChangeText={text =>
+                                    setAnimal(prev => ({ ...prev, gene: text }))}
+                                style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
                             {/* <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>คอกเลี้ยง</Text></View> */}
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: '6%' }}>
@@ -133,7 +140,7 @@ const animaladdscreen = (props) => {
                                 {/* <Button title={'selecDate'} onPress={showTimepicker} /> */}
 
                                 <TouchableOpacity onPress={showDatePicker} style={{ flexDirection: 'row' }}>
-                                    <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{date}</Text>
+                                    <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{animal.dob}</Text>
                                     <AntDesign name="calendar" size={24} color="black" style={{ marginLeft: 10 }} />
                                 </TouchableOpacity>
 
@@ -148,15 +155,33 @@ const animaladdscreen = (props) => {
 
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: '6%' }}>
+                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>เพศเมีย</Text></View>
+                            <View style={{ width: '33%', alignItems: 'center' }}>
+                                {/* <TextInput  value={animal.height} onChangeText={text=>{setAnimal(prev=> ({...prev, sex: text}))}} keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /> */}
+                                
+                                <Switch
+                                    trackColor={{ false: "#ffc0cb", true: "#9ac59a" }}
+                                    thumbColor={animal.sex ==='M' ? "#f5dd4b" : "#f4f3f4"}
+                                    ios_backgroundColor="#ffc0cb"
+                                    onValueChange={changeSexhandle}
+                                    value={animal.sex ==='M'}
+                                    style={{ transform: [{ scaleX: 2 }, { scaleY: 1 }] }}
+                                />
+                                
+                            </View>
+                            <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>เพศผู้</Text></View>
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'row', paddingVertical: '6%' }}>
                             <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>น้ำหนัก</Text></View>
-                            <View style={{ width: '33%' }}><TextInput keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
+                            <View style={{ width: '33%' }}><TextInput value={animal.weight} onChangeText={text => { setAnimal(prev => ({ ...prev, weight: text })) }} keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
                             <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>กก.</Text></View>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: '6%' }}>
                             <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>สูง</Text></View>
-                            <View style={{ width: '33%' }}><TextInput keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
+                            <View style={{ width: '33%' }}><TextInput value={animal.height} onChangeText={text => { setAnimal(prev => ({ ...prev, height: text })) }} keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /></View>
                             <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>ซม.</Text></View>
                         </View>
+
                     </View>
                 </View>
 
@@ -212,7 +237,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '5%',
         // width: '80%',
         alignItems: 'center',
-        marginTop: '10%',
+        marginTop: '2%',
     },
     inputArea: {
         flex: 1,

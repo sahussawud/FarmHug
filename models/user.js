@@ -12,18 +12,18 @@ class User {
       imageURL,
       role
     ) {
-      this.id = id;
-      this.username = username;
-      this.email = email;
-      this.password = password;
+      this.id = id || '';
+      this.username = username || '';
+      this.email = email || '';
+      this.password = password || '';
       //enum owner, employee
-      this.type = type;
-      this.farm_id = farm_id;
-      this.firstname = firstname;
-      this.lastname = lastname;
-      this.line_account = line_account;
-      this.imageURL = imageURL;
-      this.role = role
+      this.type = type || '';
+      this.farm_id = farm_id || '';
+      this.firstname = firstname || '';
+      this.lastname = lastname || '';
+      this.line_account = line_account || '';
+      this.imageURL = imageURL || '';
+      this.role = role || '';
     }
   }
   
