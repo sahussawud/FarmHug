@@ -24,19 +24,43 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
 
-import { FARMS } from '../../data/data-dummy'
+
+import { useDispatch } from 'react-redux';
+import { update_farm } from '../../store/actions/farmAction'
+
+import { useCallback } from "react";
+import { ANIMALS, FARMS, STALLS } from "../../data/data-dummy";
+
+
 const employeeScreen = (props) => {
+    const dispatch = useDispatch();
+
+    const [searchbox, setSearchbox] = useState('')
     const [farms, setFarms] = useState([]);
 
-    const submitForm = () => {
-        //simple validate
-        //sent form
-        //wait response
-        props.navigation.navigate("loginScreen")
+    const selectfarm = (farm_id) => {
+        const selectFarm = FARMS.find(farm=> farm.id === farm_id)
+        const farmStall = STALLS.find(stall=> stall.farm_id=== farm_id)
+        const farmAnimal = ANIMALS.find(animal=> animal.farm_id === farm_id)
+        dispatch(update_farm(selectFarm, farmStall, farmAnimal))
+        props.navigation.navigate("finishscreen")
     }
 
+    const findMatchFarm = useCallback(() =>{
+        //Temporary mockup data
+        const matchfarm = FARMS.filter(farm=> farm.name.includes(searchbox) || farm.address.includes(searchbox))
+        setFarms(matchfarm)
+    })
+    
+    useEffect(()=>{
+        findMatchFarm();
+    },[searchbox])
+
+    useEffect(()=>{
+        setFarms(FARMS)
+    },[])
     const renderFarmList = (itemData) => (
-        <TouchableOpacity style={{ marginBottom: 10 }}>
+        <TouchableOpacity style={{ marginBottom: 10 }} onPress={()=>selectfarm(itemData.item.id)}>
             <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10, borderRadius: 10 }}>
                 <View style={styles.uploadImg}>
                     <Image style={styles.uploadImg} source={{ uri: itemData.item.imgUrl }} />
@@ -55,23 +79,19 @@ const employeeScreen = (props) => {
     )
 
     return (
-        <SafeAreaView>
-            <ScrollView style={{ backgroundColor: 'white' }}>
+        <SafeAreaView style={{flex:1, width:'100%'}}>
+            <View style={styles.topArea}>
+                <Image source={logo} style={styles.logo} />
+                <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ค้นหาฟาร์มของคุณ</Text>
+                {/* <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับคุณให้เราฟังหน่อย</Text> */}
+                <TextInput placeholder="ชื่อฟาร์ม" style={[styles.input, theme.font]} value={searchbox} onChangeText={setSearchbox} />
+            </View>
+            <View style={{ flex: 2}}>
+               <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
-                    <View style={styles.topArea}>
-                        <Image source={logo} style={styles.logo} />
-                        <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ยินดีต้อนรับ</Text>
-                        <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับคุณให้เราฟังหน่อย</Text>
-                    </View>
-                    <View style={styles.inputArea}>
-                        <TextInput placeholder="ค้นหาฟาร์ม" style={[styles.input, theme.font]} />
-
-
-                    </View>
-
                     <View style={styles.buttonArea}>
                         <FlatList
-                            data={FARMS}
+                            data={farms}
                             renderItem={renderFarmList}
                             keyExtractor={item => item.id}
                         />
@@ -81,7 +101,9 @@ const employeeScreen = (props) => {
                     </View>
 
                 </View>
-            </ScrollView>
+            </ScrollView> 
+            </View>
+            
         </SafeAreaView>
 
 
@@ -118,9 +140,11 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     topArea: {
-        flex: 3,
-        marginBottom: 20,
-        alignItems: 'center'
+        flex: 1,
+        // marginBottom: 20,
+        alignItems: 'center',
+        backgroundColor:'white',
+        justifyContent: 'center'
     },
     buttonArea: {
         flex: 3,

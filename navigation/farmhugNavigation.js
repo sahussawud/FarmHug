@@ -18,6 +18,7 @@ import stallSetupScreen from "../screens/welcome/stallsetupscreen";
 import animaladdscreen from "../screens/welcome/animaladdscreen.js";
 import selectstallscreen from '../screens/welcome/selectstallscreen';
 import finishscreen from '../screens/welcome/finishscreen'
+import animallistscreen from '../screens/welcome/animallistscreen'
 
 import homeScreen from "../screens/home/homescreen";
 
@@ -49,7 +50,8 @@ const setupNavigator = createStackNavigator(
     stallSetupScreen: stallSetupScreen,
     selectstallscreen: selectstallscreen,
     animaladdscreen: animaladdscreen,
-    finishscreen : finishscreen
+    finishscreen : finishscreen,
+    animallistscreen: animallistscreen
     // homeScreen: homeScreen,
   },
   {

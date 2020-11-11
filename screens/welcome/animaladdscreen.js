@@ -33,15 +33,23 @@ moment.locale('th')
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { create_stall } from '../../store/actions/farmAction'
+import { create_animal, update_animal } from '../../store/actions/farmAction'
 const animaladdscreen = (props) => {
-    // const [stall, setstall] = useState({});
+    const dispatch = useDispatch()
     const stall_id = props.navigation.getParam("stall_id")
     const SelectedStall = useSelector(state => state.Farm.stall.find(stall => stall.id === stall_id))
-    const MaxIdAnimal = useSelector(state => state.Farm.animal.lenght)
-
     const [animal, setAnimal] = useState(new ANIMAL('', '', 'โคเนื้อ', stall_id, '', '', 0, 0, '', 'M', moment().format('DD MMMM YYYY'), undefined))
 
+    const isUpdateTask = props.navigation.getParam("type") === 'edit' ? true : false;
+    useEffect(() => {
+        console.log(props.navigation.getParam("animal"), );
+        if (props.navigation.getParam("type") === 'edit') {
+            console.log('useEffect animalAddscreen');
+            const updateAnimal = props.navigation.getParam("animal")
+            setAnimal(updateAnimal)
+        } 
+
+    }, [props.navigation.getParam("type")])
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -85,12 +93,18 @@ const animaladdscreen = (props) => {
     };
 
     const submitForm = () => {
-
+        dispatch(create_animal(SelectedStall, animal));
         props.navigation.navigate("selectstallscreen")
     }
 
-    const changeSexhandle = () => setAnimal(prev => ({...prev, sex: animal.sex === 'M' ? 'F' : 'M'}))
-       
+    const updatesubmit = useCallback(() =>{
+        console.log('updatesubmit', animal);
+        dispatch(update_animal(animal));
+        props.navigation.navigate("animallistscreen")
+    })
+
+    const changeSexhandle = () => setAnimal(prev => ({ ...prev, sex: animal.sex === 'M' ? 'F' : 'M' }))
+
 
 
     return (
@@ -98,11 +112,7 @@ const animaladdscreen = (props) => {
         <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}
             style={styles.screen}>
             <ScrollView style={{ width: '100%' }} >
-                {/* <View style={styles.topArea}>
-                    <Image source={logo} style={styles.logo} />
-                    <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ยินดีต้อนรับ</Text>
-                    <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับคุณให้เราฟังหน่อย</Text>
-                </View> */}
+
                 <View style={styles.inputArea}>
                     {/* <Text style={{ ...theme.font, fontSize: 16, fontWeight: 'bold' }}>เพิ่มสัตว์</Text> */}
                     <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10 }}>
@@ -113,7 +123,7 @@ const animaladdscreen = (props) => {
                             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
                                 <View style={{ flexDirection: 'row', padding: 8 }}>
                                     <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>รหัสคอก</Text></View>
-                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{animal.cage_id}</Text></View>
+                                    <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>{animal.stall_id}</Text></View>
                                 </View>
                                 <View style={{ flexDirection: 'row', padding: 8 }}>
                                     <View style={{ width: '50%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>สัตว์</Text></View>
@@ -158,16 +168,16 @@ const animaladdscreen = (props) => {
                             <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>เพศเมีย</Text></View>
                             <View style={{ width: '33%', alignItems: 'center' }}>
                                 {/* <TextInput  value={animal.height} onChangeText={text=>{setAnimal(prev=> ({...prev, sex: text}))}} keyboardType='number-pad' style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', borderWidth: 1, borderColor: 'black', textAlign: 'center' }} /> */}
-                                
+
                                 <Switch
                                     trackColor={{ false: "#ffc0cb", true: "#9ac59a" }}
-                                    thumbColor={animal.sex ==='M' ? "#f5dd4b" : "#f4f3f4"}
+                                    thumbColor={animal.sex === 'M' ? "#f5dd4b" : "#f4f3f4"}
                                     ios_backgroundColor="#ffc0cb"
                                     onValueChange={changeSexhandle}
-                                    value={animal.sex ==='M'}
-                                    style={{ transform: [{ scaleX: 2 }, { scaleY: 1 }] }}
+                                    value={animal.sex === 'M'}
+                                    style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
                                 />
-                                
+
                             </View>
                             <View style={{ width: '33%', alignItems: 'center' }}><Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}>เพศผู้</Text></View>
                         </View>
@@ -187,8 +197,8 @@ const animaladdscreen = (props) => {
 
                 <View style={styles.buttonArea}>
 
-                    <TouchableOpacity style={[styles.button, theme.successButton, { width: '100%' }]} onPress={submitForm}>
-                        <Text style={{ ...theme.font, textAlign: 'center' }}>เพิ่ม</Text>
+                    <TouchableOpacity style={[styles.button, theme.successButton, { width: '100%' }]} onPress={isUpdateTask ? updatesubmit : submitForm}>
+                        <Text style={{ ...theme.font, textAlign: 'center' }}>{ isUpdateTask ? 'อัพเดต' : 'เพิ่ม' }</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

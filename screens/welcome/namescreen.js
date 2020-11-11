@@ -24,19 +24,18 @@ import { profile_update } from '../../store/actions/userAction'
 import { Ionicons } from '@expo/vector-icons';
 const nameScreen = (props) => {
     
-    
+    const profile = useSelector(state => state.User.profile)
     // const { username, imageURL, role } = profile
-    const [ image, setImage ] = useState('');
-    const [ name, setName ] = useState('');
-    const [ type, setType ] = useState('');
+    const [ image, setImage ] = useState(profile.imageURL);
+    const [ name, setName ] = useState(profile.name);
+    const [ type, setType ] = useState(profile.role);
     // const image = useSelector(state => state.profile.imageURL)
     // const name = useSelector(state => state.profile.username)
     // const type = useSelector(state => state.profile.role)
 
     const dispatch = useDispatch()
 
-    const profile = useSelector(state => state.User.profile)
-
+    
 
     useEffect(()=>{
         const updateProfile = {
@@ -67,6 +66,7 @@ const nameScreen = (props) => {
         });
 
         if (!result.cancelled) {
+            console.log(result.uri);
             setImage(result.uri);
         }
     };

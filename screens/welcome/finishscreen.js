@@ -19,15 +19,20 @@ import theme from "../../themes/default"
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
+import { useSelector } from 'react-redux';
 
 const finishscreen = (props) => {
-    const [image, setImage] = useState(preview);
-    const [name, setName] = useState("สงบ สุขสบาย");
-    const [farm, setFarm] = useState("สุขสงบฟาร์ม");
-    const [role, setType] = useState("เจ้าของฟาร์ม");
+
+    const profile = useSelector(state=> state.User.profile)
+    const farm = useSelector(state=> state.Farm.farm)
+    // const [image, setImage] = useState(preview);
+    // const [name, setName] = useState("สงบ สุขสบาย");
+    // const [farm, setFarm] = useState("สุขสงบฟาร์ม");
+    // const [role, setType] = useState("เจ้าของฟาร์ม");
 
     const submitForm = () => {   
     }
+    const isImageProfile = profile.imageURL
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -39,15 +44,15 @@ const finishscreen = (props) => {
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>พร้อมสำหรับใช้งานฟาร์มฮักเเล้วครับ</Text>
                     </View>
                     <View style={styles.inputArea}>
-                            <Image style={styles.uploadImg} source={image} />
+                            <Image style={styles.uploadImg} source={ isImageProfile ? {uri :profile.imageURL}  : require('../../assets/farm_profile.jpg')} />
                             <Text style={[theme.font]}>
-                                ชื่อ: {name}
+                                ชื่อ: {profile.username}
                             </Text>
                             <Text style={[theme.font]}>
-                                ฟาร์ม: {farm}
+                                ฟาร์ม: {farm.name}
                             </Text>
                             <Text style={[theme.font]}>
-                                บทบาท: {role}
+                                บทบาท: {profile.role == 'owner' ? 'เจ้าของฟาร์ม' : profile.role == 'employee' ? 'พนักงานในฟาร์ม' : 'ไม่ระบุ'}
                             </Text>
                     </View>
                     <View style={styles.buttonArea}>

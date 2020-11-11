@@ -11,6 +11,7 @@ import userReducer from './store/reducers/userReducer';
 import farmReducer from './store/reducers/farmReducer';
 import FarmHugNavigation from './navigation/farmhugNavigation'
 
+
 export default function App() {
 
   const rootReducer = combineReducers({

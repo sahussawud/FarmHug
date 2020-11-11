@@ -11,35 +11,38 @@ import {
 
     FlatList
 } from "react-native";
-import { MaterialIcons, MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
+import { FontAwesome5, AntDesign } from '@expo/vector-icons';
 
 import { Picker } from '@react-native-community/picker';
 import logo from "../../assets/logo.png"
 import style from "../../themes/default";
 import theme from "../../themes/default"
-
-// import { STALLS } from '../../data/data-dummy'
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { delete_animal } from '../../store/actions/farmAction'
 
-const SelectStallScreen = (props) => {
-    // const [stall, setStall] = useState(STALLS);
-    
-    const stall = useSelector(state => state.Farm.stall)
-    const selectStall = (stall_id, currentAnimal, name) => {
-        props.navigation.navigate("animaladdscreen", { stall_id:stall_id, currentAnimal: currentAnimal, stall_name:name  })
+
+const AnimalListScreen = (props) => {
+    const dispatch = useDispatch()
+    const SelectStallId = props.navigation.getParam("stall_id")
+    const animals = useSelector(state => state.Farm.animal).filter(animal=> animal.stall_id === SelectStallId)
+
+    const editAnimal = (animal) => {
+        props.navigation.navigate("animaladdscreen", { type: 'edit', animal: animal, stall_id: SelectStallId})
     }
 
-    const selectStalldetail = (stall_id) =>{
-        props.navigation.navigate("animallistscreen", {stall_id: stall_id})
+    const deleteAnimal = (animal) => {
+        dispatch(delete_animal(animal))
     }
 
     const colorStatus = (current, max) => current>=max ? 'red' : current/max > 0.5  ? 'orange'  : 'green';
 
     const submitForm=()=>{
-        props.navigation.navigate('finishscreen')
+        props.navigation.goBack()
     }
 
-    const renderStallList = (itemData) => {
+    const renderAnimalList = (itemData) => {
+        console.log(itemData.item);
         const colorstatus = colorStatus(itemData.item.currentAnimal, itemData.item.maximumAnimal);
         return (
         <View style={{ marginBottom: 10 }} >
@@ -48,20 +51,16 @@ const SelectStallScreen = (props) => {
                     <Image style={styles.uploadImg} source={{ uri: itemData.item.imgUrl }} />
                 </View> */}
                 <View style={{ flexDirection: 'column', alignContent: 'center' }}>
-                    <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ชื่อคอก : {itemData.item.name}</Text>
-                    <View style={{ flexDirection: 'row' }}>
-                        <MaterialCommunityIcons name="cow" size={24} color={colorstatus} />
-                        <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold', color:colorstatus }}>{itemData.item.currentAnimal}/{itemData.item.maximumAnimal} ตัว</Text>
-                    </View>
-                    {/* <Text style={{ ...theme.font, fontSize: 13 }}>{itemData.item.address}</Text> */}
+                    <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}> ชื่อ : {itemData.item.type} </Text>
+                    <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}> {itemData.item.gene} {itemData.item.sex =='M'? 'ตัวผู้' : 'ตัวเมีย' }</Text>
                 </View>
                 <View style={{ width: '40%', justifyContent:'center', flexDirection: 'row', alignContent: 'center', marginLeft:10}}>
-                    <TouchableOpacity onPress={()=>selectStalldetail(itemData.item.id)}>
-                        <MaterialCommunityIcons name="cow"  size={50} color={colorstatus} style={{ paddingVertical: 10}}/>
+                    <TouchableOpacity onPress={()=> editAnimal(itemData.item)}>
+                    <FontAwesome5 name="edit" size={30} color='orange'style={{ padding: '10%'}} />
                     </TouchableOpacity>
                     
-                    <TouchableOpacity onPress={()=>selectStall(itemData.item.id, itemData.item.currentAnimal,itemData.item.name )}>
-                        <MaterialIcons name="add"  size={50} color={colorstatus} style={{paddingVertical: 10}}/ >
+                    <TouchableOpacity  onPress={()=> deleteAnimal(itemData.item)}>
+                    <AntDesign name="delete" size={30} color='red' style={{ padding: '10%'}} />
                     </TouchableOpacity>
                     
                     {/* <Ionicons name="md-arrow-round-forward" size={40} color={colorstatus} style={
@@ -77,7 +76,7 @@ const SelectStallScreen = (props) => {
                 <View style={styles.screen}>
                     <View style={styles.topArea}>
                         {/* <Image source={logo} style={styles.logo} /> */}
-                        <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold', marginVertical: 25 }}>เลือกคอก</Text>
+    <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold', marginVertical: 25 }}>คอก {SelectStallId}</Text>
                         {/* <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}></Text> */}
                     </View>
                     {/* <View style={styles.inputArea}>
@@ -86,13 +85,13 @@ const SelectStallScreen = (props) => {
 
                     <View style={styles.buttonArea}>
                         <FlatList
-                            data={stall}
-                            renderItem={renderStallList}
+                            data={animals}
+                            renderItem={renderAnimalList}
                             keyExtractor={item => item.id}
                         />
-                        <TouchableOpacity style={[styles.button, theme.defaultButton, {width: '100%'}]} onPress={submitForm}>
-                            <Text style={{ ...theme.font, textAlign: 'center' }}>เสร็จสิ้น</Text>
-                        </TouchableOpacity>
+                        {/* <TouchableOpacity style={[styles.button, theme.defaultButton, {width: '100%'}]} onPress={submitForm}>
+                            <Text style={{ ...theme.font, textAlign: 'center' }}>ย้อนกลับ</Text>
+                        </TouchableOpacity> */}
                     </View>
 
                 </View>
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
     }
 });
 
-SelectStallScreen.navigationOptions = {
+AnimalListScreen.navigationOptions = {
     title: 'เลือกคอก',
     headerStyle: {
         elevation: 0,
@@ -175,5 +174,5 @@ SelectStallScreen.navigationOptions = {
     }
 };
 
-export default SelectStallScreen;
+export default AnimalListScreen;
 
