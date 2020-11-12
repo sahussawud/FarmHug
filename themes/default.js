@@ -11,6 +11,10 @@ const style = {
         backgroundColor: '#43B8D2',
         color: 'white'
     },
+    defaultButton1:{
+        backgroundColor: 'EE3030',
+        color: 'white'
+    },
     warnButton:{
         backgroundColor: '#F46652',
         color: 'white'

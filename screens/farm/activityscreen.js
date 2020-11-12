@@ -37,7 +37,7 @@ const activityScreen = (props) => {
         //simple validate
         //sent form
         //wait response
-        props.navigation.navigate("-")
+        props.navigation.navigate("cattlescreen")
     }
 
     const renderFarmList = (itemData) => {}
@@ -56,6 +56,7 @@ const activityScreen = (props) => {
                 <View style={styles.button2}>
                 <ButtonGroup
                     buttons={buttons}
+                    onPress={submitForm1}
                     containerStyle={{height: 50, weight:50}}
                 />
                 </View>
@@ -76,14 +77,14 @@ const activityScreen = (props) => {
 
                 <View style={styles.button1}>
                     <View style={{flex: 1, flexDirection: 'row'}}>
-                            <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm1}>
+                            <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={"submitForm1"}>
                                 <Text style={{ ...theme.font, textAlign: 'center' }}>เสร็จสิ้น </Text>
                             </TouchableOpacity>
                 
                     </View>
                 </View> 
             </View>  
-            <TouchableOpacity style={[styles.button3, theme.defaultButton]} onPress={submitForm1}>
+            <TouchableOpacity style={[styles.button3, theme.defaultButton]} onPress={"submitForm1"}>
                                 <Text style={{ ...theme.font1, textAlign: 'center' }}>เพิ่มกิจกรรม </Text>
                             </TouchableOpacity>
                             </View>

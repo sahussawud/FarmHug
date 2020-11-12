@@ -57,7 +57,7 @@ const homeScreen = (props) => {
                 </View>
                 </View>
 
-                <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold',color:'#708090'}}>สถานะฟาร์มวันนี้</Text>
+                <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold',color:'#708090'}}>สถานะฟาร์มวันนี้</Text>
 
                 <View style={{flex: 1, flexDirection: 'row'}}>
                     <View style={styles.layback1}> 
@@ -84,12 +84,12 @@ const homeScreen = (props) => {
                     </View>
                 </View>
 
-                <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold',color:'#708090'}}>กิจกรรมภายในฟาร์ม</Text>
+                <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold',color:'#708090'}}>กิจกรรมภายในฟาร์ม</Text>
 
                 <View style={{flex: 1, flexDirection: 'row'}}>
                     <View style={styles.layback2} >
                     <Image source={cow2} style={{width: 50, height: 50, marginTop: '10%'}}/>
-                    <Text style={{ ...theme.font, textAlign: 'center',marginTop: '11%'}}>ไม่มีกิจกรรมใดๆภายในฟาร์ม</Text>
+                    <Text style={{ ...theme.font, fontSize: 17, textAlign: 'center',marginTop: '11%'}}>ไม่มีกิจกรรมใดๆภายในฟาร์ม</Text>
                     </View>
                 </View>
 

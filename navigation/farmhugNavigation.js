@@ -26,6 +26,7 @@ import homeScreen from "../screens/home/homescreen";
 import cattleScreen from '../screens/farm/cattlescreen';
 import statuScreen from "../screens/farm/statuscreen";
 import activityScreen from "../screens/farm/activityscreen";
+import settingScreen from "../screens/setting1/settingscreen";
 
 // import logo from "../../assets/logo.png"
 
@@ -86,7 +87,8 @@ const comNavigator = createStackNavigator(
     postScreen : postScreen,
     comScreen : comScreen,
     statuScreen : statuScreen,
-    activityScreen : activityScreen
+    activityScreen : activityScreen,
+    settingScreen : settingScreen
   },
   {
     // กำหนด defaultNavigationOptions (Slide 23-24)
@@ -130,7 +132,7 @@ const FTabNavigator =  createBottomTabNavigator(
       }}
     },
     ตั้งค่า:  {
-      screen: homeScreen,
+      screen: settingScreen,
       navigationOptions:{
         tabBarIcon: (tabinfo) => {
         return(<Ionicons name="ios-cog" size={40} color='Black'/>);
@@ -150,7 +152,6 @@ const MainNavigator = createDrawerNavigator(
   {
     Navigator:FTabNavigator,
     comNa: comNavigator,
-
     // Filters: FiltersNavigator
   },
   {contentOptions:{activeTintColor:"blue"},}

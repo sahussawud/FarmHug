@@ -71,7 +71,7 @@ const postScreen = (props) => {
                 </View>
                 </View>
 
-                <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold',color:'#708090', marginLeft: '2%'}}>แชร์เรื่องราวของคุณ</Text>
+                <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold',color:'#708090', marginLeft: '2%'}}>แชร์เรื่องราวของคุณ</Text>
                 <View style={{flex: 1, flexDirection: 'row'}}>
                     <View style={styles.layback2}>
                     <TextInput placeholder="เรื่องราว"
