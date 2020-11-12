@@ -18,11 +18,17 @@ import farmLocationScreen from "../screens/welcome/farmlocationscreen";
 import stallSetupScreen from "../screens/welcome/stallsetupscreen";
 import animaladdscreen from "../screens/welcome/animaladdscreen.js";
 import selectstallscreen from '../screens/welcome/selectstallscreen';
-import finishscreen from '../screens/welcome/finishscreen'
-import animallistscreen from '../screens/welcome/animallistscreen'
+import finishscreen from '../screens/welcome/finishscreen';
+import animallistscreen from '../screens/welcome/animallistscreen';
 
+import comScreen from "../screens/community/communityscreen";
+import postScreen from '../screens/community/postscreen';
 import homeScreen from "../screens/home/homescreen";
 import cattlescreen from "../screens/farm/cattlescreen";
+
+import statuScreen from "../screens/farm/statuscreen";
+import activityScreen from "../screens/farm/activityscreen";
+import settingScreen from "../screens/setting1/settingscreen";
 
 // import logo from "../../assets/logo.png"
 
@@ -54,7 +60,6 @@ const setupNavigator = createStackNavigator(
     animaladdscreen: animaladdscreen,
     finishscreen: finishscreen,
     animallistscreen: animallistscreen
-    // homeScreen: homeScreen,
   },
   {
     // กำหนด defaultNavigationOptions (Slide 23-24)
@@ -87,13 +92,31 @@ const homeNavigator = createStackNavigator(
 const farmNavigator = createStackNavigator(
   {
     cattlescreen: {
-      screen: cattlescreen, 
+      screen: cattlescreen,
       navigationOptions: {
         header: null,
       }
     }
   },
   {
+    defaultNavigationOptions: {
+      title: "",
+      headerStyle: { backgroundColor: "#4a148c", },
+      headerTintColor: "black",
+    }
+  }, { headerMode: 'screen' }
+);
+
+const comNavigator = createStackNavigator(
+  {
+    comScreen : comScreen,
+    postScreen : postScreen,
+    statuScreen : statuScreen,
+    // activityScreen : activityScreen,
+    // settingScreen : settingScreen
+  },
+  {
+    // กำหนด defaultNavigationOptions (Slide 23-24)
     defaultNavigationOptions: {
       title: "",
       headerStyle: { backgroundColor: "#4a148c", },
@@ -114,7 +137,7 @@ const FTabNavigator = createBottomTabNavigator(
       }
     },
     community: {
-      screen: setupNavigator,
+      screen: comNavigator,
       navigationOptions: {
         title: 'ชุมชน',
         tabBarIcon: (tabinfo) => {
@@ -142,7 +165,7 @@ const FTabNavigator = createBottomTabNavigator(
       }
     },
     setting: {
-      screen: setupNavigator,
+      screen: settingScreen,
       navigationOptions: {
         title: 'ตั้งค่า',
         tabBarIcon: (tabinfo) => {
@@ -161,16 +184,18 @@ const FTabNavigator = createBottomTabNavigator(
 );
 
 
-// const MainNavigator = createDrawerNavigator(
-//   {
-//     FTab:FTabNavigator,
-//     // Filters: FiltersNavigator
-//   },
-// );
+const MainNavigator = createDrawerNavigator(
+  {
+    Navigator:FTabNavigator,
+    comNa: comNavigator,
+    // Filters: FiltersNavigator
+  },
+  {contentOptions:{activeTintColor:"blue"},}
+);
 
 const mainNavigator = createStackNavigator({
   // authentication: AuthenticationNavigator,
-  Setup: setupNavigator
+  Setup: setupNavigator,
 },
   {
     // กำหนด defaultNavigationOptions (Slide 23-24)

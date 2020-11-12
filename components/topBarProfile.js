@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View, Text, StyleSheet, Image,StatusBar } from 'react-native';
 import theme from "../themes/default"
-import logo from "../assets/farmer.png"
+import logo from "../assets/home/farmer.png"
 import { Fontisto } from '@expo/vector-icons';
 
 const TopBarProfile = (props) => {
