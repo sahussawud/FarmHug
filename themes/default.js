@@ -3,6 +3,10 @@ const style = {
         fontSize: 20,
         fontFamily: 'Kanit'
     },
+    font1:{
+        fontSize: 12,
+        fontFamily: 'Kanit'
+    },
     defaultButton:{
         backgroundColor: '#43B8D2',
         color: 'white'

@@ -16,18 +16,18 @@ import {
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 import { Picker } from '@react-native-community/picker';
-import logo from "../../assets/farmer.png"
+import logo from "../../assets/home/farmer.png"
 import style from "../../themes/default";
 import theme from "../../themes/default"
-import cow from "../../assets/cow.png"
-import check from "../../assets/check.png"
-import grass from "../../assets/grass.png"
-import group from "../../assets/group.png"
-import house from "../../assets/house.png"
-import plant from "../../assets/plant.png"
-import water from "../../assets/water-drop.png"
-import wait from "../../assets/wait.png"
-import cow2 from "../../assets/cow2.png"
+import cow from "../../assets/home/cow.png"
+import check from "../../assets/home/check.png"
+import grass from "../../assets/home/grass.png"
+import group from "../../assets/home/group.png"
+import house from "../../assets/home/house.png"
+import plant from "../../assets/home/plant.png"
+import water from "../../assets/home/water-drop.png"
+import wait from "../../assets/home/wait.png"
+import cow2 from "../../assets/home/cow2.png"
 
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -41,7 +41,7 @@ const homeScreen = (props) => {
         //simple validate
         //sent form
         //wait response
-        props.navigation.navigate("loginScreen")
+        props.navigation.navigate("activityScreen")
     }
     const renderFarmList = (itemData) => {}
 

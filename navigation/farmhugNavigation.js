@@ -17,10 +17,15 @@ import farmLocationScreen from "../screens/welcome/farmlocationscreen";
 import stallSetupScreen from "../screens/welcome/stallsetupscreen";
 import animaladdscreen from "../screens/welcome/animaladdscreen.js";
 import selectstallscreen from '../screens/welcome/selectstallscreen';
-import finishscreen from '../screens/welcome/finishscreen'
-import animallistscreen from '../screens/welcome/animallistscreen'
+import finishscreen from '../screens/welcome/finishscreen';
 
+
+import comScreen from "../screens/community/communityscreen";
+import postScreen from '../screens/community/postscreen';
 import homeScreen from "../screens/home/homescreen";
+import cattleScreen from '../screens/farm/cattlescreen';
+import statuScreen from "../screens/farm/statuscreen";
+import activityScreen from "../screens/farm/activityscreen";
 
 // import logo from "../../assets/logo.png"
 
@@ -51,8 +56,6 @@ const setupNavigator = createStackNavigator(
     selectstallscreen: selectstallscreen,
     animaladdscreen: animaladdscreen,
     finishscreen : finishscreen,
-    animallistscreen: animallistscreen
-    // homeScreen: homeScreen,
   },
   {
     // กำหนด defaultNavigationOptions (Slide 23-24)
@@ -76,64 +79,86 @@ const setupNavigator = createStackNavigator(
 //   }
 // );
 
-// const FTabNavigator =  createBottomTabNavigator(
-//   {
-//     สร้างมาก่อนเฉยๆ:  {
-//       screen: FarmHugNavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="logo-apple" size={40} color='Black'/>);
-//       }}
-//     },
-//     หน้าแรก:  {
-//       screen: Homenavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="ios-home" size={40} color='Black'/>);
-//       }}
-//     },
-//     ชุมชน:  {
-//       screen: FarmHugNavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="ios-people" size={40} color='Black'/>);
-//       }}
+
+const comNavigator = createStackNavigator(
+  {
+    homeScreen : homeScreen,
+    postScreen : postScreen,
+    comScreen : comScreen,
+    statuScreen : statuScreen,
+    activityScreen : activityScreen
+  },
+  {
+    // กำหนด defaultNavigationOptions (Slide 23-24)
+    defaultNavigationOptions: {
+      title: "",
+      headerStyle: { backgroundColor: "#4a148c", },
+      headerTintColor: "black",
+    }
+  }
+  );
+
+const FTabNavigator =  createBottomTabNavigator(
+  {
+    สร้างมาก่อนเฉยๆ:  {
+      screen: setupNavigator,
+      navigationOptions:{
+        tabBarIcon: (tabinfo) => {
+        return(<Ionicons name="logo-apple" size={40} color='Black'/>);
+      }}
+    },
+    หน้าแรก:  {
+      screen: homeScreen,
+      navigationOptions:{
+        tabBarIcon: (tabinfo) => {
+        return(<Ionicons name="ios-home" size={40} color='Black'/>);
+      }}
+    },
+    ชุมชน:  {
+      screen: comScreen,
+      navigationOptions:{
+        tabBarIcon: (tabinfo) => {
+        return(<Ionicons name="ios-people" size={40} color='Black'/>);
+      }}
  
-//   },
-//     ฟาร้ม:  {
-//       screen: FarmHugNavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="ios-paw" size={40} color='Black'/>);
-//       }}
-//     },
-//     ตั้งค่า:  {
-//       screen: FarmHugNavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="ios-cog" size={40} color='Black'/>);
-//       }}
-//     },
-//     },
-//     {
-//       tabBarOptions:{activeTintColor: 'white', activeBackgroundColor: 'gray'
+  },
+    ฟาร้ม:  {
+      screen: cattleScreen,
+      navigationOptions:{
+        tabBarIcon: (tabinfo) => {
+        return(<Ionicons name="ios-paw" size={40} color='Black'/>);
+      }}
+    },
+    ตั้งค่า:  {
+      screen: homeScreen,
+      navigationOptions:{
+        tabBarIcon: (tabinfo) => {
+        return(<Ionicons name="ios-cog" size={40} color='Black'/>);
+      }}
+    },
+    },
+    {
+      tabBarOptions:{activeTintColor: 'white', activeBackgroundColor: 'gray'
       
-//     }
+    }
     
-//   }
-// );
+  }
+);
 
 
-// const MainNavigator = createDrawerNavigator(
-//   {
-//     FTab:FTabNavigator,
-//     // Filters: FiltersNavigator
-//   },
-// );
+const MainNavigator = createDrawerNavigator(
+  {
+    Navigator:FTabNavigator,
+    comNa: comNavigator,
+
+    // Filters: FiltersNavigator
+  },
+  {contentOptions:{activeTintColor:"blue"},}
+);
 
 const mainNavigator = createStackNavigator({
   // authentication: AuthenticationNavigator,
-  Setup: setupNavigator
+  Setup: setupNavigator,
 },
 {
   // กำหนด defaultNavigationOptions (Slide 23-24)
@@ -149,4 +174,4 @@ const mainNavigator = createStackNavigator({
   }
 })
 
-export default createAppContainer(mainNavigator);
+export default createAppContainer(MainNavigator);
