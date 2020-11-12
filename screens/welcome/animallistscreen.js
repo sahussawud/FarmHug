@@ -25,19 +25,19 @@ import { delete_animal } from '../../store/actions/farmAction'
 const AnimalListScreen = (props) => {
     const dispatch = useDispatch()
     const SelectStallId = props.navigation.getParam("stall_id")
-    const animals = useSelector(state => state.Farm.animal).filter(animal=> animal.stall_id === SelectStallId)
+    const animals = useSelector(state => state.Farm.animal).filter(animal => animal.stall_id === SelectStallId)
 
     const editAnimal = (animal) => {
-        props.navigation.navigate("animaladdscreen", { type: 'edit', animal: animal, stall_id: SelectStallId})
+        props.navigation.navigate("animaladdscreen", { type: 'edit', animal: animal, stall_id: SelectStallId })
     }
 
     const deleteAnimal = (animal) => {
         dispatch(delete_animal(animal))
     }
 
-    const colorStatus = (current, max) => current>=max ? 'red' : current/max > 0.5  ? 'orange'  : 'green';
+    const colorStatus = (current, max) => current >= max ? 'red' : current / max > 0.5 ? 'orange' : 'green';
 
-    const submitForm=()=>{
+    const submitForm = () => {
         props.navigation.goBack()
     }
 
@@ -45,38 +45,39 @@ const AnimalListScreen = (props) => {
         console.log(itemData.item);
         const colorstatus = colorStatus(itemData.item.currentAnimal, itemData.item.maximumAnimal);
         return (
-        <View style={{ marginBottom: 10 }} >
-            <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10, borderRadius: 10 }}>
-                {/* <View style={styles.uploadImg}>
+            <View style={{ marginBottom: 10 }} >
+                <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10, borderRadius: 10 }}>
+                    {/* <View style={styles.uploadImg}>
                     <Image style={styles.uploadImg} source={{ uri: itemData.item.imgUrl }} />
                 </View> */}
-                <View style={{ flexDirection: 'column', alignContent: 'center' }}>
-                    <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}> ชื่อ : {itemData.item.type} </Text>
-                    <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}> {itemData.item.gene} {itemData.item.sex =='M'? 'ตัวผู้' : 'ตัวเมีย' }</Text>
-                </View>
-                <View style={{ width: '40%', justifyContent:'center', flexDirection: 'row', alignContent: 'center', marginLeft:10}}>
-                    <TouchableOpacity onPress={()=> editAnimal(itemData.item)}>
-                    <FontAwesome5 name="edit" size={30} color='orange'style={{ padding: '10%'}} />
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity  onPress={()=> deleteAnimal(itemData.item)}>
-                    <AntDesign name="delete" size={30} color='red' style={{ padding: '10%'}} />
-                    </TouchableOpacity>
-                    
-                    {/* <Ionicons name="md-arrow-round-forward" size={40} color={colorstatus} style={
+                    <View style={{ flexDirection: 'column', alignContent: 'center' }}>
+                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}> ชื่อ : {itemData.item.type} </Text>
+                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}> {itemData.item.gene} {itemData.item.sex == 'M' ? 'ตัวผู้' : 'ตัวเมีย'}</Text>
+                    </View>
+                    <View style={{ width: '40%', justifyContent: 'center', flexDirection: 'row', alignContent: 'center', marginLeft: 10 }}>
+                        <TouchableOpacity onPress={() => editAnimal(itemData.item)}>
+                            <FontAwesome5 name="edit" size={30} color='orange' style={{ padding: '10%' }} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => deleteAnimal(itemData.item)}>
+                            <AntDesign name="delete" size={30} color='red' style={{ padding: '10%' }} />
+                        </TouchableOpacity>
+
+                        {/* <Ionicons name="md-arrow-round-forward" size={40} color={colorstatus} style={
                         {textAlign:'center'}}/> */}
+                    </View>
                 </View>
             </View>
-        </View>
-    )}
+        )
+    }
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <ScrollView>
                 <View style={styles.screen}>
                     <View style={styles.topArea}>
                         {/* <Image source={logo} style={styles.logo} /> */}
-    <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold', marginVertical: 25 }}>คอก {SelectStallId}</Text>
+                        <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold', marginVertical: 25 }}>คอก {SelectStallId}</Text>
                         {/* <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}></Text> */}
                     </View>
                     {/* <View style={styles.inputArea}>

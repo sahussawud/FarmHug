@@ -1,10 +1,11 @@
 import React from 'react'
-import { createStackNavigator} from "react-navigation-stack";
+import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { createDrawerNavigator, DrawerItems }  from "react-navigation-drawer";
+import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
 import { Image } from "react-native";
+import logo from "../assets/logo.png"
 
 import firstPageScreen from "../screens/auth/firstpagescreen";
 import loginScreen from "../screens/auth/loginscreen";
@@ -21,11 +22,12 @@ import finishscreen from '../screens/welcome/finishscreen'
 import animallistscreen from '../screens/welcome/animallistscreen'
 
 import homeScreen from "../screens/home/homescreen";
+import cattlescreen from "../screens/farm/cattlescreen";
 
 // import logo from "../../assets/logo.png"
 
 
-const AuthenticationNavigator = createStackNavigator( {
+const AuthenticationNavigator = createStackNavigator({
   // กำหนด RouteConfigs (Slide 14)
   FirstPageScreen: firstPageScreen,
   loginScreen: loginScreen,
@@ -50,7 +52,7 @@ const setupNavigator = createStackNavigator(
     stallSetupScreen: stallSetupScreen,
     selectstallscreen: selectstallscreen,
     animaladdscreen: animaladdscreen,
-    finishscreen : finishscreen,
+    finishscreen: finishscreen,
     animallistscreen: animallistscreen
     // homeScreen: homeScreen,
   },
@@ -64,64 +66,99 @@ const setupNavigator = createStackNavigator(
   }
 );
 
-// const Homenavigator = createStackNavigator({
-//   homeScreen: homeScreen},
-//   {
-//   // กำหนด defaultNavigationOptions (Slide 23-24)
-//     defaultNavigationOptions: {
-//       title: "",
-//       headerStyle: { backgroundColor: "#4a148c", },
-//       headerTintColor: "black",
-//     }
-//   }
-// );
+const homeNavigator = createStackNavigator(
+  {
+    homeScreen: {
+      screen: homeScreen, 
+      navigationOptions: {
+        header: null,
+      }
+    }
+  },
+  {
+    defaultNavigationOptions: {
+      title: "",
+      headerStyle: { backgroundColor: "#4a148c", },
+      headerTintColor: "black",
+    }
+  }, { headerMode: 'screen' }
+);
 
-// const FTabNavigator =  createBottomTabNavigator(
-//   {
-//     สร้างมาก่อนเฉยๆ:  {
-//       screen: FarmHugNavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="logo-apple" size={40} color='Black'/>);
-//       }}
-//     },
-//     หน้าแรก:  {
-//       screen: Homenavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="ios-home" size={40} color='Black'/>);
-//       }}
-//     },
-//     ชุมชน:  {
-//       screen: FarmHugNavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="ios-people" size={40} color='Black'/>);
-//       }}
- 
-//   },
-//     ฟาร้ม:  {
-//       screen: FarmHugNavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="ios-paw" size={40} color='Black'/>);
-//       }}
-//     },
-//     ตั้งค่า:  {
-//       screen: FarmHugNavigator,
-//       navigationOptions:{
-//         tabBarIcon: (tabinfo) => {
-//         return(<Ionicons name="ios-cog" size={40} color='Black'/>);
-//       }}
-//     },
-//     },
-//     {
-//       tabBarOptions:{activeTintColor: 'white', activeBackgroundColor: 'gray'
-      
-//     }
-    
-//   }
-// );
+const farmNavigator = createStackNavigator(
+  {
+    cattlescreen: {
+      screen: cattlescreen, 
+      navigationOptions: {
+        header: null,
+      }
+    }
+  },
+  {
+    defaultNavigationOptions: {
+      title: "",
+      headerStyle: { backgroundColor: "#4a148c", },
+      headerTintColor: "black",
+    }
+  }, { headerMode: 'screen' }
+);
+
+const FTabNavigator = createBottomTabNavigator(
+  {
+    home: {
+      screen: homeNavigator,
+      navigationOptions: {
+        title: 'หน้าหลัก',
+        tabBarIcon: (tabinfo) => {
+          return (<Ionicons name="ios-home" size={40} color='Black' />);
+        }
+      }
+    },
+    community: {
+      screen: setupNavigator,
+      navigationOptions: {
+        title: 'ชุมชน',
+        tabBarIcon: (tabinfo) => {
+          return (<Ionicons name="ios-people" size={40} color='Black' />);
+        }
+      }
+
+    },
+    icon: {
+      screen: homeNavigator,
+      navigationOptions: {
+        title: '',
+        tabBarIcon: (tabinfo) => {
+          return (<Image source={logo} size={20} style={{ transform: [{ scale: 0.28 }] }} />);
+        }
+      }
+    },
+    farm: {
+      screen: farmNavigator,
+      navigationOptions: {
+        title: 'ฟาร์ม',
+        tabBarIcon: (tabinfo) => {
+          return (<Ionicons name="ios-paw" size={40} color='Black' />);
+        }
+      }
+    },
+    setting: {
+      screen: setupNavigator,
+      navigationOptions: {
+        title: 'ตั้งค่า',
+        tabBarIcon: (tabinfo) => {
+          return (<Ionicons name="ios-cog" size={40} color='Black' />);
+        }
+      }
+    },
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: 'white', 
+
+    }
+
+  }
+);
 
 
 // const MainNavigator = createDrawerNavigator(
@@ -135,18 +172,18 @@ const mainNavigator = createStackNavigator({
   // authentication: AuthenticationNavigator,
   Setup: setupNavigator
 },
-{
-  // กำหนด defaultNavigationOptions (Slide 23-24)
-  defaultNavigationOptions: {
-    title: "",
-    headerStyle: { 
-      backgroundColor: "white", 
-      elevation: 0,
-      shadowOpacity: 0,
-      borderBottomWidth: 0,
-  },
-    headerTintColor: "black",
-  }
-})
+  {
+    // กำหนด defaultNavigationOptions (Slide 23-24)
+    defaultNavigationOptions: {
+      title: "",
+      headerStyle: {
+        backgroundColor: "white",
+        elevation: 0,
+        shadowOpacity: 0,
+        borderBottomWidth: 0,
+      },
+      headerTintColor: "black",
+    }
+  })
 
-export default createAppContainer(mainNavigator);
+export default createAppContainer(FTabNavigator);

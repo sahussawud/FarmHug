@@ -11,7 +11,8 @@ import {
     SafeAreaView,
     ScrollView,
     Platform,
-    FlatList
+    FlatList,
+    StatusBar
 } from "react-native";
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 
@@ -32,84 +33,173 @@ import cow2 from "../../assets/cow2.png"
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 // const preview = require('../../assets/farm_profile.jpg');
-
+import { Fontisto } from '@expo/vector-icons';
 import { FARMS } from '../../data/data-dummy'
+
+import TopBarProfile from  '../../components/topBarProfile';
 const homeScreen = (props) => {
     const [farms, setFarms] = useState([]);
 
-    const submitForm = () => {
-        //simple validate
-        //sent form
-        //wait response
-        props.navigation.navigate("loginScreen")
-    }
-    const renderFarmList = (itemData) => {}
+    const submitForm = () => { }
+
+    const renderFarmList = (itemData) => { }
 
     return (
-        <SafeAreaView>
-            <ScrollView style={{ backgroundColor: 'white' }}>
-                <View style={styles.screen}>
+        
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <StatusBar backgroundColor="white" barStyle={'dark-content'} />
+            {/* <View style={{ flex: 0.3 }}>
                 <View style={styles.profile}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <View style={{ justifyContent: 'center', padding: 10 }}>
+                                <Image source={logo} style={styles.logo} />
+                            </View>
+                            <View style={{ justifyContent: 'center' }}>
+                                <Text style={{ ...theme.font, fontSize: 20, fontWeight: "600", marginLeft: '2%', lineHeight: 30 }}>สหัสวรรษ ขันรักษา</Text>
+                                <Text style={{ ...theme.font, fontSize: 18, fontWeight: 'bold', marginLeft: '2%', lineHeight: 22 }}>ฟาร์มเเสนสุข</Text>
+                            </View>
+                        </View>
+
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 5 }}>
+                            <View style={{ justifyContent: 'center', padding: 10 }}>
+                                <Fontisto name="sun" size={30} color="black" />
+                            </View>
+                            <View style={{ justifyContent: 'center' }}>
+                                <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', marginLeft: '2%' }}>27c</Text>
+                                <Text style={{ ...theme.font, fontSize: 10, fontWeight: 'bold', marginLeft: '2%' }}>23/10/20 13:13</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </View>
+             */}
+            <TopBarProfile/>
+            <View style={{ flex: 0.8, paddingHorizontal: 10 }}>
+                <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>สถานะฟาร์มวันนี้</Text>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <View style={styles.layback1}>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Image source={cow} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '2%', marginTop: '2%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                            <Image source={house} style={{ width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                            <Image source={grass} style={{ width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                            <Image source={water} style={{ width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Image source={check} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '2%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                            <Image source={wait} style={{ width: 35, height: 35, marginLeft: '11%', marginBottom: '50%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                            <Image source={group} style={{ width: 35, height: 35, marginLeft: '11%', marginBottom: '50%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                            <Image source={plant} style={{ width: 35, height: 35, marginLeft: '11%', marginBottom: '50%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+            <View style={{ flex: 1.4 }}>
+                <View style={styles.screen}>
+
+                    <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>กิจกรรมภายในฟาร์ม</Text>
+
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <View style={styles.layback2} >
+                            <ScrollView style={{width:'100%'}}>
+                                <View style={{flex:1, justifyContent:'center', padding:'20%', width:'100%'}}>
+                                    <Image source={cow2} style={{ width: 50, height: 50, marginTop: '10%', alignSelf:'center'}} />
+                                    <Text style={{ ...theme.font, textAlign: 'center', marginTop: '11%', fontSize:13 }}>ไม่มีกิจกรรมใดๆภายในฟาร์ม</Text>
+                                </View>
+                                <View style={{flex:1, justifyContent:'center', padding:'20%', width:'100%'}}>
+                                    <Image source={cow2} style={{ width: 50, height: 50, marginTop: '10%', alignSelf:'center'}} />
+                                    <Text style={{ ...theme.font, textAlign: 'center', marginTop: '11%', fontSize:13 }}>ไม่มีกิจกรรมใดๆภายในฟาร์ม</Text>
+                                </View>
+                            </ScrollView>
+
+                        </View>
+                    </View>
+                </View>
+            </View>
+            <View style={{ flex: 0.4, }}>
+                <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm}>
+                    <Text style={{ ...theme.font, textAlign: 'center' }}>เพิ่มกิจกรรมในฟาร์ม</Text>
+                </TouchableOpacity>
+
+            </View>
+            {/* <View>
+                <View style={styles.profile}>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
                         <Image source={logo} style={styles.logo} />
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', marginLeft: '2%'}}>ชื่อ: -</Text>
-
+                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', marginLeft: '2%' }}>ชื่อ: -</Text>
+                    </View>
                 </View>
-                </View>
 
-                <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold',color:'#708090'}}>สถานะฟาร์มวันนี้</Text>
-
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                    <View style={styles.layback1}> 
-                        <View style={{flex: 1, flexDirection: 'row'}}>
-                        <Image source={cow} style={{width: 35, height: 35,marginBottom: '5%', marginLeft: '2%', marginTop: '2%'}}/>
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%'}}>-</Text>
-                        <Image source={house} style={{width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%'}}/>
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%'}}>-</Text>
-                        <Image source={grass} style={{width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%'}}/>
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%'}}>-</Text>
-                        <Image source={water} style={{width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%'}}/>
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%'}}>-</Text>
+                <View style={{flex: 3}}>
+                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>สถานะฟาร์มวันนี้</Text>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <View style={styles.layback1}>
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                    <Image source={cow} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '2%', marginTop: '2%' }} />
+                                    <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                                    <Image source={house} style={{ width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%' }} />
+                                    <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                                    <Image source={grass} style={{ width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%' }} />
+                                    <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                                    <Image source={water} style={{ width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%' }} />
+                                    <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                                </View>
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                    <Image source={check} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '2%' }} />
+                                    <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                                    <Image source={wait} style={{ width: 35, height: 35, marginLeft: '11%', marginBottom: '50%' }} />
+                                    <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                                    <Image source={group} style={{ width: 35, height: 35, marginLeft: '11%', marginBottom: '50%' }} />
+                                    <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                                    <Image source={plant} style={{ width: 35, height: 35, marginLeft: '11%', marginBottom: '50%' }} />
+                                    <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                                </View>
+                            </View>
                         </View>
-                        <View style={{flex: 1, flexDirection: 'row'}}>
-                        <Image source={check} style={{width: 35, height: 35,marginBottom: '5%', marginLeft: '2%'}}/>
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%'}}>-</Text>
-                        <Image source={wait} style={{width: 35, height: 35, marginLeft: '11%', marginBottom: '50%'}}/>
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%'}}>-</Text>
-                        <Image source={group} style={{width: 35, height: 35, marginLeft: '11%', marginBottom: '50%'}}/>
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%'}}>-</Text>
-                        <Image source={plant} style={{width: 35, height: 35, marginLeft: '11%', marginBottom: '50%'}}/>
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%'}}>-</Text>
+
+                </View>
+
+            </View>
+            <View style={{ flex: 3 }}>
+                <ScrollView style={{ backgroundColor: 'white' }}>
+                    <View style={styles.screen}>
+
+                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>กิจกรรมภายในฟาร์ม</Text>
+
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <View style={styles.layback2} >
+                                <Image source={cow2} style={{ width: 50, height: 50, marginTop: '10%' }} />
+                                <Text style={{ ...theme.font, textAlign: 'center', marginTop: '11%' }}>ไม่มีกิจกรรมใดๆภายในฟาร์ม</Text>
+                            </View>
                         </View>
+
+                        <View style={styles.buttonArea}>
+                            <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm}>
+                                <Text style={{ ...theme.font, textAlign: 'center' }}>เพิ่มกิจกรรมในฟาร์ม</Text>
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
-                </View>
-
-                <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold',color:'#708090'}}>กิจกรรมภายในฟาร์ม</Text>
-
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                    <View style={styles.layback2} >
-                    <Image source={cow2} style={{width: 50, height: 50, marginTop: '10%'}}/>
-                    <Text style={{ ...theme.font, textAlign: 'center',marginTop: '11%'}}>ไม่มีกิจกรรมใดๆภายในฟาร์ม</Text>
-                    </View>
-                </View>
-
-                    <View style={styles.buttonArea}>
-                        <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm}>
-                            <Text style={{ ...theme.font, textAlign: 'center' }}>เพิ่มกิจกรรมในฟาร์ม</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View> */}
         </SafeAreaView>
-    
+
 
     );
 };
 
 
 const styles = StyleSheet.create({
-    profile:{
+    profile: {
+        flex: 1,
         flexDirection: 'row'
     },
     screen: {
@@ -120,10 +210,10 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingLeft: 10
     },
-    fonts:{
+    fonts: {
         color: 'black',
-        fontSize: 20, 
-        fontWeight: 'bold', 
+        fontSize: 20,
+        fontWeight: 'bold',
         alignItems: 'center'
     },
     logo: {
@@ -150,38 +240,37 @@ const styles = StyleSheet.create({
         marginBottom: '5%'
     },
     button: {
-        flex: 1,
+        flex: 0.6,
         borderColor: 'black',
         //borderWidth: 1,
         borderRadius: 5,
         textAlign: 'center',
-        marginHorizontal: '10%',
-        paddingVertical: '3%',
+        marginHorizontal: '3%',
+        marginTop: '4%',
+        // paddingVertical: '3%',
         backgroundColor: theme.defaultButton.backgroundColor,
         color: theme.defaultButton.color,
         justifyContent: "center",
-        flex: 1,
         alignItems: "center",
     },
     privacyaccept: {
         alignItems: 'center',
         flexDirection: 'row',
     },
-    layback1:{
+    layback1: {
         flex: 1,
         width: 300,
         height: 120,
-        backgroundColor: '#F5F5F5',  
-        marginBottom: '10%', 
+        backgroundColor: '#F5F5F5',
+        marginBottom: '10%',
         borderRadius: 15,
         // alignItems: "center",
     },
-    layback2:{
+    layback2: {
         flex: 1,
-        width: 300,
-        height: 200,
-        backgroundColor: '#F5F5F5',  
-        marginBottom: '10%', 
+        width: '60%',
+        backgroundColor: '#F5F5F5',
+        marginBottom: 0,
         borderRadius: 15,
         alignItems: "center",
     }
