@@ -28,16 +28,34 @@ import Constants from 'expo-constants';
 import TopBarProfile from '../../components/topBarProfile'
 import SegmentedControl from '@react-native-community/segmented-control';
 import AnimalFlatListRender from '../../components/animal/AnimalRender';
+import StallRender from '../../components/animal/StallRender';
+import ActivityRenderComponent from '../../components/activity/ActivityRenderComponent'
 
-import { ANIMALS, FARMS } from '../../data/data-dummy'
+import { ANIMALS, FARMS, STALLS, ACTIVITIES } from '../../data/data-dummy'
 const cattleScreen = (props) => {
-    const [farms, setFarms] = useState([]);
+    const segmentValue = ['ปศุสัตว์', 'คอก', 'กิจกรรม'];
+    const segmentActValue = ['ดำเนินการ', 'เสร็จสิ้น'];
     const [selectSegment, setselectSegment] = useState(0);
+    const [segmentActivity, setSegmentActivity] = useState(0);
     const [searchbox, setSearchbox] = useState('')
 
     const submitForm = () => { }
 
-    const renderFarmList = (itemData) => { }
+    const renderSegmentContent = () => {
+        if (selectSegment == 0 && ANIMALS.length > 0) {
+            return (<AnimalFlatListRender animals={ANIMALS} />);
+        } else if (selectSegment == 1 && STALLS.length > 0) {
+            return (<StallRender stalls={STALLS} />);
+        } else if (selectSegment == 2) {
+            return (<ActivityRenderComponent activities={ACTIVITIES} />);
+        } else {
+            return (<View style={{ flex: 1, justifyContent: 'center', padding: '20%', width: '100%' }}>
+                <Image source={cow2} style={{ width: 50, height: 50, marginTop: '10%', alignSelf: 'center' }} />
+                <Text style={{ ...theme.font, textAlign: 'center', marginTop: '11%', fontSize: 13 }}>ไม่มีข้อมูลเกี่ยวกับ{segmentValue[selectSegment]}ในฟาร์ม</Text>
+            </View>)
+        }
+        //    
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
@@ -47,7 +65,7 @@ const cattleScreen = (props) => {
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     <View style={styles.layback1}>
                         <SegmentedControl
-                            values={['ปศุสัตว์', 'คอก', 'กิจกรรม']}
+                            values={segmentValue}
                             selectedIndex={selectSegment}
                             onChange={(event) => {
                                 setselectSegment(event.nativeEvent.selectedSegmentIndex);
@@ -56,22 +74,29 @@ const cattleScreen = (props) => {
                     </View>
                 </View>
             </View>
+
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        {selectSegment == 2 ? 
+                                (
+                                <SegmentedControl
+                                    style={{width:'50%', marginBottom: '5%',}}
+                                    values={segmentActValue}
+                                    selectedIndex={segmentActivity}
+                                    onChange={(event) => {
+                                        setSegmentActivity(event.nativeEvent.selectedSegmentIndex);
+                                    }}
+                                />
+                                )
+                         : (<TextInput placeholder={"ค้นหา" + segmentValue[selectSegment]} style={[styles.input, theme.font]} value={searchbox} onChangeText={setSearchbox} />)}
+
+            </View>
+
             <View style={{ flex: 1.4 }}>
                 <View style={styles.screen}>
-                    <View style={{ justifyContent:'center', alignItems: 'center'}}>
-                    {/* <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>ปศุสัตว์ในฟาร์ม</Text> */}
-                    <TextInput placeholder="ค้นหาปศุสัตว์" style={[styles.input, theme.font]} value={searchbox} onChangeText={setSearchbox} />
-                    </View>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <View style={styles.layback2} >
-                            <ScrollView style={{ width: '100%', borderRadius: 10 , backgroundColor: 'white'}}>
-                                { ANIMALS.length > 0 ? <AnimalFlatListRender animals={ANIMALS}/> :
-                                (<View style={{ flex: 1, justifyContent: 'center', padding: '20%', width: '100%' }}>
-                                    <Image source={cow2} style={{ width: 50, height: 50, marginTop: '10%', alignSelf: 'center' }} />
-                                    <Text style={{ ...theme.font, textAlign: 'center', marginTop: '11%', fontSize: 13 }}>ไม่มีกิจกรรมใดๆภายในฟาร์ม</Text>
-                                </View>)
-                            }
-                                
+                            <ScrollView style={{ width: '100%', borderRadius: 10, backgroundColor: 'white' }}>
+                                {renderSegmentContent()}
                             </ScrollView>
 
                         </View>
@@ -94,7 +119,7 @@ const styles = StyleSheet.create({
         marginBottom: '5%',
         height: 40,
         // paddingHorizontal: 40,
-        
+
         borderRadius: 2
     },
     profile: {
@@ -162,7 +187,7 @@ const styles = StyleSheet.create({
         // height: 120,
         backgroundColor: 'white',
         // marginBottom: '10%',
-        paddingHorizontal:'5%',
+        paddingHorizontal: '5%',
         // marginTop:'5%',
         borderRadius: 15,
         // alignItems: "center",

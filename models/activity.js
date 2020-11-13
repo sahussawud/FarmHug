@@ -6,7 +6,7 @@ class activity {
       type,
       farm_id,
       stall_id,
-      cage_id,
+      animal_id,
       alertDate,
       is_routine,
       routineOptions,
@@ -16,12 +16,13 @@ class activity {
       this.id = id;
       this.name = name;
       this.farm_id = farm_id;
-      this.cage_id = cage_id;
+      this.cage_id = animal_id;
       this.stall_id = stall_id;
       this.detail = detail;
       this.type = type;
-      this.weight = weight;
-      this.breed = breed;
+      this.alertDate = alertDate;
+      this.creater_id= creater_id;
+
     }
   }
   

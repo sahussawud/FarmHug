@@ -43,70 +43,70 @@ const statuScreen = (props) => {
         props.navigation.navigate("-")
     }
 
-    const renderFarmList = (itemData) => {}
+    const renderFarmList = (itemData) => { }
 
     return (
         <SafeAreaView>
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
-                <View style={styles.profile}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                        <Image source={logo} style={styles.logo} />
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', marginLeft: '2%'}}>ชื่อ: - </Text>
+                    <View style={styles.profile}>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Image source={logo} style={styles.logo} />
+                            <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', marginLeft: '2%' }}>ชื่อ: - </Text>
 
-                </View>
-                </View>
-                <View style={styles.button2}>
-                <ButtonGroup
-                    buttons={buttons}
-                    containerStyle={{height: 50, weight:50}}
-                />
-                </View>
-                
-                <View style={styles.layback1}> 
-                <Text style={{ ...theme.font, marginBottom: '1%', marginLeft: '40%', marginTop: '2%'}}>คอก 1</Text>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                <Image source={cow} style={{width: 35, height: 35,marginBottom: '5%', marginLeft: '20%', marginTop: '2%'}}/>
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '5%', marginTop: '4%'}}>จำนวนวัว:  - ตัว</Text>
                         </View>
-                
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                <Image  source={grass} style={{width: 35, height: 35,marginBottom: '5%', marginLeft: '20%'}}/>
-                            <Text style={{...theme.font, marginBottom: '3%', marginLeft: '5%', marginTop: '2%'}}>อาหาร:  จัดการแล้ว</Text>
-                </View>
-
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                <Image  source={water} style={{width: 35, height: 35,marginBottom: '5%', marginLeft: '20%'}}/>
-                            <Text style={{...theme.font, marginBottom: '3%', marginLeft: '5%', marginTop: '2%'}}>น้ำ:  ยังไม่จัดการ</Text>
-                </View>
-
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                <Image  source={plant} style={{width: 35, height: 35,marginBottom: '5%', marginLeft: '20%'}}/>
-                            <Text style={{...theme.font, marginBottom: '3%', marginLeft: '5%', marginTop: '2%'}}>มูลสัตว์:  จัดการแล้ว</Text>
-                </View>
-
-                <View style={styles.button1}>
-                    <View style={{flex: 1, flexDirection: 'row'}}>
-                            <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={""}>
-                                <Text style={{ ...theme.font, textAlign: 'center' }}>จัดการข้อมูล </Text>
-                            </TouchableOpacity>
-                
                     </View>
-                </View> 
-            </View>
-                
+                    <View style={styles.button2}>
+                        <ButtonGroup
+                            buttons={buttons}
+                            containerStyle={{ height: 50, weight: 50 }}
+                        />
+                    </View>
+
+                    <View style={styles.layback1}>
+                        <Text style={{ ...theme.font, marginBottom: '1%', marginLeft: '40%', marginTop: '2%' }}>คอก 1</Text>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Image source={cow} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '20%', marginTop: '2%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '5%', marginTop: '4%' }}>จำนวนวัว:  - ตัว</Text>
+                        </View>
+
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Image source={grass} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '20%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '3%', marginLeft: '5%', marginTop: '2%' }}>อาหาร:  จัดการแล้ว</Text>
+                        </View>
+
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Image source={water} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '20%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '3%', marginLeft: '5%', marginTop: '2%' }}>น้ำ:  ยังไม่จัดการ</Text>
+                        </View>
+
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Image source={plant} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '20%' }} />
+                            <Text style={{ ...theme.font, marginBottom: '3%', marginLeft: '5%', marginTop: '2%' }}>มูลสัตว์:  จัดการแล้ว</Text>
+                        </View>
+
+                        <View style={styles.button1}>
+                            <View style={{ flex: 1, flexDirection: 'row' }}>
+                                <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={""}>
+                                    <Text style={{ ...theme.font, textAlign: 'center' }}>จัดการข้อมูล </Text>
+                                </TouchableOpacity>
+
+                            </View>
+                        </View>
+                    </View>
+
 
                 </View>
             </ScrollView>
         </SafeAreaView>
-    
+
 
     );
 };
 
 
 const styles = StyleSheet.create({
-    profile:{
+    profile: {
         flexDirection: 'row'
     },
     screen: {
@@ -117,10 +117,10 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingLeft: 10
     },
-    fonts:{
+    fonts: {
         color: 'black',
-        fontSize: 20, 
-        fontWeight: 'bold', 
+        fontSize: 20,
+        fontWeight: 'bold',
         alignItems: 'center'
     },
     logo: {
@@ -176,20 +176,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
     },
-    layback1:{
+    layback1: {
         width: 350,
         height: 400,
-        backgroundColor: '#F5F5F5',  
-        marginBottom: '10%', 
+        backgroundColor: '#F5F5F5',
+        marginBottom: '10%',
         borderRadius: 15,
         // alignItems: "center",
     },
-    layback2:{
+    layback2: {
         flex: 1,
         width: 300,
         height: 200,
-        backgroundColor: '#F5F5F5',  
-        marginBottom: '10%', 
+        backgroundColor: '#F5F5F5',
+        marginBottom: '10%',
         borderRadius: 15,
         alignItems: "center",
     }

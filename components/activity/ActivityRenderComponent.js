@@ -16,31 +16,31 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { delete_animal } from '../../store/actions/farmAction'
 import { MaterialIcons } from '@expo/vector-icons';
+import cow from "../../assets/home/cow.png"
+import grass from "../../assets/home/grass.png"
+import water from "../../assets/home/water-drop.png"
+import plant from "../../assets/home/plant.png"
+
 import moment from 'moment';
 
 
-const AnimalFlatListRender = (props) => {
+const ActivityRenderComponent = (props) => {
     const dispatch = useDispatch()
 
-    const editAnimal = (animal) => {
-        props.navigation.navigate("animaladdscreen", { type: 'edit', animal: animal, stall_id: SelectStallId })
+    const stallDetail = () => {
+        // props.navigation.navigate("animaladdscreen")
     }
 
-    const deleteAnimal = (animal) => {
-        dispatch(delete_animal(animal))
+    const addEventStall = () => {
     }
 
-    const colorStatus = (current, max) => current >= max ? 'red' : current / max > 0.5 ? 'orange' : 'green';
+    const renderActivityList = (itemData) => {
 
-
-    const renderAnimalList = (itemData) => {
-        console.log(itemData.item);
-        const colorstatus = colorStatus(itemData.item.currentAnimal, itemData.item.maximumAnimal);
         return (
             <View style={{ marginBottom: 10 }} >
                 <View style={{ flexDirection: 'colums', alignContent: 'center', justifyContent: 'center', borderColor: 'black', backgroundColor: '#e6ecf0', padding: 10, borderRadius: 10 }}>
-                    <TouchableOpacity>
-                        <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity onPress={stallDetail}>
+                    <View style={{ flexDirection: 'row' }}>
                             <View>
                                 <Image style={styles.uploadImg} source={itemData.item.imageUrl ? { uri: itemData.item.imageUrl } : require('../../assets/farm_profile.jpg')} />
                             </View>
@@ -69,8 +69,8 @@ const AnimalFlatListRender = (props) => {
 
                     </View> */}
                     <View style={{ flex: 0.4, }}>
-                        <TouchableOpacity style={[styles.button]}>
-                            <Text style={{ ...theme.font, textAlign: 'center',color:'white' }}>เพิ่มกิจกรรม</Text>
+                        <TouchableOpacity style={[styles.button]} onPress={addEventStall}>
+                            <Text style={{ ...theme.font, textAlign: 'center', color: 'white' }}>เพิ่มกิจกรรม</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -104,12 +104,12 @@ const AnimalFlatListRender = (props) => {
 
     return (
         <FlatList
-            data={props.animals}
-            renderItem={renderAnimalList}
+            data={props.activities}
+            renderItem={renderActivityList}
             keyExtractor={item => item.id}
         />
     );
 
 }
 
-export default AnimalFlatListRender;
+export default ActivityRenderComponent;

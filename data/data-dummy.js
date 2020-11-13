@@ -2,6 +2,14 @@ import Farm from "../models/farms";
 import User from "../models/user";
 import Animal from "../models/animal";
 import Stall from "../models/stall";
+import Activity from "../models/activity";
+
+const new_activity= [];
+for (let index = 0; index < 10; index++) {
+  const isOdd = index%2 == 1 
+  const element = new Activity(index, 'กิจกรรม '+(index+1), isOdd ? 'อาบน้ำให้วัว': 'ฉีดยา', isOdd ? 'stall': 'animal', 'f1', 1, isOdd ? undefined: 1,'2020-11-14 15:02:16.341093','','','',0 )
+  new_activity.push(element)
+}
 
 export const FARMS = [
     new Farm("f1", "ฟาร์มสุขใจ1", "0.1", 35.4,"168/65 ต.หนองวัว อ.ดอเราะ จ.สงขลา","https://www.organicfarmthailand.com/wp-content/uploads/2016/09/Farm-from-a-Box-SMA.jpg", [101,50], "Fri Oct 23 2020 12:47:26 GMT+0700 (Indochina Time)"),
@@ -25,3 +33,7 @@ export const FARMS = [
     new Animal(3,'วัวเนื้อ 3', 'วัวเนื่อ', 3, 'f2', 'บรามัน', 20, 20, 'วัวไทย', 'M', '2020-11-12 15:02:16.341093', ''),
     new Animal(4,'วัวเนื้อ 4', 'วัวเนื่อ', 3, 'f2', 'บรามัน', 20, 20, 'วัวไทย', 'F', '2020-11-12 15:02:16.341093', ''),
   ];
+
+  export const ACTIVITIES = new_activity;
+
+  export const USER = new User(0, 'ลุงปอนด์ โคราช', 'xxxx@hotmail.com', '', 'owner', "f1", "สหัสวรรษ", "ขันรักษา", "xxsdfid", "https://static.bangkokpost.com/media/content/20190410/c1_1659632_190410173728.jpg", 'owner')
