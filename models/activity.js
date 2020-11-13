@@ -11,6 +11,7 @@ class activity {
       is_routine,
       routineOptions,
       creater_id,
+      updatedAt
 
     ) {
       this.id = id;
@@ -22,7 +23,7 @@ class activity {
       this.type = type;
       this.alertDate = alertDate;
       this.creater_id= creater_id;
-
+      this.updatedAt = new Date();
     }
   }
   

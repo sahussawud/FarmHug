@@ -30,6 +30,7 @@ import SegmentedControl from '@react-native-community/segmented-control';
 import AnimalFlatListRender from '../../components/animal/AnimalRender';
 import StallRender from '../../components/animal/StallRender';
 import ActivityRenderComponent from '../../components/activity/ActivityRenderComponent'
+import { useSelector } from 'react-redux';
 
 import { ANIMALS, FARMS, STALLS, ACTIVITIES } from '../../data/data-dummy'
 const cattleScreen = (props) => {
@@ -47,6 +48,7 @@ const cattleScreen = (props) => {
         } else if (selectSegment == 1 && STALLS.length > 0) {
             return (<StallRender stalls={STALLS} />);
         } else if (selectSegment == 2) {
+
             return (<ActivityRenderComponent activities={ACTIVITIES} />);
         } else {
             return (<View style={{ flex: 1, justifyContent: 'center', padding: '20%', width: '100%' }}>
@@ -96,7 +98,9 @@ const cattleScreen = (props) => {
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <View style={styles.layback2} >
                             <ScrollView style={{ width: '100%', borderRadius: 10, backgroundColor: 'white' }}>
+                                <View>
                                 {renderSegmentContent()}
+                                </View>
                             </ScrollView>
 
                         </View>
