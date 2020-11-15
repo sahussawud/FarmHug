@@ -12,82 +12,87 @@ import {
     ScrollView,
     Platform,
     FlatList,
-    fixed
+    StatusBar
 } from "react-native";
 import { AntDesign, Ionicons } from '@expo/vector-icons';
+
 import { Picker } from '@react-native-community/picker';
-import logo from "../../assets/home/farmer.png"
+
 import style from "../../themes/default";
 import theme from "../../themes/default"
+
+import cow2 from "../../assets/home/cow2.png"
+
 import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import TopBarProfile from '../../components/topBarProfile'
+import SegmentedControl from '@react-native-community/segmented-control';
+import { useSelector } from 'react-redux';
+import PostComponent from '../community/components/postComponent'
 
+import { POSTS } from '../../data/data-dummy'
+const CommunityScreen = (props) => {
+    const segmentValue = ['โพสต์ทั้งหมด', 'ระเเวกฟาร์ม'];
+    const [selectSegment, setselectSegment] = useState(0);
+    const [segmentActivity, setSegmentActivity] = useState(0);
+    const [searchbox, setSearchbox] = useState('')
 
-import SelectInput from 'react-native-select-input-ios'
-import { FARMS } from '../../data/data-dummy'
+    const submitForm = () => { }
 
-class Component extends React.Component {
-    render() {
-      const options = [{ value: 0, label: '0' }]
-      
-      return (
-        <View>
-          <SelectInput value={0} options={options} />
-        </View>
-      )
+    const renderSegmentContent = () => {
+        return (<PostComponent posts={POSTS}/>)
     }
-  }
-const comScreen  = (props) => {
-    const [farms, setFarms] = useState([]);
-    const submitForm = () => {
-        props.navigation.navigate('postScreen')
-    }
-
-    const pickImage = async (event) => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-
-        if (!result.cancelled) {
-            setImage({ uri: result.uri });
-        }
-    };
 
     return (
-        <SafeAreaView>
-            <ScrollView style={{ backgroundColor: 'white' }}>
-                <View style={styles.screen}>
-                <View style={styles.profile}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                        <Image source={logo} style={styles.logo} />
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', marginLeft: '2%'}}>ชื่อ: -</Text>
-                </View>
-                </View>
-
-                <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold',color:'#708090', marginLeft: '2%'}}>โพสทั้งหมด</Text>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                    <View style={styles.layback2}>
-
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <TopBarProfile />
+            <View style={{ flex: 0.15, paddingHorizontal: 10 }}>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <View style={styles.layback1}>
+                        <SegmentedControl
+                            values={segmentValue}
+                            selectedIndex={selectSegment}
+                            onChange={(event) => {
+                                setselectSegment(event.nativeEvent.selectedSegmentIndex);
+                            }}
+                        />
                     </View>
                 </View>
-        
-                        <TouchableOpacity style={[styles.button]} onPress={submitForm}>
-                            <Text style={{ ...theme.font, textAlign: 'center' }}>โพสลงชุมชน</Text>
-                        </TouchableOpacity>
+            </View>
 
+            <View style={{ flex: 1.4 }}>
+                <View style={styles.screen}>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <View style={styles.layback2} >
+                            <ScrollView style={{ width: '100%', borderRadius: 10, backgroundColor: 'white' }}>
+                                <View>
+                                {renderSegmentContent()}
+                                </View>
+                            </ScrollView>
+
+                        </View>
+                    </View>
                 </View>
-            </ScrollView>
+            </View>
         </SafeAreaView>
-    
-
     );
 };
 
 
 const styles = StyleSheet.create({
-    profile:{
+    input: {
+        borderColor: 'gray',
+        borderWidth: 1,
+        width: '90%',
+        textAlign: 'center',
+        marginBottom: '5%',
+        height: 40,
+        // paddingHorizontal: 40,
+
+        borderRadius: 2
+    },
+    profile: {
+        flex: 1,
         flexDirection: 'row'
     },
     screen: {
@@ -98,10 +103,10 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingLeft: 10
     },
-    fonts:{
+    fonts: {
         color: 'black',
-        fontSize: 20, 
-        fontWeight: 'bold', 
+        fontSize: 20,
+        fontWeight: 'bold',
         alignItems: 'center'
     },
     logo: {
@@ -112,14 +117,7 @@ const styles = StyleSheet.create({
     topArea: {
         flex: 1,
         marginBottom: 10,
-        alignItems: 'center',
-        borderRadius: 50,
-    },
-    button1: {
-        flex: 1,
-        flexDirection: 'column',
-        width: '40%',
-        marginBottom: '5%',
+        alignItems: 'center'
     },
     buttonArea: {
         flex: 3,
@@ -135,54 +133,45 @@ const styles = StyleSheet.create({
         marginBottom: '5%'
     },
     button: {
-        flex: 3,
+        flex: 0.6,
         borderColor: 'black',
         //borderWidth: 1,
         borderRadius: 5,
         textAlign: 'center',
-        marginHorizontal: '10%',
-        paddingVertical: '3%',
+        marginHorizontal: '3%',
+        marginTop: '4%',
+        // paddingVertical: '3%',
         backgroundColor: theme.defaultButton.backgroundColor,
         color: theme.defaultButton.color,
         justifyContent: "center",
-        flex: 1,
         alignItems: "center",
-        borderRadius: 30
     },
     privacyaccept: {
         alignItems: 'center',
         flexDirection: 'row',
     },
-    layback1:{
+    layback1: {
         flex: 1,
         width: 300,
-        height: 120,
-        backgroundColor: '#F5F5F5',  
-        marginBottom: '10%', 
+        // height: 120,
+        backgroundColor: 'white',
+        // marginBottom: '10%',
+        paddingHorizontal: '5%',
+        // marginTop:'5%',
         borderRadius: 15,
         // alignItems: "center",
     },
-    layback2:{
+    layback2: {
         flex: 1,
-        width: 300,
-        height: 200,
-        backgroundColor: '#F5F5F5',  
-        marginBottom: '10%', 
-        borderRadius: 15,
-        alignItems: "center",
-    },
-    layback2:{
-        flex: 1,
-        width: 200,
-        height: 150,
-        backgroundColor: '#F5F5F5',  
-        marginBottom: '10%', 
+        width: '60%',
+        backgroundColor: '#F5F5F5',
+        marginBottom: 0,
         borderRadius: 15,
         alignItems: "center",
     }
 });
 
-comScreen .navigationOptions = {
+CommunityScreen.navigationOptions = {
     headerStyle: {
         elevation: 0,
         shadowOpacity: 0,
@@ -190,4 +179,4 @@ comScreen .navigationOptions = {
     }
 };
 
-export default comScreen;
+export default CommunityScreen;

@@ -18,7 +18,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import moment from 'moment';
 
-
 const ActivityRenderComponent = (props) => {
     const dispatch = useDispatch()
 
@@ -107,8 +106,7 @@ const ActivityRenderComponent = (props) => {
             renderItem={renderActivityList}
             keyExtractor={item => item.id}
         />
-    );
-
+    )
 }
 
 export default ActivityRenderComponent;

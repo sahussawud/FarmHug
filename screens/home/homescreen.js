@@ -48,32 +48,6 @@ const homeScreen = (props) => {
         
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <StatusBar backgroundColor="white" barStyle={'dark-content'} />
-            {/* <View style={{ flex: 0.3 }}>
-                <View style={styles.profile}>
-                    <View style={{ flex: 1, flexDirection: 'row' }}>
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
-                            <View style={{ justifyContent: 'center', padding: 10 }}>
-                                <Image source={logo} style={styles.logo} />
-                            </View>
-                            <View style={{ justifyContent: 'center' }}>
-                                <Text style={{ ...theme.font, fontSize: 20, fontWeight: "600", marginLeft: '2%', lineHeight: 30 }}>สหัสวรรษ ขันรักษา</Text>
-                                <Text style={{ ...theme.font, fontSize: 18, fontWeight: 'bold', marginLeft: '2%', lineHeight: 22 }}>ฟาร์มเเสนสุข</Text>
-                            </View>
-                        </View>
-
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 5 }}>
-                            <View style={{ justifyContent: 'center', padding: 10 }}>
-                                <Fontisto name="sun" size={30} color="black" />
-                            </View>
-                            <View style={{ justifyContent: 'center' }}>
-                                <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', marginLeft: '2%' }}>27c</Text>
-                                <Text style={{ ...theme.font, fontSize: 10, fontWeight: 'bold', marginLeft: '2%' }}>23/10/20 13:13</Text>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            </View>
-             */}
             <TopBarProfile/>
             <View style={{ flex: 0.8, paddingHorizontal: 10 }}>
                 <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>สถานะฟาร์มวันนี้</Text>

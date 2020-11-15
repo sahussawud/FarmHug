@@ -112,12 +112,12 @@ const comNavigator = createStackNavigator(
     comScreen : comScreen,
     postScreen : postScreen,
     statuScreen : statuScreen,
-    // activityScreen : activityScreen,
-    // settingScreen : settingScreen
+
   },
   {
     // กำหนด defaultNavigationOptions (Slide 23-24)
     defaultNavigationOptions: {
+      header: null,
       title: "",
       headerStyle: { backgroundColor: "#4a148c", },
       headerTintColor: "black",
