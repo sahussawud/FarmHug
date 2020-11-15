@@ -32,7 +32,7 @@ import PostComponent from '../community/components/postComponent'
 
 import { POSTS } from '../../data/data-dummy'
 const CommunityScreen = (props) => {
-    const segmentValue = ['โพสต์ทั้งหมด', 'ระเเวกฟาร์ม'];
+    const segmentValue = ['ระเเวกฟาร์ม', 'ภายในฟาร์ม', 'โพสต์ของฉัน'];
     const [selectSegment, setselectSegment] = useState(0);
     const [segmentActivity, setSegmentActivity] = useState(0);
     const [searchbox, setSearchbox] = useState('')

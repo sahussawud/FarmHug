@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
 import { Image } from "react-native";
 import logo from "../assets/logo.png"
@@ -27,7 +27,7 @@ import homeScreen from "../screens/home/homescreen";
 import cattlescreen from "../screens/farm/cattlescreen";
 
 import statuScreen from "../screens/farm/statuscreen";
-import activityScreen from "../screens/farm/activityscreen";
+import activityScreen from "../screens/activity/activityscreen";
 import settingScreen from "../screens/setting1/settingscreen";
 
 // import logo from "../../assets/logo.png"
@@ -127,24 +127,23 @@ const comNavigator = createStackNavigator(
 
 const FTabNavigator = createBottomTabNavigator(
   {
-    home: {
-      screen: homeNavigator,
+    activity: {
+      screen: activityScreen,
       navigationOptions: {
-        title: 'หน้าหลัก',
+        title: 'กิจกรรม',
         tabBarIcon: (tabinfo) => {
-          return (<Ionicons name="ios-home" size={40} color='Black' />);
+          return (<MaterialIcons name="event" size={30} color="black" style={{ paddingTop: 7.5}} />);
         }
       }
     },
-    community: {
-      screen: comNavigator,
+    farm: {
+      screen: farmNavigator,
       navigationOptions: {
-        title: 'ชุมชน',
+        title: 'ฟาร์ม',
         tabBarIcon: (tabinfo) => {
-          return (<Ionicons name="ios-people" size={40} color='Black' />);
+          return (<Ionicons name="ios-paw" size={40} color='black' />);
         }
       }
-
     },
     icon: {
       screen: homeNavigator,
@@ -155,21 +154,22 @@ const FTabNavigator = createBottomTabNavigator(
         }
       }
     },
-    farm: {
-      screen: farmNavigator,
+    community: {
+      screen: comNavigator,
       navigationOptions: {
-        title: 'ฟาร์ม',
+        title: 'ชุมชน',
         tabBarIcon: (tabinfo) => {
-          return (<Ionicons name="ios-paw" size={40} color='Black' />);
+          return (<Ionicons name="ios-people" size={40} color='black' />);
         }
       }
+
     },
     setting: {
       screen: settingScreen,
       navigationOptions: {
         title: 'ตั้งค่า',
         tabBarIcon: (tabinfo) => {
-          return (<Ionicons name="ios-cog" size={40} color='Black' />);
+          return (<Ionicons name="ios-cog" size={40} color='black' />);
         }
       }
     },

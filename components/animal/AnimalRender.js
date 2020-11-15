@@ -38,7 +38,7 @@ const AnimalFlatListRender = (props) => {
         const colorstatus = colorStatus(itemData.item.currentAnimal, itemData.item.maximumAnimal);
         return (
             <View style={{ marginBottom: 10 }} >
-                <View style={{ flexDirection: 'colums', alignContent: 'center', justifyContent: 'center', borderColor: 'black', backgroundColor: '#e6ecf0', padding: 10, borderRadius: 10 }}>
+                <View style={{  alignContent: 'center', justifyContent: 'center', borderColor: 'black', backgroundColor: '#e6ecf0', padding: 10, borderRadius: 10 }}>
                     <TouchableOpacity>
                         <View style={{ flexDirection: 'row' }}>
                             <View>

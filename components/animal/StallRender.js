@@ -38,7 +38,7 @@ const StallRender = (props) => {
 
         return (
             <View style={{ marginBottom: 10 }} >
-                <View style={{ flexDirection: 'colums', alignContent: 'center', justifyContent: 'center', borderColor: 'black', backgroundColor: '#e6ecf0', padding: 10, borderRadius: 10 }}>
+                <View style={{  alignContent: 'center', justifyContent: 'center', borderColor: 'black', backgroundColor: '#e6ecf0', padding: 10, borderRadius: 10 }}>
                     <TouchableOpacity onPress={stallDetail}>
                         <View>
                             <Text style={{ ...theme.font, marginBottom: '1%', marginLeft: '40%', marginTop: '2%' }}>คอก 1</Text>

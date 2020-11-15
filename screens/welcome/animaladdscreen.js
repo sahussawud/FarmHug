@@ -15,7 +15,7 @@ import {
     KeyboardAvoidingView,
     Button
 } from "react-native";
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 // import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";

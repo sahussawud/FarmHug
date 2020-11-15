@@ -34,7 +34,7 @@ import { useSelector } from 'react-redux';
 
 import { ANIMALS, FARMS, STALLS, ACTIVITIES } from '../../data/data-dummy'
 const cattleScreen = (props) => {
-    const segmentValue = ['ปศุสัตว์', 'คอก', 'กิจกรรม'];
+    const segmentValue = ['ปศุสัตว์', 'คอก'];
     const segmentActValue = ['ดำเนินการ', 'เสร็จสิ้น'];
     const [selectSegment, setselectSegment] = useState(0);
     const [segmentActivity, setSegmentActivity] = useState(0);

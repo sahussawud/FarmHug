@@ -9,14 +9,19 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from "react-redux";
 import userReducer from './store/reducers/userReducer';
 import farmReducer from './store/reducers/farmReducer';
+import activityReducer from './store/reducers/activityReducer'
+
 import FarmHugNavigation from './navigation/farmhugNavigation'
+
 
 
 export default function App() {
 
   const rootReducer = combineReducers({
     User: userReducer,
-    Farm: farmReducer
+    Farm: farmReducer,
+    Activity: activityReducer,
+    // Post: postReducer
   })
 
   const store = createStore(rootReducer);

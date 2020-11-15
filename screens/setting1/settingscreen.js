@@ -66,7 +66,7 @@ const settingScreen = (props) => {
                             <Text style={{ ...theme.font1, marginBottom: '5%', marginLeft: '2%', marginTop: '4%'}}>ชื่อ</Text>
                             <TouchableOpacity onPress={submitForm}>
                                 <View style={{  marginBottom: '5%', marginLeft: '84%', marginTop: '4%'}}>
-                                 <Ionicons name="ios-arrow-dropright" size={21} color='Black'/>
+                                 <Ionicons name="ios-arrow-dropright" size={21} color='black'/>
                                 </View>
                         </TouchableOpacity>
                         </View>
@@ -76,7 +76,7 @@ const settingScreen = (props) => {
                             <Text style={{ ...theme.font1, marginBottom: '3%', marginLeft: '2%', marginTop: '2%'}}>นามสกุล</Text>
                             <TouchableOpacity onPress={submitForm}>
                                 <View style={{  marginBottom: '5%', marginLeft: '79.4%', marginTop: '4%'}}>
-                                 <Ionicons name="ios-arrow-dropright" size={21} color='Black'/>
+                                 <Ionicons name="ios-arrow-dropright" size={21} color='black'/>
                                 </View>
                         </TouchableOpacity>
                         </View>
@@ -86,7 +86,7 @@ const settingScreen = (props) => {
                             <Text style={{...theme.font1, marginBottom: '3%', marginLeft: '2%', marginTop: '2%'}}>Line</Text>
                             <TouchableOpacity onPress={submitForm}>
                                 <View style={{  marginBottom: '5%', marginLeft: '82.5%', marginTop: '4%'}}>
-                                 <Ionicons name="ios-arrow-dropright" size={21} color='Black'/>
+                                 <Ionicons name="ios-arrow-dropright" size={21} color='black'/>
                                 </View>
                         </TouchableOpacity>
                         </View>
@@ -96,7 +96,7 @@ const settingScreen = (props) => {
                             <Text style={{ ...theme.font1, marginBottom: '3%', marginLeft: '2%', marginTop: '2%'}}>ที่อยู่</Text>
                             <TouchableOpacity onPress={submitForm}>
                                 <View style={{  marginBottom: '5%', marginLeft: '82.7%', marginTop: '4%'}}>
-                                 <Ionicons name="ios-arrow-dropright" size={21} color='Black'/>
+                                 <Ionicons name="ios-arrow-dropright" size={21} color='black'/>
                                 </View>
                         </TouchableOpacity>
                         </View>
@@ -113,7 +113,7 @@ const settingScreen = (props) => {
                             <Text style={{ ...theme.font1, marginBottom: '5%', marginLeft: '2%', marginTop: '4%'}}>ชื่อฟาร์ม</Text>
                             <TouchableOpacity onPress={submitForm}>
                                 <View style={{  marginBottom: '5%', marginLeft: '79.5%', marginTop: '4%'}}>
-                                 <Ionicons name="ios-arrow-dropright" size={21} color='Black'/>
+                                 <Ionicons name="ios-arrow-dropright" size={21} color='black'/>
                                 </View>
                         </TouchableOpacity>
                         </View>
@@ -123,7 +123,7 @@ const settingScreen = (props) => {
                             <Text style={{ ...theme.font1, marginBottom: '3%', marginLeft: '2%', marginTop: '2%'}}>ที่อยู่</Text>
                             <TouchableOpacity onPress={submitForm}>
                                 <View style={{  marginBottom: '5%', marginLeft: '82.7%', marginTop: '4%'}}>
-                                 <Ionicons name="ios-arrow-dropright" size={21} color='Black'/>
+                                 <Ionicons name="ios-arrow-dropright" size={21} color='black'/>
                                 </View>
                         </TouchableOpacity>
                         </View>
@@ -133,7 +133,7 @@ const settingScreen = (props) => {
                             <Text style={{...theme.font1, marginBottom: '3%', marginLeft: '2%', marginTop: '2%'}}>พื้นที่</Text>
                             <TouchableOpacity onPress={submitForm}>
                                 <View style={{  marginBottom: '5%', marginLeft: '82.5%', marginTop: '4%'}}>
-                                 <Ionicons name="ios-arrow-dropright" size={21} color='Black'/>
+                                 <Ionicons name="ios-arrow-dropright" size={21} color='black'/>
                                 </View>
                         </TouchableOpacity>
                         </View>
@@ -143,7 +143,7 @@ const settingScreen = (props) => {
                             <Text style={{ ...theme.font1, marginBottom: '3%', marginLeft: '2%', marginTop: '2%'}}>ความจุ</Text>
                             <TouchableOpacity onPress={submitForm}>
                                 <View style={{  marginBottom: '5%', marginLeft: '80.7%', marginTop: '4%'}}>
-                                 <Ionicons name="ios-arrow-dropright" size={21} color='Black'/>
+                                 <Ionicons name="ios-arrow-dropright" size={21} color='black'/>
                                 </View>
                         </TouchableOpacity>
                         </View>
@@ -153,7 +153,7 @@ const settingScreen = (props) => {
                             <Text style={{ ...theme.font1, marginBottom: '3%', marginLeft: '2%', marginTop: '2%'}}>รางน้ำดื่ม</Text>
                             <TouchableOpacity onPress={submitForm}>
                                 <View style={{  marginBottom: '5%', marginLeft: '78.5%', marginTop: '4%'}}>
-                                 <Ionicons name="ios-arrow-dropright" size={21} color='Black'/>
+                                 <Ionicons name="ios-arrow-dropright" size={21} color='black'/>
                                 </View>
                         </TouchableOpacity>
                         </View>

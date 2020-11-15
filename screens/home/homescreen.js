@@ -40,7 +40,9 @@ import TopBarProfile from  '../../components/topBarProfile';
 const homeScreen = (props) => {
     const [farms, setFarms] = useState([]);
 
-    const submitForm = () => { }
+    const addFarmActivity = () => {
+        
+    }
 
     const renderFarmList = (itemData) => { }
 
@@ -99,7 +101,7 @@ const homeScreen = (props) => {
                 </View>
             </View>
             <View style={{ flex: 0.4, }}>
-                <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm}>
+                <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={addFarmActivity}>
                     <Text style={{ ...theme.font, textAlign: 'center' }}>เพิ่มกิจกรรมในฟาร์ม</Text>
                 </TouchableOpacity>
 

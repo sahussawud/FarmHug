@@ -37,7 +37,7 @@ const ActivityRenderComponent = (props) => {
         const activityScopeId = itemData.item.type === 'animal'? itemData.item.animal_id : itemData.item.type === 'stall' ? itemData.item.stall_id : itemData.item.farm_id;
         return (
             <View style={{ marginBottom: 10 }} >
-                <View style={{ flexDirection: 'colums', alignContent: 'center', justifyContent: 'center', borderColor: 'black', backgroundColor: '#e6ecf0', padding: 10, borderRadius: 10 }}>
+                <View style={{  alignContent: 'center', justifyContent: 'center', borderColor: 'black', backgroundColor: '#e6ecf0', padding: 10, borderRadius: 10 }}>
                     <TouchableOpacity onPress={()=>ActivityDetail(itemData.item.type, activityScopeId)}>
                         <View style={{ alignItems: 'flex-start' }}>
                         
@@ -51,19 +51,15 @@ const ActivityRenderComponent = (props) => {
                                 
                                 <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> ขอบเขต: {itemData.item.type === 'animal'? 'ปศุสัตว์' : itemData.item.type === 'stall' ? 'คอกเลี้ยง' : 'ฟาร์ม'} </Text>
                                 <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> เเจ้งเตือน : {moment(itemData.item.alertDate).calendar()} </Text>
-                            
                         </View>
                     </TouchableOpacity>
 
                     {/* <View style={{ width: '40%', justifyContent: 'center', flexDirection: 'row', alignContent: 'center', marginLeft: 10 }}>
 
                     </View> */}
-                    <View style={{ flex: 0.4, flexDirection:'row', width:'100%', justifyContent:'space-between'}}>
+                    <View style={{ flex: 0.4, flexDirection:'row', width:'100%', justifyContent:'space-evenly'}}>
                         <TouchableOpacity style={[styles.button, theme.successButton]} onPress={addEventStall}>
                             <Text style={{ ...theme.font, textAlign: 'center', color: 'black', fontSize:18 }}>เสร็จสิ้น</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, {backgroundColor: 'yellow'}]} onPress={addEventStall}>
-                            <Text style={{ ...theme.font, textAlign: 'center', color: 'black', fontSize:18 }}>เลื่อน</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={[styles.button, theme.dangerButton]} onPress={addEventStall}>
