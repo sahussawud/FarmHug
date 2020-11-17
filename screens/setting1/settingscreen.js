@@ -57,17 +57,17 @@ const settingScreen = (props) => {
 
 
     const updateProfile = (bodychange) => {
-        setProfile(prev=> ({...prev, ...bodychange}))
+        setProfile(prev => ({ ...prev, ...bodychange }))
     }
 
-    const renderInputDisplay = (input, keyname) =>{
-        if(isEditProfile){
+    const renderInputDisplay = (input, keyname) => {
+        if (isEditProfile) {
             return (<TextInput
-            maxLength={25}
-            value={input}
-            onChangeText={(text)=> updateProfile({[keyname]:text})}
-            style={styles.inputBox} />)
-        }else{
+                maxLength={25}
+                value={input}
+                onChangeText={(text) => updateProfile({ [keyname]: text })}
+                style={styles.inputBox} />)
+        } else {
             return (<Text style={{ ...theme.font1 }}>{input}</Text>)
         }
     }
@@ -77,26 +77,26 @@ const settingScreen = (props) => {
     }
 
     const updateFarm = (bodychange) => {
-        setFarm(prev=> ({...prev, ...bodychange}))
+        setFarm(prev => ({ ...prev, ...bodychange }))
     }
 
-    const renderInputDisplayFarm = (input, keyname) =>{
-        if(isEditFarm){
+    const renderInputDisplayFarm = (input, keyname) => {
+        if (isEditFarm) {
             return (<TextInput
-            maxLength={25}
-            value={input}
-            onChangeText={(text)=> updateFarm({[keyname]:text})}
-            style={styles.inputBox} />)
-        }else{
+                maxLength={25}
+                value={input}
+                onChangeText={(text) => updateFarm({ [keyname]: text })}
+                style={styles.inputBox} />)
+        } else {
             return (<Text style={{ ...theme.font1 }}>{input}</Text>)
         }
     }
 
-    
+
 
     return (
         <SafeAreaView>
-                        <TopBarProfile navigation={props.navigation}/>
+            <TopBarProfile navigation={props.navigation} />
 
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
@@ -112,7 +112,7 @@ const settingScreen = (props) => {
 
                                 </View>
                                 <View style={styles.backrow}>
-                                        {renderInputDisplay(profile.firstname, 'firstname')}
+                                    {renderInputDisplay(profile.firstname, 'firstname')}
                                 </View>
                             </View>
 
@@ -122,7 +122,7 @@ const settingScreen = (props) => {
                                     <Text style={{ ...theme.font1, }}>นามสกุล</Text>
                                 </View>
                                 <View style={styles.backrow}>
-                                {renderInputDisplay(profile.lastname, 'lastname')}
+                                    {renderInputDisplay(profile.lastname, 'lastname')}
                                 </View>
                             </View>
 
@@ -244,7 +244,7 @@ const settingScreen = (props) => {
                         </TouchableOpacity>
                     </View>*/}
 
-                </View> 
+                </View>
             </ScrollView>
         </SafeAreaView>
 
