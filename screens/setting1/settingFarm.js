@@ -57,17 +57,17 @@ const settingScreen = (props) => {
 
 
     const updateProfile = (bodychange) => {
-        setProfile(prev=> ({...prev, ...bodychange}))
+        setProfile(prev => ({ ...prev, ...bodychange }))
     }
 
-    const renderInputDisplay = (input, keyname) =>{
-        if(isEditProfile){
+    const renderInputDisplay = (input, keyname) => {
+        if (isEditProfile) {
             return (<TextInput
-            maxLength={25}
-            value={input}
-            onChangeText={(text)=> updateProfile({[keyname]:text})}
-            style={styles.inputBox} />)
-        }else{
+                maxLength={25}
+                value={input}
+                onChangeText={(text) => updateProfile({ [keyname]: text })}
+                style={styles.inputBox} />)
+        } else {
             return (<Text style={{ ...theme.font1 }}>{input}</Text>)
         }
     }
@@ -77,30 +77,30 @@ const settingScreen = (props) => {
     }
 
     const updateFarm = (bodychange) => {
-        setFarm(prev=> ({...prev, ...bodychange}))
+        setFarm(prev => ({ ...prev, ...bodychange }))
     }
 
-    const renderInputDisplayFarm = (input, keyname) =>{
-        if(isEditFarm){
+    const renderInputDisplayFarm = (input, keyname) => {
+        if (isEditFarm) {
             return (<TextInput
-            maxLength={25}
-            value={input}
-            onChangeText={(text)=> updateFarm({[keyname]:text})}
-            style={styles.inputBox} />)
-        }else{
+                maxLength={25}
+                value={input}
+                onChangeText={(text) => updateFarm({ [keyname]: text })}
+                style={styles.inputBox} />)
+        } else {
             return (<Text style={{ ...theme.font1 }}>{input}</Text>)
         }
     }
 
-    
+
 
     return (
         <SafeAreaView>
-                        <TopBarProfile navigation={props.navigation}/>
+            <TopBarProfile navigation={props.navigation} />
 
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
-
+                    {/* 
                     <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', color: '#708090', marginLeft: '10%' }}>รายละเอียดบัญชี</Text>
 
                     <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -158,11 +158,11 @@ const settingScreen = (props) => {
                                     <Text style={{ ...theme.font, textAlign: 'center' }}>บันทึกเเก้ไข</Text>
                                 </TouchableOpacity>
                             )}
-                    </View>
+                    </View> */}
 
-                    {/* <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', color: '#708090', marginLeft: '10%' }}>ข้อมูลฟาร์ม</Text> */}
+                    <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', color: '#708090', marginLeft: '10%' }}>ข้อมูลฟาร์ม</Text>
 
-                    {/* <View style={{ flex: 1, flexDirection: 'row', alignContent: 'center' }}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignContent: 'center' }}>
                         <View style={styles.layback1}>
                             <View style={{ flex: 1, flexDirection: 'row' }}>
                                 <View style={styles.frontrow}>
@@ -180,7 +180,7 @@ const settingScreen = (props) => {
                                     <Text style={{ ...theme.font1, }}>ที่อยู่</Text>
                                 </View>
                                 <View style={styles.backrow}>
-                                {renderInputDisplayFarm(farm.address, 'address')}
+                                    {renderInputDisplayFarm(farm.address, 'address')}
 
                                 </View>
                             </View>
@@ -191,7 +191,7 @@ const settingScreen = (props) => {
                                     <Text style={{ ...theme.font1, }}>คำอธิบาย</Text>
                                 </View>
                                 <View style={styles.backrow}>
-                                {renderInputDisplayFarm(farm.description, 'description')}
+                                    {renderInputDisplayFarm(farm.description, 'description')}
 
                                 </View>
                             </View>
@@ -202,7 +202,7 @@ const settingScreen = (props) => {
                                     <Text style={{ ...theme.font1, }}>ขนาดพื้นที่</Text>
                                 </View>
                                 <View style={styles.backrow}>
-                                {renderInputDisplayFarm(farm.area, 'area')}
+                                    {renderInputDisplayFarm(farm.area, 'area')}
 
                                 </View>
                             </View>
@@ -213,7 +213,7 @@ const settingScreen = (props) => {
                                     <Text style={{ ...theme.font1, }}>ความถี่ในการเช็ครางน้ำ(วัน)</Text>
                                 </View>
                                 <View style={styles.backrow}>
-                                {renderInputDisplayFarm(farm.watercheck, 'water')}
+                                    {renderInputDisplayFarm(farm.watercheck, 'water')}
                                 </View>
                             </View>
 
@@ -223,7 +223,7 @@ const settingScreen = (props) => {
                                     <Text style={{ ...theme.font1, }}>ความเร็วการลดอาหาร(%/วัน)</Text>
                                 </View>
                                 <View style={styles.backrow}>
-                                {renderInputDisplayFarm(farm.foodConsume, 'foodConsume')}
+                                    {renderInputDisplayFarm(farm.foodConsume, 'foodConsume')}
                                 </View>
                             </View>
 
@@ -233,18 +233,26 @@ const settingScreen = (props) => {
                                     <Text style={{ ...theme.font1, }}>จำนวนพนักงาน</Text>
                                 </View>
                                 <View style={styles.backrow}>
-                                {renderInputDisplayFarm(farm.employee, 'employee')}
+                                    {renderInputDisplayFarm(farm.employee, 'employee')}
                                 </View>
                             </View>
                         </View>
                     </View>
                     <View >
-                        <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={logout}>
+                        {/* <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={editFarm}>
                             <Text style={{ ...theme.font, textAlign: 'center' }}>เเก้ไขข้อมูลฟาร์ม</Text>
-                        </TouchableOpacity>
-                    </View>*/}
+                        </TouchableOpacity> */}
 
-                </View> 
+                        {!isEditFarm ? (<TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={editFarm}>
+                            <Text style={{ ...theme.font, textAlign: 'center' }}>เเก้ไขฟาร์ม</Text>
+                        </TouchableOpacity>) : (
+                                <TouchableOpacity style={[styles.button, theme.successButton]} onPress={editFarm}>
+                                    <Text style={{ ...theme.font, textAlign: 'center' }}>บันทึกเเก้ไข</Text>
+                                </TouchableOpacity>
+                            )}
+                    </View>
+
+                </View>
             </ScrollView>
         </SafeAreaView>
 

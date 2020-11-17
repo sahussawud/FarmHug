@@ -1,7 +1,8 @@
-import User from '../../models/user';
+// import User from '../../models/user';
+import {USER} from '../../data/data-dummy'
 import { PROFILE_UPDATE } from '../actions/userAction'
 
-const initialUser = new User()
+const initialUser = USER
 
 
 const initialState = {

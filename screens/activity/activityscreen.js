@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
     View,
     Text,
@@ -10,13 +10,11 @@ import {
     Linking,
     SafeAreaView,
     ScrollView,
-    Platform,
-    FlatList,
-    StatusBar
-} from "react-native";
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+    KeyboardAvoidingView,
+    Animated
 
-import { Picker } from '@react-native-community/picker';
+} from "react-native";
+import { MaterialIcons } from '@expo/vector-icons';
 
 import style from "../../themes/default";
 import theme from "../../themes/default"
@@ -27,60 +25,122 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import TopBarProfile from '../../components/header/topBarProfile'
 import SegmentedControl from '@react-native-community/segmented-control';
+import ActivityRenderComponent from '../../components/activity/ActivityRenderComponent'
+import AddActivityModal from '../../components/activity/AddActivityModal'
 import { useSelector } from 'react-redux';
-import PostComponent from '../community/components/postComponent'
 
-import { POSTS } from '../../data/data-dummy'
-const CommunityScreen = (props) => {
-    const segmentValue = ['ระเเวกฟาร์ม', 'ภายในฟาร์ม', 'โพสต์ของฉัน'];
-    const [selectSegment, setselectSegment] = useState(0);
+
+const activityScreen = (props) => {
+    const activities = useSelector(state => state.Activity.activities)
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+    const [Activity, setActivity] = useState([]);
+  
+    const fadeIn = () => {
+        // Will change fadeAnim value to 1 in 5 seconds
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true
+        }).start();
+    };
+
+    const fadeOut = () => {
+        // Will change fadeAnim value to 0 in 5 seconds
+        Animated.timing(fadeAnim, {
+            toValue: 0,
+            duration: 100,
+            useNativeDriver: true
+        }).start();
+    };
+
+    const segmentActValue = ['ดำเนินการ', 'เสร็จสิ้น'];
     const [segmentActivity, setSegmentActivity] = useState(0);
-    const [searchbox, setSearchbox] = useState('')
+    const [modalVisible, setModalVisible] = useState(false)
+
+    useEffect(() => {
+        modalVisible ? fadeIn() : fadeOut()
+    }, [modalVisible])
+
+    const updateActivity = useCallback(()=>{
+        if(segmentActivity == 0){
+            const filtered = activities.filter(act=> act.status == 'process')
+            setActivity(filtered)
+        }else if(segmentActivity ===1){
+            const filtered = activities.filter(act=> act.status == 'finish').sort((a,b)=> b.updatedAt - a.updatedAt)
+            setActivity(filtered)
+        }
+    })
+
+    useEffect(()=>{
+        updateActivity()
+    },[segmentActivity, modalVisible, setActivity])
+
+    const navigateProps = props.navigation.getParam('type')
+    const selectedItem = props.navigation.getParam('selectedItem')
+
+    useEffect(() => {
+        if (navigateProps) {
+            setModalVisible(true)
+        }
+    }, [navigateProps, selectedItem])
 
     const submitForm = () => { }
 
     const renderSegmentContent = () => {
-        return (<PostComponent posts={POSTS}/>)
+        // console.log('renderSegmentContent', ACTIVITIES);
+            return (<ActivityRenderComponent updateActivity={updateActivity} activities={Activity} isActivityButton={ segmentActivity==0 } />);
+        
     }
 
+
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <SafeAreaView style={[{ flex: 1, backgroundColor: 'white' },]}>
             <TopBarProfile navigation={props.navigation}/>
-            
+            <AddActivityModal type={navigateProps || 'farm'} selectedItem={selectedItem} modalVisible={modalVisible} setModalVisible={() => setModalVisible(prev => !prev)} navigation={props.navigation} />
             <View style={{ flex: 0.15, paddingHorizontal: 10 }}>
+                {/* <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>สถานะฟาร์มวันนี้</Text> */}
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     <View style={styles.layback1}>
                         <SegmentedControl
-                            values={segmentValue}
-                            selectedIndex={selectSegment}
+                            style={{ width: '50%', marginBottom: '5%', }}
+                            values={segmentActValue}
+                            selectedIndex={segmentActivity}
                             onChange={(event) => {
-                                setselectSegment(event.nativeEvent.selectedSegmentIndex);
+                                setSegmentActivity(event.nativeEvent.selectedSegmentIndex);
                             }}
                         />
                     </View>
                 </View>
             </View>
-
+            { modalVisible ? <Animated.View style={[styles.overlay, { opacity: fadeAnim }]} /> : <View />}
             <View style={{ flex: 1.4 }}>
                 <View style={styles.screen}>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <View style={styles.layback2} >
                             <ScrollView style={{ width: '100%', borderRadius: 10, backgroundColor: 'white' }}>
                                 <View>
-                                {renderSegmentContent()}
+                                    {renderSegmentContent()}
                                 </View>
                             </ScrollView>
-
                         </View>
                     </View>
                 </View>
             </View>
+            <TouchableOpacity style={{ position: 'absolute', bottom: 10, right: 10, width: 60, height: 60, borderRadius: 30, backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}
+                onPress={() => { setModalVisible(prev => !prev) }}
+            >
+                <MaterialIcons name="add" size={40} color="white" />
+            </TouchableOpacity>
         </SafeAreaView>
     );
 };
 
 
 const styles = StyleSheet.create({
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(69,85,117,0.7)',
+    },
     input: {
         borderColor: 'gray',
         borderWidth: 1,
@@ -160,7 +220,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: '5%',
         // marginTop:'5%',
         borderRadius: 15,
-        // alignItems: "center",
+        alignItems: "center",
     },
     layback2: {
         flex: 1,
@@ -172,7 +232,7 @@ const styles = StyleSheet.create({
     }
 });
 
-CommunityScreen.navigationOptions = {
+activityScreen.navigationOptions = {
     headerStyle: {
         elevation: 0,
         shadowOpacity: 0,
@@ -180,4 +240,4 @@ CommunityScreen.navigationOptions = {
     }
 };
 
-export default CommunityScreen;
+export default activityScreen;

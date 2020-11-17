@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useIsFocused } from '@react-navigation/native';
 import {
     View,
     Text,
@@ -28,38 +29,76 @@ import house from "../../assets/home/house.png"
 import plant from "../../assets/home/plant.png"
 import water from "../../assets/home/water-drop.png"
 import wait from "../../assets/home/wait.png"
-import cow2 from "../../assets/home/cow2.png"
+
 
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 // const preview = require('../../assets/farm_profile.jpg');
 import { Fontisto } from '@expo/vector-icons';
 import { FARMS } from '../../data/data-dummy'
+import { useSelector } from 'react-redux';
+import ActivityRenderComponent from '../../components/activity/ActivityRenderComponent'
+import moment from 'moment'
 
-import TopBarProfile from  '../../components/topBarProfile';
+import TopBarProfile from '../../components/header/topBarProfile';
+import * as RootNavigation from '../../navigation/RootNavigation';
+
 const homeScreen = (props) => {
-    const [farms, setFarms] = useState([]);
+    const Farm = useSelector(state => state.Farm)
+    const activities = useSelector(state => state.Activity.activities)
 
-    const addFarmActivity = () => {
-        
+    // const isFocused = useIsFocused();
+
+    const [status, setStatus] = useState({
+        animalUnit: 0,
+        stallUnit: 0,
+        finishTask: 0,
+        processTask: 0,
+        farm: 0,
+        fertilizer: 0,
+        water: 0,
+        food: 0,
+        TodayActvity: []
+    })
+
+    const updateStatus = () => {
+        console.log('updateStatus');
+        const newAct = activities.filter(act => moment(act.alertDate) >= moment().subtract(1, 'days'))
+        const TodayActvity = activities.filter(act => moment(act.alertDate) >= moment().subtract(1, 'days')).sort((a, b) => a.alertDate - b.alertDate)
+        setStatus(prev => ({
+            ...prev,
+            animalUnit: Object.keys(Farm.animal).length,
+            stallUnit: Object.keys(Farm.stall).length,
+            finishTask: newAct.filter(task => task.status === 'finish').length,
+            processTask: newAct.filter(task => task.status === 'process').length,
+            TodayActvity: TodayActvity
+        }))
     }
 
-    const renderFarmList = (itemData) => { }
+    useEffect(() => {
+        const unsubscribe = props.navigation.addListener('didFocus', () => updateStatus());
+    
+        return unsubscribe;
+      }, [props.navigation]);
+
+    const renderActivitiesList = () => {
+        return (<ActivityRenderComponent activities={status.TodayActvity} isActivityButton={false} />)
+    }
 
     return (
-        
+
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <StatusBar backgroundColor="white" barStyle={'dark-content'} />
-            <TopBarProfile/>
+            <TopBarProfile navigation={props.navigation}/>
             <View style={{ flex: 0.8, paddingHorizontal: 10 }}>
                 <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>สถานะฟาร์มวันนี้</Text>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     <View style={styles.layback1}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <Image source={cow} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '2%', marginTop: '2%' }} />
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>{status.animalUnit}</Text>
                             <Image source={house} style={{ width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%' }} />
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>{status.stallUnit}</Text>
                             <Image source={grass} style={{ width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%' }} />
                             <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginTop: '4%' }}>-</Text>
                             <Image source={water} style={{ width: 35, height: 35, marginLeft: '11%', marginTop: '2%', marginBottom: '50%' }} />
@@ -67,9 +106,9 @@ const homeScreen = (props) => {
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <Image source={check} style={{ width: 35, height: 35, marginBottom: '5%', marginLeft: '2%' }} />
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}> {status.finishTask}</Text>
                             <Image source={wait} style={{ width: 35, height: 35, marginLeft: '11%', marginBottom: '50%' }} />
-                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
+                            <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>{status.processTask}</Text>
                             <Image source={group} style={{ width: 35, height: 35, marginLeft: '11%', marginBottom: '50%' }} />
                             <Text style={{ ...theme.font, marginBottom: '5%', marginLeft: '3%', marginBottom: '4%' }}>-</Text>
                             <Image source={plant} style={{ width: 35, height: 35, marginLeft: '11%', marginBottom: '50%' }} />
@@ -78,38 +117,22 @@ const homeScreen = (props) => {
                     </View>
                 </View>
             </View>
-            <View style={{ flex: 1.4 }}>
+            <View style={{ flex: 1.5 }}>
                 <View style={styles.screen}>
 
                     <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>กิจกรรมภายในฟาร์ม</Text>
 
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <View style={styles.layback2} >
-                            <ScrollView style={{width:'100%'}}>
-                                <View style={{flex:1, justifyContent:'center', padding:'20%', width:'100%'}}>
-                                    <Image source={cow2} style={{ width: 50, height: 50, marginTop: '10%', alignSelf:'center'}} />
-                                    <Text style={{ ...theme.font, textAlign: 'center', marginTop: '11%', fontSize:13 }}>ไม่มีกิจกรรมใดๆภายในฟาร์ม</Text>
-                                </View>
-                                <View style={{flex:1, justifyContent:'center', padding:'20%', width:'100%'}}>
-                                    <Image source={cow2} style={{ width: 50, height: 50, marginTop: '10%', alignSelf:'center'}} />
-                                    <Text style={{ ...theme.font, textAlign: 'center', marginTop: '11%', fontSize:13 }}>ไม่มีกิจกรรมใดๆภายในฟาร์ม</Text>
-                                </View>
+                            <ScrollView style={{ width: '100%' }}>
+                                {renderActivitiesList()}
                             </ScrollView>
 
                         </View>
                     </View>
                 </View>
             </View>
-            <View style={{ flex: 0.4, }}>
-                <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={addFarmActivity}>
-                    <Text style={{ ...theme.font, textAlign: 'center' }}>เพิ่มกิจกรรมในฟาร์ม</Text>
-                </TouchableOpacity>
-
-            </View>
-           
         </SafeAreaView>
-
-
     );
 };
 
@@ -120,7 +143,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     screen: {
-        flex: 1,
+        flex: 0.94,
         // justifyContent: "center",
         // alignItems: "center",
         backgroundColor: 'white',

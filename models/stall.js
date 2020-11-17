@@ -19,7 +19,7 @@ class stall {
       this.food = food || 0;
       this.water = water || 0;
       this.manure = manure || 0;
-      this.updatedAt = updatedAt;
+      this.updatedAt = new Date();
       this.area = area
     }
   }

@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { delete_animal } from '../../store/actions/farmAction'
 import { MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
+import AnimalItem from './AnimalItem'
 
 
 const AnimalFlatListRender = (props) => {
@@ -30,53 +31,59 @@ const AnimalFlatListRender = (props) => {
         dispatch(delete_animal(animal))
     }
 
+    const create_animal_event = (animal) =>{
+        console.log('create_animal_event');
+        props.navigation.navigate("activity", { type: 'animal', selectedItem: animal})
+    }
+
     const colorStatus = (current, max) => current >= max ? 'red' : current / max > 0.5 ? 'orange' : 'green';
 
 
     const renderAnimalList = (itemData) => {
-        console.log(itemData.item);
-        const colorstatus = colorStatus(itemData.item.currentAnimal, itemData.item.maximumAnimal);
-        return (
-            <View style={{ marginBottom: 10 }} >
-                <View style={{  alignContent: 'center', justifyContent: 'center', borderColor: 'black', backgroundColor: '#e6ecf0', padding: 10, borderRadius: 10 }}>
-                    <TouchableOpacity>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View>
-                                <Image style={styles.uploadImg} source={itemData.item.imageUrl ? { uri: itemData.item.imageUrl } : require('../../assets/farm_profile.jpg')} />
-                            </View>
-                            <View>
-                                <View style={{ flexDirection: 'row', alignContent: 'center', marginLeft: '20%' }}>
-                                    <View>
-                                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}> {itemData.item.type} </Text>
-                                        <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> พันธุ์ {itemData.item.gene} </Text>
-                                        <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> น้ำหนัก {itemData.item.weight}</Text>
-                                        <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> สูง {itemData.item.height} </Text>
+        return (<AnimalItem Animal={itemData.item} isActivityButton={true} navigation={props.navigation}/>)
+        // console.log(itemData.item);
+        // const colorstatus = colorStatus(itemData.item.currentAnimal, itemData.item.maximumAnimal);
+        // return (
+        //     <View style={{ marginBottom: 10 }} >
+        //         <View style={{  alignContent: 'center', justifyContent: 'center', borderColor: 'black', backgroundColor: '#e6ecf0', padding: 10, borderRadius: 10 }}>
+        //             <TouchableOpacity>
+        //                 <View style={{ flexDirection: 'row' }}>
+        //                     <View>
+        //                         <Image style={styles.uploadImg} source={itemData.item.imageUrl ? { uri: itemData.item.imageUrl } : require('../../assets/farm_profile.jpg')} />
+        //                     </View>
+        //                     <View>
+        //                         <View style={{ flexDirection: 'row', alignContent: 'center', marginLeft: '20%' }}>
+        //                             <View>
+        //                                 <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold' }}> {itemData.item.type} </Text>
+        //                                 <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> พันธุ์ {itemData.item.gene} </Text>
+        //                                 <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> น้ำหนัก {itemData.item.weight}</Text>
+        //                                 <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> สูง {itemData.item.height} </Text>
 
-                                    </View>
-                                    <View >
-                                        <Text style={{ ...theme.font, fontSize: 10, fontWeight: 'bold', height: 30, paddingTop: 8, justifyContent: 'center' }}> <MaterialIcons name="update" size={15} color="green" /> {moment(itemData.item.dob).fromNow()} </Text>
-                                        <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> คอก {itemData.item.stall_id} </Text>
-                                        <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> เพศ {itemData.item.sex == 'M' ? 'ตัวผู้' : 'ตัวเมีย'}</Text>
-                                        <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> อายุ  {moment(itemData.item.dob).fromNow('YYMMYY')} </Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+        //                             </View>
+        //                             <View >
+        //                                 <Text style={{ ...theme.font, fontSize: 10, fontWeight: 'bold', height: 30, paddingTop: 8, justifyContent: 'center' }}> <MaterialIcons name="update" size={15} color="green" /> {moment(itemData.item.dob).fromNow()} </Text>
+        //                                 <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> คอก {itemData.item.stall_id} </Text>
+        //                                 <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> เพศ {itemData.item.sex == 'M' ? 'ตัวผู้' : 'ตัวเมีย'}</Text>
+        //                                 <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold' }}> อายุ  {moment(itemData.item.dob).fromNow('YYMMYY')} </Text>
+        //                             </View>
+        //                         </View>
+        //                     </View>
+        //                 </View>
+        //             </TouchableOpacity>
 
 
-                    {/* <View style={{ width: '40%', justifyContent: 'center', flexDirection: 'row', alignContent: 'center', marginLeft: 10 }}>
+        //             {/* <View style={{ width: '40%', justifyContent: 'center', flexDirection: 'row', alignContent: 'center', marginLeft: 10 }}>
 
-                    </View> */}
-                    <View style={{ flex: 0.4, }}>
-                        <TouchableOpacity style={[styles.button]}>
-                            <Text style={{ ...theme.font, textAlign: 'center',color:'white' }}>เพิ่มกิจกรรม</Text>
-                        </TouchableOpacity>
+        //             </View> */}
+        //             <View style={{ flex: 0.4, }}>
+        //                 <TouchableOpacity style={[styles.button]} onPress={()=>create_animal_event(itemData.item)}>
+        //                     <Text style={{ ...theme.font, textAlign: 'center',color:'white' }}>เพิ่มกิจกรรม</Text>
+        //                 </TouchableOpacity>
 
-                    </View>
-                </View>
-            </View>
-        )
+        //             </View>
+        //         </View>
+        //     </View>
+        // )
     }
 
     const styles = StyleSheet.create({

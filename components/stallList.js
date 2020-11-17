@@ -28,7 +28,6 @@ const StallList = (props) => {
                             
                             props.setstall(prev=> {
                                 const stalls = prev.filter(stall=> stall.id == props.id)
-                                console.log(props.id, stalls);
                                 return stalls;
                             })
                         }}

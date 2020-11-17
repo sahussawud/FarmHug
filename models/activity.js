@@ -1,6 +1,7 @@
+import 'react-native-get-random-values'
+import { v4 as uuidv4 } from 'uuid';
 class activity {
     constructor(
-      id,
       name,
       detail,
       type,
@@ -11,10 +12,11 @@ class activity {
       is_routine,
       routineOptions,
       creater_id,
-      updatedAt
+      updatedAt,
+      status
 
     ) {
-      this.id = id;
+      this.id = uuidv4();
       this.name = name;
       this.farm_id = farm_id;
       this.cage_id = animal_id;
@@ -24,6 +26,7 @@ class activity {
       this.alertDate = alertDate;
       this.creater_id= creater_id;
       this.updatedAt = new Date();
+      this.status = status || 'process';//['process','finish','delete']
     }
   }
   

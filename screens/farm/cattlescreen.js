@@ -25,15 +25,18 @@ import cow2 from "../../assets/home/cow2.png"
 
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
-import TopBarProfile from '../../components/topBarProfile'
+import TopBarProfile from '../../components/header/topBarProfile'
 import SegmentedControl from '@react-native-community/segmented-control';
 import AnimalFlatListRender from '../../components/animal/AnimalRender';
-import StallRender from '../../components/animal/StallRender';
+import StallRender from '../../components/stall/StallRender';
 import ActivityRenderComponent from '../../components/activity/ActivityRenderComponent'
 import { useSelector } from 'react-redux';
 
 import { ANIMALS, FARMS, STALLS, ACTIVITIES } from '../../data/data-dummy'
 const cattleScreen = (props) => {
+    const animal = useSelector(state=> state.Farm.animal)
+    const stall = useSelector(state=> state.Farm.stall)
+
     const segmentValue = ['ปศุสัตว์', 'คอก'];
     const segmentActValue = ['ดำเนินการ', 'เสร็จสิ้น'];
     const [selectSegment, setselectSegment] = useState(0);
@@ -43,14 +46,11 @@ const cattleScreen = (props) => {
     const submitForm = () => { }
 
     const renderSegmentContent = () => {
-        if (selectSegment == 0 && ANIMALS.length > 0) {
-            return (<AnimalFlatListRender animals={ANIMALS} />);
-        } else if (selectSegment == 1 && STALLS.length > 0) {
-            return (<StallRender stalls={STALLS} />);
-        } else if (selectSegment == 2) {
-
-            return (<ActivityRenderComponent activities={ACTIVITIES} />);
-        } else {
+        if (selectSegment == 0 && animal.length > 0) {
+            return (<AnimalFlatListRender animals={animal} navigation={props.navigation}/>);
+        } else if (selectSegment == 1 && stall.length > 0) {
+            return (<StallRender stalls={stall}  navigation={props.navigation} />);
+        }else {
             return (<View style={{ flex: 1, justifyContent: 'center', padding: '20%', width: '100%' }}>
                 <Image source={cow2} style={{ width: 50, height: 50, marginTop: '10%', alignSelf: 'center' }} />
                 <Text style={{ ...theme.font, textAlign: 'center', marginTop: '11%', fontSize: 13 }}>ไม่มีข้อมูลเกี่ยวกับ{segmentValue[selectSegment]}ในฟาร์ม</Text>
@@ -61,7 +61,8 @@ const cattleScreen = (props) => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-            <TopBarProfile />
+            <TopBarProfile navigation={props.navigation}/>
+            
             <View style={{ flex: 0.15, paddingHorizontal: 10 }}>
                 {/* <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>สถานะฟาร์มวันนี้</Text> */}
                 <View style={{ flex: 1, flexDirection: 'row' }}>

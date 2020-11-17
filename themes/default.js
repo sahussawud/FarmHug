@@ -4,7 +4,7 @@ const style = {
         fontFamily: 'Kanit'
     },
     font1:{
-        fontSize: 12,
+        fontSize: 15,
         fontFamily: 'Kanit'
     },
     defaultButton:{

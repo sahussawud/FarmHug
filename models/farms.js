@@ -26,6 +26,9 @@ class farm {
       this.createdAt = createdAt;
       this.capacity = capacity;
       this.cow = cow;
+      this.watercheck = 30;
+      this.foodConsume = 1;
+      this.employee = 1;
     }
   }
   

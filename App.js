@@ -12,7 +12,7 @@ import farmReducer from './store/reducers/farmReducer';
 import activityReducer from './store/reducers/activityReducer'
 
 import FarmHugNavigation from './navigation/farmhugNavigation'
-
+import {navigationRef} from './navigation/RootNavigation'
 
 
 export default function App() {
@@ -35,7 +35,7 @@ export default function App() {
   } else {
     return (
       <Provider store={store}>
-        <FarmHugNavigation />
+        <FarmHugNavigation ref={navigationRef}/>
       </Provider>
     );
   }
