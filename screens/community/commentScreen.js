@@ -5,20 +5,12 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
-    Switch,
-    Image,
-    Linking,
     SafeAreaView,
     ScrollView,
-    Platform,
-    FlatList,
-    StatusBar
+
 } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { Picker } from '@react-native-community/picker';
-
-import style from "../../themes/default";
 import theme from "../../themes/default"
 
 import cow2 from "../../assets/home/cow2.png"
@@ -29,44 +21,33 @@ import TopBarProfile from '../../components/header/topBarProfile'
 import SegmentedControl from '@react-native-community/segmented-control';
 import { useSelector } from 'react-redux';
 import PostComponent from '../community/components/postComponent'
+import CommentComponent from '../community/components/commentComponent'
+import { COMMENTS } from '../../data/data-dummy'
 
-import { POSTS } from '../../data/data-dummy'
-const CommunityScreen = (props) => {
-    const User = useSelector(state=> state.User.profile)
-    const segmentValue = ['ระเเวกฟาร์ม', 'ฟาร์มของฉัน'];
-    const [selectSegment, setselectSegment] = useState(0);
+const CommentScreen = (props) => {
+    const [commment, setComment] = useState([])
+    const post = props.navigation.getParam('post')
 
-    const submitForm = () => {}
+    useEffect(()=>{
+        const thisPostComment = COMMENTS.filter(comment => comment.post_id === post.id)
+        setComment(thisPostComment)
+    },[])
 
     const addPost = () =>{
-        props.navigation.navigate('postScreen', { type: 'post'})
+        props.navigation.navigate('postScreen', { type: 'comment', post_id: post.id })
     }
 
-    const renderSegmentContent = (value) => {
-        if(value===0){
-           return (<PostComponent posts={POSTS} navigation={props.navigation} isComment={false}/>) 
-        }else{
-            const myFarmPost = POSTS.filter(post=> post.farm_id === User.farm_id)
-            return (<PostComponent posts={myFarmPost} navigation={props.navigation} isComment={false}/>)
-        }
+    const renderComments = () =>{
+        return (<CommentComponent comments={commment} />)
+    }
+
+    const renderPost = () => {
+        return (<PostComponent posts={[post]} isComment={true} navigation={props.navigation} />)
     }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <TopBarProfile navigation={props.navigation}/>
-            <View style={{ flex: 0.15, paddingHorizontal: 10 }}>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={styles.layback1}>
-                        <SegmentedControl
-                            values={segmentValue}
-                            selectedIndex={selectSegment}
-                            onChange={(event) => {
-                                setselectSegment(event.nativeEvent.selectedSegmentIndex);
-                            }}
-                        />
-                    </View>
-                </View>
-            </View>
 
             <View style={{ flex: 1.4 }}>
                 <View style={styles.screen}>
@@ -74,7 +55,8 @@ const CommunityScreen = (props) => {
                         <View style={styles.layback2} >
                             <ScrollView style={{ width: '100%', borderRadius: 10, backgroundColor: 'white' }}>
                                 <View>
-                                {selectSegment===0 ? renderSegmentContent(0) :renderSegmentContent(1)}
+                                { renderPost() }
+                                {renderComments()}
                                 </View>
                             </ScrollView>
 
@@ -86,7 +68,7 @@ const CommunityScreen = (props) => {
             <TouchableOpacity style={{ position: 'absolute', bottom: 10, right: 10, width: 60, height: 60, borderRadius: 30, backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}
             onPress={addPost}
             >
-                <MaterialIcons name="add" size={40} color="white" />
+                <MaterialIcons name="forum" size={30} color="white" />
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -185,7 +167,7 @@ const styles = StyleSheet.create({
     }
 });
 
-CommunityScreen.navigationOptions = {
+CommentScreen.navigationOptions = {
     headerStyle: {
         elevation: 0,
         shadowOpacity: 0,
@@ -193,4 +175,4 @@ CommunityScreen.navigationOptions = {
     }
 };
 
-export default CommunityScreen;
+export default CommentScreen;

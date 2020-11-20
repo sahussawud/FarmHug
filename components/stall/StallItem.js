@@ -12,7 +12,7 @@ import {
 import theme from "../../themes/default"
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import cow from "../../assets/home/cow.png"
 import grass from "../../assets/home/grass.png"
 import water from "../../assets/home/water-drop.png"
@@ -30,7 +30,6 @@ const StallRender = (props) => {
 
     const toStallScreen =()=>{
         navigation.navigate("farm")
-        // props.setModalVisible()
     }
 
     const styles = StyleSheet.create({
@@ -83,7 +82,7 @@ const StallRender = (props) => {
                     </View> */}
                     { isActivityButton ?(<View style={{ flex: 0.4, }}>
                         <TouchableOpacity style={[styles.button]} onPress={()=>create_stall_event(stalls)}>
-                            <Text style={{ ...theme.font, textAlign: 'center',color:'white' }}>เพิ่มกิจกรรม</Text>
+                            <Text style={{ ...theme.font, textAlign: 'center',color:'white' }}><Ionicons name="ios-notifications-outline" size={20} color="white" /> เพิ่มกิจกรรม</Text>
                         </TouchableOpacity>
                     </View>) : <View/>}
                 </View>

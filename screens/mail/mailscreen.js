@@ -27,18 +27,12 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import TopBarProfile from '../../components/header/topBarProfile'
 import SegmentedControl from '@react-native-community/segmented-control';
-import AnimalFlatListRender from '../../components/animal/AnimalRender';
-import StallRender from '../../components/stall/StallRender';
-import ActivityRenderComponent from '../../components/activity/ActivityRenderComponent'
 import { useSelector } from 'react-redux';
+import MailComponent from './components/mailComponent'
 
-import { ANIMALS, FARMS, STALLS, ACTIVITIES } from '../../data/data-dummy'
-const cattleScreen = (props) => {
-    const animal = useSelector(state=> state.Farm.animal)
-    const stall = useSelector(state=> state.Farm.stall)
-
-    const segmentValue = ['ปศุสัตว์', 'คอก'];
-    const segmentActValue = ['ดำเนินการ', 'เสร็จสิ้น'];
+import { POSTS } from '../../data/data-dummy'
+const MailScreen = (props) => {
+    const segmentValue = ['ระเเวกฟาร์ม', 'ภายในฟาร์ม', 'โพสต์ของฉัน'];
     const [selectSegment, setselectSegment] = useState(0);
     const [segmentActivity, setSegmentActivity] = useState(0);
     const [searchbox, setSearchbox] = useState('')
@@ -46,23 +40,13 @@ const cattleScreen = (props) => {
     const submitForm = () => { }
 
     const renderSegmentContent = () => {
-        if (selectSegment == 0 && animal.length > 0) {
-            return (<AnimalFlatListRender animals={animal} navigation={props.navigation}/>);
-        } else if (selectSegment == 1 && stall.length > 0) {
-            return (<StallRender stalls={stall}  navigation={props.navigation} />);
-        }else {
-            return (<View style={{ flex: 1, justifyContent: 'center', padding: '20%', width: '100%' }}>
-                <Image source={cow2} style={{ width: 50, height: 50, marginTop: '10%', alignSelf: 'center' }} />
-                <Text style={{ ...theme.font, textAlign: 'center', marginTop: '11%', fontSize: 13 }}>ไม่มีข้อมูลเกี่ยวกับ{segmentValue[selectSegment]}ในฟาร์ม</Text>
-            </View>)
-        }
+        return (<MailComponent posts={POSTS}/>)
     }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <TopBarProfile navigation={props.navigation}/>
-            <View style={{ flex: 0.15, paddingHorizontal: 10 }}>
-                {/* <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', color: '#708090' }}>สถานะฟาร์มวันนี้</Text> */}
+            {/* <View style={{ flex: 0.15, paddingHorizontal: 10 }}>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     <View style={styles.layback1}>
                         <SegmentedControl
@@ -74,23 +58,7 @@ const cattleScreen = (props) => {
                         />
                     </View>
                 </View>
-            </View>
-
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        {selectSegment == 2 ? 
-                                (
-                                <SegmentedControl
-                                    style={{width:'50%', marginBottom: '5%',}}
-                                    values={segmentActValue}
-                                    selectedIndex={segmentActivity}
-                                    onChange={(event) => {
-                                        setSegmentActivity(event.nativeEvent.selectedSegmentIndex);
-                                    }}
-                                />
-                                )
-                         : (<TextInput placeholder={"ค้นหา" + segmentValue[selectSegment]} style={[styles.input, theme.font]} value={searchbox} onChangeText={setSearchbox} />)}
-
-            </View>
+            </View> */}
 
             <View style={{ flex: 1.4 }}>
                 <View style={styles.screen}>
@@ -101,14 +69,11 @@ const cattleScreen = (props) => {
                                 {renderSegmentContent()}
                                 </View>
                             </ScrollView>
-
                         </View>
                     </View>
                 </View>
             </View>
         </SafeAreaView>
-
-
     );
 };
 
@@ -205,7 +170,7 @@ const styles = StyleSheet.create({
     }
 });
 
-cattleScreen.navigationOptions = {
+MailScreen.navigationOptions = {
     headerStyle: {
         elevation: 0,
         shadowOpacity: 0,
@@ -213,4 +178,4 @@ cattleScreen.navigationOptions = {
     }
 };
 
-export default cattleScreen;
+export default MailScreen;

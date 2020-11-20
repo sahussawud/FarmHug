@@ -23,13 +23,14 @@ import animallistscreen from '../screens/welcome/animallistscreen';
 
 import comScreen from "../screens/community/communityscreen";
 import postScreen from '../screens/community/postscreen';
+import commentScreen from "../screens/community/commentScreen";
+
 import homeScreen from "../screens/home/homescreen";
 import cattlescreen from "../screens/farm/cattlescreen";
 
-// import statuScreen from "../screens/farm/statuscreen";
 import activityScreen from "../screens/activity/activityscreen";
 import settingScreen from "../screens/setting1/settingscreen";
-import FarmSettingScreen from "../screens/setting1/settingFarm";
+import MailScreen from "../screens/mail/mailscreen";
 // import logo from "../../assets/logo.png"
 
 
@@ -111,6 +112,7 @@ const comNavigator = createStackNavigator(
   {
     comScreen: comScreen,
     postScreen: postScreen,
+    commentScreen: commentScreen,
 
   },
   {
@@ -126,14 +128,12 @@ const comNavigator = createStackNavigator(
 
 const settingNavigator = createStackNavigator(
   {
-    profile: settingScreen,
-    farm: FarmSettingScreen,
+    profile: settingScreen
   },
   {
     // กำหนด defaultNavigationOptions (Slide 23-24)
     defaultNavigationOptions: {
-      header: null,
-      title: "",
+      title: "ตั้งค่าบัญชี",
       headerStyle: { backgroundColor: "#4a148c", },
       headerTintColor: "black",
     }
@@ -179,12 +179,12 @@ const FTabNavigator = createBottomTabNavigator(
       }
 
     },
-    setting: {
-      screen: settingScreen,
+    mail: {
+      screen: MailScreen,
       navigationOptions: {
-        title: 'ตั้งค่า',
+        title: 'จดหมาย',
         tabBarIcon: (tabinfo) => {
-          return (<Ionicons name="ios-cog" size={40} color={tabinfo.tintColor} />);
+          return (<Ionicons name="ios-mail" size={40} color={tabinfo.tintColor} />);
         }
       }
     },

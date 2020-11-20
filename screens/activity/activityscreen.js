@@ -14,7 +14,7 @@ import {
     Animated
 
 } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons,Ionicons } from '@expo/vector-icons';
 
 import style from "../../themes/default";
 import theme from "../../themes/default"
@@ -84,7 +84,9 @@ const activityScreen = (props) => {
         }
     }, [navigateProps, selectedItem])
 
-    const submitForm = () => { }
+    const submitForm = () => {
+        
+    }
 
     const renderSegmentContent = () => {
         // console.log('renderSegmentContent', ACTIVITIES);
@@ -129,7 +131,8 @@ const activityScreen = (props) => {
             <TouchableOpacity style={{ position: 'absolute', bottom: 10, right: 10, width: 60, height: 60, borderRadius: 30, backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}
                 onPress={() => { setModalVisible(prev => !prev) }}
             >
-                <MaterialIcons name="add" size={40} color="white" />
+                {/* <MaterialIcons name="add" size={40} color="white" /> */}
+                <Ionicons name="ios-notifications-outline" size={40} color="white" />
             </TouchableOpacity>
         </SafeAreaView>
     );

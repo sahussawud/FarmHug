@@ -7,7 +7,7 @@ import {
     Image,
     TouchableOpacity,
 } from "react-native";
-import { FontAwesome5, AntDesign } from '@expo/vector-icons';
+import { FontAwesome5, AntDesign, Ionicons } from '@expo/vector-icons';
 
 import logo from "../../assets/logo.png"
 import style from "../../themes/default";
@@ -99,7 +99,7 @@ const AnimalItemComponent = (props) => {
                     </View> */}
                     { isActivityButton ?(<View style={{ flex: 0.4, }}>
                         <TouchableOpacity style={[styles.button]} onPress={()=>create_animal_event(Animal)}>
-                            <Text style={{ ...theme.font, textAlign: 'center',color:'white' }}>เพิ่มกิจกรรม</Text>
+                            <Text style={{ ...theme.font, textAlign: 'center',color:'white' }}><Ionicons name="ios-notifications-outline" size={20} color="white" /> เพิ่มกิจกรรม</Text>
                         </TouchableOpacity>
                     </View>) : <View/>}
                 </View>

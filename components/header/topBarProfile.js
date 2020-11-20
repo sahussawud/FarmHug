@@ -6,9 +6,12 @@ import logo from "../../assets/setting1/farmer1.png"
 import { Fontisto } from '@expo/vector-icons';
 import * as RootNavigation from '../../navigation/RootNavigation'
 // import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux'
+import farm from '../../models/farms';
 
 const TopBarProfile = (props) => {
-    console.log('TopBarProfile', props);
+    const User = useSelector(state=> state.User.profile)
+    const Farm = useSelector(state=> state.Farm.farm)
     return (
         <View style={{ height: '13%' }}>
             <StatusBar backgroundColor="white" barStyle={'dark-content'} />
@@ -17,13 +20,13 @@ const TopBarProfile = (props) => {
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <TouchableOpacity onPress={()=>props.navigation.toggleDrawer()}>
                             <View style={{ justifyContent: 'center', padding: 10 }}>
-                                <Image source={logo} style={styles.logo} />
+                                <Image source={User.imageURL?{uri: User.imageURL}: logo} style={styles.logo} />
                             </View>
                         </TouchableOpacity>
 
                         <View style={{ justifyContent: 'center' }}>
-                            <Text style={{ ...theme.font, fontSize: 20, fontWeight: "600", marginLeft: '2%', lineHeight: 30 }}>สหัสวรรษ ขันรักษา</Text>
-                            <Text style={{ ...theme.font, fontSize: 18, fontWeight: 'bold', marginLeft: '2%', lineHeight: 22 }}>ฟาร์มเเสนสุข</Text>
+    <Text style={{ ...theme.font, fontSize: 20, fontWeight: "600", marginLeft: '2%', lineHeight: 30 }}>{User.firstname} {User.lastname}</Text>
+    <Text style={{ ...theme.font, fontSize: 18, fontWeight: 'bold', marginLeft: '2%', lineHeight: 22 }}>{Farm.name}</Text>
                         </View>
                     </View>
 
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 50,
         height: 50,
-        marginBottom: 5,
+        borderRadius:30
     }
 });
 
