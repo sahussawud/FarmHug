@@ -20,9 +20,11 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { profile_setup } from '../../store/actions/userAction'
 
 const finishscreen = (props) => {
-
+    const dispatch = useDispatch()
     const profile = useSelector(state=> state.User.profile)
     const farm = useSelector(state=> state.Farm.farm)
     // const [image, setImage] = useState(preview);
@@ -30,7 +32,12 @@ const finishscreen = (props) => {
     // const [farm, setFarm] = useState("สุขสงบฟาร์ม");
     // const [role, setType] = useState("เจ้าของฟาร์ม");
 
-    const submitForm = () => {   
+    const submitForm = () => {
+        const status = 200
+        const mocktoken = 'iloveyou'
+        if(status == 200){
+            dispatch(profile_setup())
+        } 
     }
     const isImageProfile = profile.imageURL
 

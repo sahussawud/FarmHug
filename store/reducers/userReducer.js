@@ -1,6 +1,6 @@
 // import User from '../../models/user';
 import { USER } from '../../data/data-dummy'
-import { PROFILE_UPDATE } from '../actions/userAction'
+import { PROFILE_UPDATE, SIGN_IN, SIGN_OUT, RESTORE_TOKEN, PROFILE_SETUP } from '../actions/userAction'
 
 const initialUser = USER
 
@@ -8,6 +8,7 @@ const initialUser = USER
 const initialState = {
     profile: initialUser,
     authentication: {
+        isProfile: false,
         isLoading: true,
         isSignout: false,
         userToken: null,
@@ -23,7 +24,7 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 profile: action.profile
             }
-        case 'RESTORE_TOKEN':
+        case RESTORE_TOKEN:
             return {
                 ...state,
                 authentication:{
@@ -33,7 +34,7 @@ const userReducer = (state = initialState, action) => {
                 }
                 
             };
-        case 'SIGN_IN':
+        case SIGN_IN:
             return {
                 ...state,
                 authentication:{
@@ -43,13 +44,21 @@ const userReducer = (state = initialState, action) => {
                 }
                
             };
-        case 'SIGN_OUT':
+        case SIGN_OUT:
             return {
                 ...state,
                 authentication:{
                     ...state.authentication,
                     isSignout: true,
                     userToken: null,
+                }
+            };
+        case PROFILE_SETUP:
+            return {
+                ...state,
+                authentication:{
+                    ...state.authentication,
+                    isProfile: true
                 }
             };
         default: 

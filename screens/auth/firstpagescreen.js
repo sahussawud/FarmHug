@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     Platform,
     Image,
+    StatusBar,
     Linking
 } from "react-native";
 import logo from "../../assets/logo.png"
@@ -20,6 +21,7 @@ const FirstPageScreen = (props) => {
     return (
 
         <View style={styles.screen}>
+                        <StatusBar backgroundColor="white" barStyle={'dark-content'} />
             <Image source={logo} style={styles.logo} />
             <Text style={{ fontSize: 45, fontWeight: 'bold', fontFamily: 'Kanit'}}>FarmHug</Text>
             <Text style={{ fontFamily: 'Kanit'}}>Grow farm with love</Text>

@@ -1,15 +1,18 @@
 // RootNavigation.js
 
-import * as React from 'react';
+import React from 'react';
+import { NavigationContainer } from "@react-navigation/native";
 
-export const navigationRef = React.createRef();
+import AuthenticationNavigation from './authenticationNavigation'
+import FarmhugNavigation from './farmhugNavigation'
+import SetupNavigation from './setupNavigation'
+import { useSelector} from 'react-redux'
 
-export function navigate(name, params) {
-  navigationRef.current.navigate(name, params);
+const RootNavigation = (props)=>{
+  const User = useSelector(state=> state.User.authentication)
+  return(
+    User.userToken && !User.isProfile ? <SetupNavigation/> : User.userToken && User.isProfile ? <FarmhugNavigation/> : <AuthenticationNavigation/> 
+  )
 }
 
-export function toggleDrawer() {
-  navigationRef.current.toggleDrawer()
-}
-
-
+export default RootNavigation

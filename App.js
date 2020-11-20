@@ -1,6 +1,6 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View , StatusBar} from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
 import { AppLoading } from 'expo'
 import Constants from 'expo-constants';
@@ -10,9 +10,10 @@ import { Provider } from "react-redux";
 import userReducer from './store/reducers/userReducer';
 import farmReducer from './store/reducers/farmReducer';
 import activityReducer from './store/reducers/activityReducer'
+import {restore_token} from './store/actions/userAction'
 
-import FarmHugNavigation from './navigation/farmhugNavigation'
-import {navigationRef} from './navigation/RootNavigation'
+import RootNavigation from './navigation/RootNavigation'
+// import { navigationRef } from './navigation/RootNavigation'
 
 
 export default function App() {
@@ -26,6 +27,22 @@ export default function App() {
 
   const store = createStore(rootReducer);
 
+  useEffect(() => {
+    // Fetch the token from storage then navigate to our appropriate place
+    const bootstrapAsync = async () => {
+      let userToken;
+      try {
+        userToken = await AsyncStorage.getItem('userToken');
+      } catch (e) {
+        // Restoring token failed
+        console.log(e);
+      }
+
+      dispatch(restore_token(userToken));
+    };
+    bootstrapAsync();
+  }, []);
+
   let [fontsLoaded] = useFonts({
     'Kanit': require('./assets/fonts/Kanit-Light.ttf'),
   });
@@ -35,7 +52,7 @@ export default function App() {
   } else {
     return (
       <Provider store={store}>
-        <FarmHugNavigation ref={navigationRef}/>
+        <RootNavigation/>
       </Provider>
     );
   }

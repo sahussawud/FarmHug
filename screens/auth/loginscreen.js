@@ -10,16 +10,26 @@ import {
     Platform,
     Image,
     Linking,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    StatusBar
     
 } from "react-native";
 import logo from "../../assets/logo.png"
 import theme from "../../themes/default"
+import { useDispatch } from 'react-redux';
+import {sign_in} from '../../store/actions/userAction'
+
 
 const LoginScreen = (props) => {
-    const [loginDetail, setLoginDetail] = useState({ username: null, password: null })
+    const dispatch = useDispatch()
+    const [payload, setPayload] = useState({ username: null, password: null })
+
     const LoginSubmit = () => {
-        props.navigation.navigate("nameScreen")
+        const status = 200
+        const mocktoken = 'iloveyou'
+        if(status == 200){
+            dispatch(sign_in(mocktoken))
+        }
     }
 
     return (
@@ -27,17 +37,18 @@ const LoginScreen = (props) => {
         <KeyboardAvoidingView 
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.screen}>
+            <StatusBar backgroundColor="white" barStyle={'dark-content'} />
             <View style={styles.topArea}>
                 <Image source={logo} style={styles.logo} />
                 {/* <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>เข้าสู่ระบบ</Text> */}
             </View>
             <View style={styles.inputArea}>
-                <TextInput placeholder="อีเมล" style={[styles.input, theme.font]} />
-                <TextInput placeholder="รหัสผ่าน" style={[styles.input, theme.font]} secureTextEntry />
-                <Text style={{ textDecorationLine: 'underline', ...theme.font }}
+                <TextInput placeholder="อีเมล" style={[styles.input, theme.font]} value={payload.username} onChangeText={t=> setPayload(prev=> ({...prev, username: t}))}/>
+                <TextInput placeholder="รหัสผ่าน" style={[styles.input, theme.font]} value={payload.password} onChangeText={t=> setPayload(prev=> ({...prev, password: t}))} secureTextEntry/>
+                {/* <Text style={{ textDecorationLine: 'underline', ...theme.font }}
                     onPress={() => Linking.openURL('http://google.com')}>
                     ลืมรหัสผ่าน?
-                </Text>
+                </Text> */}
             </View>
             <View style={styles.buttonArea}>
                 <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={LoginSubmit}>

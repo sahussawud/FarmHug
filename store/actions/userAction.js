@@ -2,6 +2,7 @@ export const PROFILE_UPDATE = "PROFILE_UPDATE"
 export const RESTORE_TOKEN = "RESTORE_TOKEN"
 export const SIGN_IN = "SIGN_IN"
 export const SIGN_OUT = "SIGN_OUT"
+export const PROFILE_SETUP = "PROFILE_SETUP"
 
 
 
@@ -32,6 +33,11 @@ export const sign_out = () =>{
     }
 }
 
+export const profile_setup = () =>{
+    return {
+        type: PROFILE_SETUP
+    }
+}
 
 
 
