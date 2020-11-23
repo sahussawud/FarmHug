@@ -8,7 +8,7 @@ import comment from "../models/comments";
 
 import gql from 'graphql-tag'
 import { ApolloClient } from 'apollo-client'
-import { setContext } from 'apollo-link-context';
+// import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http'
 
 const client = new ApolloClient({
@@ -144,10 +144,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-const userdata = await client.mutate({
+const userdata = await client.qurry({
   variables:{id : _id},
-  mutation: gql`
-  mutation AddComment($id: ID!){
+  qurry: gql`
+  qurry AddComment($id: ID!){
       user(_id:$id){
         _id
         firstname
@@ -167,10 +167,10 @@ const userdata = await client.mutate({
 console.log(userdata)
 export const USER = new User(data.data.user._id, data.data.user.username, data.data.user.email)
 
-const farmdata = await client.mutate({
+const farmdata = await client.qurry({
   variables:{id : _id},
-  mutation: gql`
-  mutation AddComment($id: ID!){
+  qurry: gql`
+  qurry AddComment($id: ID!){
     farm(_id:$id){
       _id
       name
@@ -193,11 +193,11 @@ const farmdata = await client.mutate({
 })
 console.log(farmdata)
 
-const cowpropertydata = await client.mutate({
-  variables:{id : _id},
-  mutation: gql`
-  mutation AddComment($id: ID!){
-    farm(_id:$id){
+const cowpropertydata = await client.qurry({
+  variables:{farm_id : _id},
+  qurry: gql`
+  qurry AddComment($farm_id: ID!){
+    cowproperty(_id:$farm_id){
       _id
       name
       type
@@ -217,3 +217,45 @@ const cowpropertydata = await client.mutate({
 })
 console.log(cowpropertydata)
 
+const activitydata = await client.qurry({
+  variables:{farm_id : _id},
+  qurry: gql`
+  qurry AddComment($farm_id: ID!){
+    activity(_id:$farm_id){
+      _id
+      name
+      farm_id
+      cage_id
+      stall_id
+      type
+      detail
+      alertDate
+      updatedAt
+      status
+      creater_id
+      }
+    }
+    `
+})
+console.log(activitydata)
+
+const stalldata = await client.qurry({
+  variables:{farm_id : _id},
+  qurry: gql`
+  qurry AddComment($farm_id: ID!){
+    stall(_id:$farm_id){
+      _id
+      name
+      currentAnimal
+      maximumAnimal
+      farm_id
+      food
+      water
+      manure
+      updatedAt
+      area
+      }
+    }
+    `
+})
+console.log(stalldata)

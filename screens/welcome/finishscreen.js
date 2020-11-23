@@ -20,9 +20,11 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { profile_setup } from '../../store/actions/userAction'
 
 const finishscreen = (props) => {
-
+    const dispatch = useDispatch()
     const profile = useSelector(state=> state.User.profile)
     const farm = useSelector(state=> state.Farm.farm)
     // const [image, setImage] = useState(preview);
@@ -31,33 +33,11 @@ const finishscreen = (props) => {
     // const [role, setType] = useState("เจ้าของฟาร์ม");
 
     const submitForm = () => {
-            client.mutate({
-      mutation: gql`
-      mutation{
-        updateUser(_id:"5fb773301b265d001772d5ad",input:{
-          firstname: "phophon01"
-          lastname: "Insee"
-          line_account: ""
-          username: "Lnwlil007"
-          email: "Lnwlil@email.com"
-          password: "000000"
-          imageURL: ""
-          role_of_farm: "cow-maneger"
-          role_of_user: "employee"
-      }){
-          _id
-          firstname
-          lastname
-          line_account
-          username
-          email
-          password
-          imageURL
-          role_of_farm
-          role_of_user
-      }
-    }
-      `,}).then(data => console.log(data)).catch(error => console.error(error));
+        const status = 200
+        const mocktoken = 'iloveyou'
+        if(status == 200){
+            dispatch(profile_setup())
+        } 
     }
     const isImageProfile = profile.imageURL
 

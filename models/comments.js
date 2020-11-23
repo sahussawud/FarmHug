@@ -1,3 +1,5 @@
+import 'react-native-get-random-values'
+import { v4 as uuidv4 } from 'uuid';
 class comment {
     constructor(
       id,
@@ -5,14 +7,16 @@ class comment {
       post_id,
       user_id,
       detail,
-      updatedAt
+      updatedAt,
+      createdAt
     ) {
-      this.id = id;
+      this.id = uuidv4();
       this.farm_id = farm_id;
       this.user_id = user_id;
       this.post_id = post_id;
       this.detail = detail;
-      this.updatedAt = new Date();
+      this.updatedAt = updatedAt;
+      this.createdAt = createdAt;
     }
   }
   

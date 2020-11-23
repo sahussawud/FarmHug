@@ -19,102 +19,96 @@ import { Picker } from '@react-native-community/picker';
 import logo from "../../assets/home/farmer.png"
 import style from "../../themes/default";
 import theme from "../../themes/default"
-import * as ImagePicker from 'expo-image-picker';
-
 
 import SelectInput from 'react-native-select-input-ios'
 import { FARMS } from '../../data/data-dummy'
+import { useSelector } from 'react-redux';
+import TopBarProfile from '../../components/header/topBarProfile'
+import Post from '../../models/post'
+import Comment from '../../models/comments'
 
-class Component extends React.Component {
-    render() {
-      const options = [{ value: 0, label: '0' }]
-      
-      return (
-        <View>
-          <SelectInput value={0} options={options} />
-        </View>
-      )
-    }
-  }
+
 const postScreen = (props) => {
-    const [farms, setFarms] = useState([]);
-    const [isGlutenFree,setIsGlutenFree] = useState(false);
-    const [ post, setPost] = useState("")
+    const type = props.navigation.getParam('type')
+    const User = useSelector(state=> state.User.profile)
+    const post_id = props.navigation.getParam('post_id')
+
+    const [post, setPost] = useState(new Post());
+    const [comment, setComment] = useState(new Comment(undefined, User.farm_id, post_id, User.id))
+
+
     const submitForm = () => {
-        //simple validate
-        //sent form
-        //wait response
         props.navigation.navigate("postScreen")
     }
 
-    const pickImage = async (event) => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-
-        if (!result.cancelled) {
-            setImage({ uri: result.uri });
+    const changePost = (bodyChange) =>{
+        if(type==="post"){ 
+            setPost(prev=> ({ ...prev, ...bodyChange}))
+        }else if(type==="comment"){
+            setComment(prev=> ({ ...prev, ...bodyChange}))
         }
-    };
+        
+    }
 
     return (
-        <SafeAreaView>
-            <ScrollView style={{ backgroundColor: 'white' }}>
-                <View style={styles.screen}>
-                <View style={styles.profile}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                        <Image source={logo} style={styles.logo} />
-                        <Text style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', marginLeft: '2%'}}>ชื่อ: -</Text>
-                </View>
-                </View>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <TopBarProfile navigation={props.navigation} />
+            <View style={styles.screen}>
 
-                <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold',color:'#708090', marginLeft: '2%'}}>แชร์เรื่องราวของคุณ</Text>
-                <View style={{flex: 1, flexDirection: 'row'}}>
+                <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', color: '#708090', marginLeft: '2%' }}> { type==="post" ? 'แชร์เรื่องราวของคุณ' : 'ความเห็นของคุณ'}</Text>
+                <View style={{ flex: 1 }}>
                     <View style={styles.layback2}>
-                    <TextInput placeholder="เรื่องราว"
-                            multiline={true}
-                            numberOfLines={4}
-                            style={[styles.input, theme.font]}
-                            value={post}
-                            onChangeText={setPost}
-                            maxLength={255}
-                        />
-                    <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold',color:'#708090',marginTop: '30%', marginLeft:'80%'}}>แชร์สถานที่</Text>
-                        <View style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', marginBottom: '50%', marginLeft:'80%'}}>
-                            <Switch
-                                trackColor={{ false: "#767577", true: "#81b0ff"}}
-                                thumbColor={isGlutenFree ? "#FFFFFF" : "#767577"}
-                                onValueChange={setIsGlutenFree}
-                                value={isGlutenFree}
+                        <ScrollView>
+                            <View>
+                                <TextInput placeholder={type==="post" ? "ใส่เรื่องราวที่คุณต้องการเเชร์": "เเสดงความคิดเห็นของคุณที่นี่"}
+                                    multiline={true}
+                                    numberOfLines={5}
+                                    style={[{ textAlign: 'auto' }, theme.font]}
+                                    value={type==="post" ? post.detail: comment.detail}
+                                    onChangeText={(text)=>changePost({ detail:text })}
+                                    maxLength={255}
                                 />
-                        </View>
+                            </View>
+
+                        </ScrollView>
+                        { type==="post" ? ( <View style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', position: 'absolute', bottom: 0, right: 0 }}>
+                            <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', color: '#708090' }}>สาธารณะ</Text>
+                            <Switch
+                                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                thumbColor={post.isPublic ? "#FFFFFF" : "#767577"}
+                                onValueChange={(value)=>changePost({ isPublic:value })}
+                                value={post.isPublic}
+                            />
+                        </View>): (<View/>)}
+                        {/* <View style={{ ...theme.font, fontSize: 20, fontWeight: 'bold', position: 'absolute', bottom: 0, right: 0 }}>
+                            <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', color: '#708090' }}>สาธารณะ</Text>
+                            <Switch
+                                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                thumbColor={post.isPublic ? "#FFFFFF" : "#767577"}
+                                onValueChange={(value)=>changePost({ isPublic:value })}
+                                value={post.isPublic}
+                            />
+                        </View> */}
                     </View>
-                </View>
-                <View style={styles.button1}>
-                    
-                    <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={pickImage}>
-                            <Text style={{ ...theme.font, textAlign: 'center' }}>เลือกรูปภาพ</Text>
-                        </TouchableOpacity></View>
-                    <View style={styles.buttonArea}>
+                    <View style={{ height: 50}}>
                         <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm}>
-                            <Text style={{ ...theme.font, textAlign: 'center' }}>โพสเรื่องราวของคุณ</Text>
+                    <Text style={{ ...theme.font, textAlign: 'center' }}>{ type==="post" ? "โพสต์" : "เเสดงความคิดเห็น"}</Text>
                         </TouchableOpacity>
                     </View>
 
                 </View>
-            </ScrollView>
+
+
+            </View>
         </SafeAreaView>
-    
+
 
     );
 };
 
 
 const styles = StyleSheet.create({
-    profile:{
+    profile: {
         flexDirection: 'row'
     },
     screen: {
@@ -125,10 +119,10 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingLeft: 10
     },
-    fonts:{
+    fonts: {
         color: 'black',
-        fontSize: 20, 
-        fontWeight: 'bold', 
+        fontSize: 20,
+        fontWeight: 'bold',
         alignItems: 'center'
     },
     logo: {
@@ -148,10 +142,10 @@ const styles = StyleSheet.create({
         marginBottom: '5%',
     },
     buttonArea: {
-        flex: 3,
+        flex: 1,
         flexDirection: 'column',
-        width: '100%',
-        marginBottom: '25%',
+        // width: '100%',
+        // marginBottom: '25%',
     },
     inputArea: {
         flex: 3,
@@ -178,23 +172,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
     },
-    layback1:{
+    layback1: {
         flex: 1,
         width: 300,
         height: 120,
-        backgroundColor: '#F5F5F5',  
-        marginBottom: '10%', 
+        backgroundColor: '#F5F5F5',
+        marginBottom: '10%',
         borderRadius: 15,
         // alignItems: "center",
     },
-    layback2:{
-        flex: 1,
-        width: 300,
-        height: 200,
-        backgroundColor: '#F5F5F5',  
-        marginBottom: '10%', 
+    layback2: {
+        // flex: 0.6,
+        height: 250,
+        backgroundColor: '#F5F5F5',
+        marginBottom: '10%',
         borderRadius: 15,
-        alignItems: "center",
+        // alignItems: "center",
     }
 });
 

@@ -35,23 +35,25 @@ import Constants from 'expo-constants';
 import TopBarProfile from '../../components/header/topBarProfile'
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { profile_update } from '../../store/actions/userAction'
+import { create_farm } from '../../store/actions/farmAction'
+
 
 import { FARMS } from '../../data/data-dummy'
 const settingScreen = (props) => {
-
+    const dispatch = useDispatch();
     const user = useSelector(state => state.User.profile)
     const _farm = useSelector(state => state.Farm.farm)
+
     const [profile, setProfile] = useState(user)
     const [farm, setFarm] = useState(_farm)
     const [isEditProfile, setIsEditProfile] = useState(false)
     const [isEditFarm, setIsEditFarm] = useState(false)
 
-    const logout = () => {
-        props.navigation.navigate("homeScreen")
-    }
-
     const editProfile = () => {
-        console.log('editProfile');
+        if(isEditProfile){
+            dispatch(profile_update(profile))
+        }
         setIsEditProfile(prev => !prev)
     }
 
@@ -73,6 +75,9 @@ const settingScreen = (props) => {
     }
 
     const editFarm = () => {
+        if(isEditFarm){
+           dispatch(create_farm(farm)) 
+        }
         setIsEditFarm(prev => !prev)
     }
 
@@ -95,12 +100,11 @@ const settingScreen = (props) => {
 
 
     return (
-        <SafeAreaView>
-            <TopBarProfile navigation={props.navigation} />
+        <SafeAreaView style={styles.screen}>
+            {/* <TopBarProfile navigation={props.navigation} /> */}
 
             <ScrollView style={{ backgroundColor: 'white' }}>
-                <View style={styles.screen}>
-
+                <View>
                     <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', color: '#708090', marginLeft: '10%' }}>รายละเอียดบัญชี</Text>
 
                     <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -160,10 +164,10 @@ const settingScreen = (props) => {
                             )}
                     </View>
 
-                    {/* <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', color: '#708090', marginLeft: '10%' }}>ข้อมูลฟาร์ม</Text> */}
+                    <Text style={{ ...theme.font, fontSize: 15, fontWeight: 'bold', color: '#708090', marginLeft: '10%' }}>ข้อมูลฟาร์ม</Text> 
 
-                    {/* <View style={{ flex: 1, flexDirection: 'row', alignContent: 'center' }}>
-                        <View style={styles.layback1}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignContent: 'center' }}>
+                        <View style={styles.layback2}>
                             <View style={{ flex: 1, flexDirection: 'row' }}>
                                 <View style={styles.frontrow}>
                                     <Image source={farm1} style={{ width: 35, height: 35, marginHorizontal: 20 }} />
@@ -238,12 +242,11 @@ const settingScreen = (props) => {
                             </View>
                         </View>
                     </View>
-                    <View >
-                        <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={logout}>
+                    <View style={{ paddingBottom: '50%'}}>
+                        <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={editFarm}>
                             <Text style={{ ...theme.font, textAlign: 'center' }}>เเก้ไขข้อมูลฟาร์ม</Text>
                         </TouchableOpacity>
-                    </View>*/}
-
+                    </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -265,7 +268,6 @@ const styles = StyleSheet.create({
     },
     screen: {
         flex: 1,
-        paddingBottom: '30%',
         // justifyContent: "center",
         // alignItems: "center",
         backgroundColor: 'white',
@@ -331,7 +333,7 @@ const styles = StyleSheet.create({
     layback2: {
         flex: 1,
         width: 300,
-        height: 230,
+        height: 300,
         backgroundColor: '#F5F5F5',
         marginBottom: '3%',
         borderRadius: 15,

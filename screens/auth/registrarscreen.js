@@ -9,24 +9,47 @@ import {
     Image,
     Linking,
     SafeAreaView,
-    ScrollView
+    ScrollView,
+    StatusBar,
+    Alert
 } from "react-native";
 import logo from "../../assets/logo.png"
 import theme from "../../themes/default"
 
 const RegistarScreen = (props) => {
+    const [payload, setPayload] = useState({
+        username: undefined,
+        password: undefined,
+        repassword: undefined
+    })
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    const submitForm = () =>{
+    const createAlert = (title, msg) =>
+        Alert.alert(
+            title,
+            msg,
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+        );
+
+    const submitForm = () => {
         //simple validate
-        //sent form
-        //wait response
-        props.navigation.navigate("loginScreen")
+        if (!isEnabled) {
+            createAlert('ลงทะเบียนไม่สำเร็จ', 'กรุณายอมรับข้อตกลงการใช้')
+        } else if (payload.password !== payload.repassword) {
+            createAlert('ลงทะเบียนไม่สำเร็จ', 'ยืนยันรหัสผ่านไม่ถูกต้อง')
+        } 
+        if (isEnabled && (payload.password === payload.repassword)){
+            props.navigation.goBack()
+        }
     }
 
     return (
         <SafeAreaView>
+            <StatusBar backgroundColor="white" barStyle={'dark-content'} />
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <View style={styles.screen}>
                     <View style={styles.topArea}>
@@ -34,10 +57,10 @@ const RegistarScreen = (props) => {
                         <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>สมัครสมาชิก</Text>
                     </View>
                     <View style={styles.inputArea}>
-                        <TextInput placeholder="ชื่อผู้ใช้" style={[styles.input, theme.font]} />
-                        <TextInput placeholder="อีเมล" style={[styles.input, theme.font]} />
-                        <TextInput placeholder="รหัสผ่าน" style={[styles.input, theme.font]} />
-                        <TextInput placeholder="ยืนยันรหัสผ่าน" style={[styles.input, theme.font]} />
+                        <TextInput placeholder="ชื่อผู้ใช้" style={[styles.input, theme.font]} value={payload.username} onChangeText={t=> setPayload(prev=> ({ ...prev,username: t }))} />
+                        {/* <TextInput placeholder="อีเมล" style={[styles.input, theme.font]}  value={payload.email}/> */}
+                        <TextInput placeholder="รหัสผ่าน" style={[styles.input, theme.font]} secureTextEntry  value={payload.password} onChangeText={t=> setPayload(prev=> ({ ...prev,password: t }))}/>
+                        <TextInput placeholder="ยืนยันรหัสผ่าน" style={[styles.input, theme.font]} secureTextEntry  value={payload.repassword} onChangeText={t=> setPayload(prev=> ({ ...prev,repassword: t }))} />
                         <View style={styles.privacyaccept}>
                             <Switch
                                 style={{ marginRight: '5%' }}

@@ -1,12 +1,13 @@
 class post {
     constructor(
       id,
-      type,
+      isPublic,
       farm_id,
       user_id,
       topic,
       detail,
       comments,
+      createdAt,
       updatedAt
     ) {
       this.id = id;
@@ -14,9 +15,10 @@ class post {
       this.user_id = user_id;
       this.topic = topic;
       this.detail = detail;
-      this.type = type;
+      this.isPublic = isPublic || false;
       this.comments = comments;
-      this.updatedAt = new Date();
+      this.createdAt =  new Date();
+      this.updatedAt = updatedAt;
     }
   }
   

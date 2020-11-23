@@ -17,7 +17,7 @@ for (let index = 0; index < 10; index++) {
 const type = ['question', 'share']
 export const COMMENTS = [
   new comment(1, 'f1', 1, 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', ''),
-  new comment(2, 'f1', 1, 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', ''),
+  new comment(2, 'f2', 1, 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', ''),
   new comment(3, 'f1', 1, 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', ''),
 ]
 
