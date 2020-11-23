@@ -16,8 +16,38 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
+export const ADD_NEW_USER = gql`
+  mutation AddTodo($firstname: String! , $lastname: String!, $line_account: String!, $username: String!, $email: String!, $password: String!, $imageURL: String!, $type: String!, $role: String!, $farm_id_: ID!) {
+    createUser(input:{
+      firstname: "phophon02"
+      lastname: "Insee"
+      line_account: ""
+      username: "Lnwlil007"
+      email: "Lnwlil@email.com"
+      password: "000000"
+      imageURL: ""
+      type: "cow-maneger"
+      role: Employee
+      farm_id: ""
+    }){
+      _id
+      firstname
+      lastname
+      line_account
+      username
+      email
+      password
+      imageURL
+      type
+      role
+      farm_id
+    }
+  }
+`;
+
 // create
-client.mutate({
+export const created = client.mutate({
+    variables:{farm_id : _id},
     mutation: gql`
     mutation{
       createUser(input:{
@@ -99,55 +129,15 @@ client.mutate({
         `,}).then(data => console.log(data)).catch(error => console.error(error));
 
 // qury
-// const data = await client.mutate({
-//   variables:{id : _id},
-//   mutation: gql`
-//   mutation AddComment($id: ID!){
-//       user(_id:$id){
-//         _id
-//         firstname
-//         lastname
-//         line_account
-//         username
-//         email
-//         password
-//         imageURL
-//         type
-//         role
-//         farm_id
-//       }
-//     }
-//     `
-// })
-// console.log(data)
-// export const USER = new User(data.data.user._id, data.data.user.username, data.data.user.email)
-
-// client.qurry({
-//   qurry: gql`
-//   qurry{
-//     _id
-//     firstname
-//     lastname
-//     line_account
-//     username
-//     email
-//     password
-//     imageURL
-//     role_of_farm
-//     role_of_user
-//   }
-//   `
-// }).then(data => console.log(data)).catch(error => console.error(error));
-
 const client = new ApolloClient({
   link: authLink.concat(new HttpLink({ uri: 'https://cors-anywhere.herokuapp.com/https://farm-hug-api.herokuapp.com/graphql' })),
   cache: new InMemoryCache()
 })
 
-const userdata = await client.qurry({
+const userdata = await client.query({
   variables:{id : _id},
-  qurry: gql`
-  qurry AddComment($id: ID!){
+  query: gql`
+  query AddComment($id: ID!){
       user(_id:$id){
         _id
         firstname
@@ -167,10 +157,10 @@ const userdata = await client.qurry({
 console.log(userdata)
 export const USER = new User(data.data.user._id, data.data.user.username, data.data.user.email)
 
-const farmdata = await client.qurry({
+const farmdata = await client.query({
   variables:{id : _id},
-  qurry: gql`
-  qurry AddComment($id: ID!){
+  query: gql`
+  query AddComment($id: ID!){
     farm(_id:$id){
       _id
       name
@@ -193,10 +183,10 @@ const farmdata = await client.qurry({
 })
 console.log(farmdata)
 
-const cowpropertydata = await client.qurry({
+const cowpropertydata = await client.query({
   variables:{farm_id : _id},
-  qurry: gql`
-  qurry AddComment($farm_id: ID!){
+  query: gql`
+  query AddComment($farm_id: ID!){
     cowproperty(_id:$farm_id){
       _id
       name
@@ -217,10 +207,10 @@ const cowpropertydata = await client.qurry({
 })
 console.log(cowpropertydata)
 
-const activitydata = await client.qurry({
+const activitydata = await client.query({
   variables:{farm_id : _id},
-  qurry: gql`
-  qurry AddComment($farm_id: ID!){
+  query: gql`
+  query AddComment($farm_id: ID!){
     activity(_id:$farm_id){
       _id
       name
@@ -239,10 +229,10 @@ const activitydata = await client.qurry({
 })
 console.log(activitydata)
 
-const stalldata = await client.qurry({
+const stalldata = await client.query({
   variables:{farm_id : _id},
-  qurry: gql`
-  qurry AddComment($farm_id: ID!){
+  query: gql`
+  query AddComment($farm_id: ID!){
     stall(_id:$farm_id){
       _id
       name
