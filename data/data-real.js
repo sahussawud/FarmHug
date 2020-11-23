@@ -16,19 +16,20 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
+
 export const ADD_NEW_USER = gql`
-  mutation AddTodo($firstname: String! , $lastname: String!, $line_account: String!, $username: String!, $email: String!, $password: String!, $imageURL: String!, $type: String!, $role: String!, $farm_id_: ID!) {
+  mutation AddTodo($firstname: String! , $lastname: String!, $line_account: String!, $username: String!, $email: String!, $password: String!, $imageURL: String!, $type: String!, $role: String!, $farm_id: ID!) {
     createUser(input:{
-      firstname: "phophon02"
-      lastname: "Insee"
-      line_account: ""
-      username: "Lnwlil007"
-      email: "Lnwlil@email.com"
-      password: "000000"
-      imageURL: ""
-      type: "cow-maneger"
-      role: Employee
-      farm_id: ""
+      firstname: $firstname
+      lastname: $lastname
+      line_account: $line_account
+      username: $username
+      email: $email
+      password: $password
+      imageURL:  $imageURL
+      type: $type
+      role: $role
+      farm_id: $farm_id
     }){
       _id
       firstname
