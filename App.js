@@ -10,10 +10,17 @@ import { Provider } from "react-redux";
 import userReducer from './store/reducers/userReducer';
 import farmReducer from './store/reducers/farmReducer';
 import activityReducer from './store/reducers/activityReducer'
-import {restore_token} from './store/actions/userAction'
+import { restore_token } from './store/actions/userAction'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
 
 import RootNavigation from './navigation/RootNavigation'
 // import { navigationRef } from './navigation/RootNavigation'
+
+const client = new ApolloClient({
+  uri: 'https://cors-anywhere.herokuapp.com/https://farm-hug-api.herokuapp.com/graphql',
+  cache: new InMemoryCache()
+})
 
 
 export default function App() {
@@ -52,7 +59,9 @@ export default function App() {
   } else {
     return (
       <Provider store={store}>
-        <RootNavigation/>
+        <ApolloProvider client={client}>
+          <RootNavigation />
+        </ApolloProvider>
       </Provider>
     );
   }
