@@ -8,7 +8,7 @@ import comment from "../models/comments";
 
 const new_activity= [];
 for (let index = 0; index < 10; index++) {
-  const isOdd = index%2 == 1 
+  const isOdd = index%2 == 1
   const element = new Activity(index, 'กิจกรรม '+(index+1), isOdd ? 'อาบน้ำให้วัว': 'ฉีดยา', isOdd ? 'stall': 'animal', 'f1', 1, isOdd ? undefined: 1,'2020-11-14 15:02:16.341093','','','',0 )
   new_activity.push(element)
 }

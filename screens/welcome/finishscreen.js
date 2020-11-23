@@ -30,7 +30,34 @@ const finishscreen = (props) => {
     // const [farm, setFarm] = useState("สุขสงบฟาร์ม");
     // const [role, setType] = useState("เจ้าของฟาร์ม");
 
-    const submitForm = () => {   
+    const submitForm = () => {
+            client.mutate({
+      mutation: gql`
+      mutation{
+        updateUser(_id:"5fb773301b265d001772d5ad",input:{
+          firstname: "phophon01"
+          lastname: "Insee"
+          line_account: ""
+          username: "Lnwlil007"
+          email: "Lnwlil@email.com"
+          password: "000000"
+          imageURL: ""
+          role_of_farm: "cow-maneger"
+          role_of_user: "employee"
+      }){
+          _id
+          firstname
+          lastname
+          line_account
+          username
+          email
+          password
+          imageURL
+          role_of_farm
+          role_of_user
+      }
+    }
+      `,}).then(data => console.log(data)).catch(error => console.error(error));
     }
     const isImageProfile = profile.imageURL
 
