@@ -1,10 +1,10 @@
-// import User from '../../models/user';
-import { USER } from '../../data/data-dummy'
+import User from '../../models/user';
+// import { USER } from '../../data/data-dummy'
 import { PROFILE_UPDATE, SIGN_IN, SIGN_OUT, RESTORE_TOKEN, PROFILE_SETUP } from '../actions/userAction'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAlert} from '../../data/fetching'
 
-const initialUser = USER
+const initialUser = new User()
 
 
 const initialState = {
@@ -15,7 +15,6 @@ const initialState = {
         isSignout: false,
         userToken: null,
     }
-
 }
 
 const userReducer = (state = initialState, action) => {
@@ -52,12 +51,7 @@ const userReducer = (state = initialState, action) => {
         case SIGN_OUT:
             AsyncStorage.setItem('token', '')
             return {
-                ...state,
-                authentication:{
-                    ...state.authentication,
-                    isSignout: true,
-                    userToken: null,
-                }
+                state: initialState 
             };
         case PROFILE_SETUP:
             return {

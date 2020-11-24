@@ -4,7 +4,7 @@ import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Ionicons, MaterialIcons, Entypo } from "@expo/vector-icons";
 import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
-import { Image } from "react-native";
+import { Image, Button } from "react-native";
 import logo from "../assets/logo.png"
 
 // import firstPageScreen from "../screens/auth/firstpagescreen";
@@ -34,43 +34,7 @@ import settingScreen from "../screens/setting1/settingscreen";
 import MailScreen from "../screens/mail/mailscreen";
 
 
-  // const AuthenticationNavigator = createStackNavigator({
-  //   // กำหนด RouteConfigs (Slide 14)
-  //   FirstPageScreen: firstPageScreen,
-  //   loginScreen: loginScreen,
-  //   registrarScreen: registrarScreen,
-  // },
-  //   {
-  //     // กำหนด defaultNavigationOptions (Slide 23-24)
-  //     defaultNavigationOptions: {
-  //       title: "",
-  //       headerStyle: { backgroundColor: "#4a148c", },
-  //       headerTintColor: "black",
-  //     }
-  //   })
 
-  // const setupNavigator = createStackNavigator(
-  //   {
-  //     nameScreen: nameScreen,
-  //     employeeScreen: employeeScreen,
-  //     ownerScreen: ownerScreen,
-  //     farmLocationScreen: farmLocationScreen,
-  //     cattleSetupScreen: cattleSetupScreen,
-  //     stallSetupScreen: stallSetupScreen,
-  //     selectstallscreen: selectstallscreen,
-  //     animaladdscreen: animaladdscreen,
-  //     finishscreen: finishscreen,
-  //     animallistscreen: animallistscreen
-  //   },
-  //   {
-  //     // กำหนด defaultNavigationOptions (Slide 23-24)
-  //     defaultNavigationOptions: {
-  //       title: "สร้างโปรไฟล์",
-  //       headerStyle: { backgroundColor: "#4a148c", },
-  //       headerTintColor: "black",
-  //     }
-  //   }
-  // );
 
   const homeNavigator = createStackNavigator(
     {
@@ -199,12 +163,13 @@ import MailScreen from "../screens/mail/mailscreen";
   );
 
 
+
   const MainNavigator = createDrawerNavigator(
     {
       MyFarm: {
         screen: FTabNavigator
       },
-      Setting: settingNavigator
+      Setting: settingNavigator,
 
     },
     { contentOptions: { activeTintColor: "blue" }, }

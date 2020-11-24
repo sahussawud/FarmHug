@@ -35,7 +35,7 @@ import Constants from 'expo-constants';
 import TopBarProfile from '../../components/header/topBarProfile'
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { profile_update } from '../../store/actions/userAction'
+import { profile_update, sign_out } from '../../store/actions/userAction'
 import { create_farm } from '../../store/actions/farmAction'
 
 
@@ -55,6 +55,11 @@ const settingScreen = (props) => {
             dispatch(profile_update(profile))
         }
         setIsEditProfile(prev => !prev)
+    }
+    
+    const Logout = () =>{
+        dispatch(sign_out())
+        props.navigation.navigate('FirstPageScreen')
     }
 
 
@@ -243,8 +248,13 @@ const settingScreen = (props) => {
                         </View>
                     </View>
                     <View style={{ paddingBottom: '50%'}}>
-                        <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={editFarm}>
+                        <TouchableOpacity style={[styles.button, theme.defaultButton, {marginBottom: 20}]} onPress={editFarm}>
                             <Text style={{ ...theme.font, textAlign: 'center' }}>เเก้ไขข้อมูลฟาร์ม</Text>
+                        </TouchableOpacity>
+
+
+                        <TouchableOpacity style={[styles.button, theme.dangerButton]} onPress={Logout}>
+                            <Text style={{ ...theme.font, textAlign: 'center' }}>ออกจากระบบ</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

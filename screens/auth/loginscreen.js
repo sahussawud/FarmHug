@@ -23,6 +23,7 @@ import { getUserData } from '../../data/graphl_query'
 import { signinPath, createAlert } from '../../data/fetching'
 import axios from 'axios'
 import { useMutation, useQuery } from '@apollo/client';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const LoginScreen = (props) => {
@@ -32,10 +33,12 @@ const LoginScreen = (props) => {
 
     const LoginSubmit = () => {
 
-        axios.post(signinPath, { username: payload.username, password: payload.password }).then(response => {
+        axios.post(signinPath, { username: payload.username, password: payload.password }).then(async response => {
             if (response.status === 200) {
+                console.log(response.data.profile);
                 dispatch(profile_update(response.data.profile))
                 dispatch(sign_in(response.data.token))
+                await AsyncStorage.setItem('_id', response.data.profile._id)
             }
         }).catch(error => {
             console.log(error.request);

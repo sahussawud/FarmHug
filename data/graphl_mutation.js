@@ -49,34 +49,30 @@ export const ADD_NEW_USER = gql`
 
 
 export const UPDATE_A_PROFILE = gql`
-      mutation updateProfile($_id: ID!, $firstname: String! , $lastname: String!, $line_account: String!, $username: String!, $email: String!, $password: String!, $imageURL: String!, $type: String!, $role: RoleInput!, $farm_id: ID!, $isProfile : Boolean!){
-        updateUser(_id:$_id,input:{
-          firstname: $firstname
-          lastname: $lastname
-          line_account: $line_account
-          username: $username
-          email: $email
-          password: $password
-          imageURL:  $imageURL
-          type: $type
-          role: $role
-          farm_id: $farm_id
-          isProfile: $isProfile
-      }){
-        _id
-        firstname
-        lastname
-        line_account
-        username
-        email
-        password
-        imageURL
-        type
-        role
-        farm_id
-        isProfile
-      }
-    }
+mutation updateProfile($_id: ID!, $firstname: String! , $lastname: String!, $line_account: String!, $email: String!, $imageURL: String!, $role: RoleInput!, $farm_id: ID!, $isProfile : Boolean!){
+  updateUser(_id:$_id,input:{
+    firstname: $firstname
+    lastname: $lastname
+    line_account: $line_account
+    email: $email
+    imageURL:  $imageURL
+    role: $role
+    farm_id: $farm_id
+    isProfile: $isProfile
+}){
+  _id
+  firstname
+  lastname
+  line_account
+  username
+  email
+  password
+  imageURL
+  type
+  role
+  farm_id
+}
+}
       `;
 
 export const DELETE_A_USER = gql`
@@ -99,28 +95,25 @@ export const DELETE_A_USER = gql`
 `;
 
 export const ADD_NEW_FARM = gql`
-  mutation addNewFarm($name: String!,  $address: String!, $description: String!, $distance: Float!, $imageURL: String!, $area: String!, $type: String!, $location: String!, $capacity: Int!, $cow: Int!, $createdAt: String!, $watercheck: Int!, $foodConsume: Int!, $employee: Int!) {
+  mutation addNewFarm($name: String!,  $address: String!, $description: String!, $imageURL: String!, $area: String!, $type: String!, $location: Location!, $createdAt: String!) {
     createFarm(input:{
       name: $name
       address: $address
       description: $description
-      distance: $distance
       imageURL: $imageURL
       area: $area
       type: $type
       location: $location
-      capacity: $capacity
       cow: $cow
       createdAt: $createdAt
-      watercheck: $watercheck
-      foodConsume: $foodConsume
-      employee: $employee
+      watercheck: 0
+      foodConsume: 0
+      employee: 0
     }){
       _id
       name
       address
       description
-      distance
       imageURL
       area
       type

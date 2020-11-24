@@ -6,9 +6,9 @@ import { FARMS, ANIMALS, STALLS} from '../../data/data-dummy'
 const initialFarm = new Farm()
 
 const initialState = {
-    farm: FARMS[0], // initialFarm
-    stall: STALLS, //[]
-    animal: ANIMALS //[]
+    farm:  initialFarm,
+    stall:  [],
+    animal: []
 }
 
 const farmReducer = (state = initialState, action) => {
