@@ -47,6 +47,12 @@ export const ADD_NEW_USER = gql`
 
 
 export const UPDATE_A_PROFILE = gql`
+enum RoleInput{
+  Owner
+  Employee
+  NONE
+}
+
       mutation updateProfile($_id: ID!, $firstname: String! , $lastname: String!, $line_account: String!, $username: String!, $email: String!, $password: String!, $imageURL: String!, $type: String!, $role: RoleInput!, $farm_id: ID!, $isProfile : Boolean!){
         updateUser(_id:$_id,input:{
           firstname: $firstname
