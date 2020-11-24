@@ -21,25 +21,38 @@ import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { profile_setup, profile_update } from '../../store/actions/userAction'
+import { profile_update } from '../../store/actions/userAction'
+import { create_farm } from '../../store/actions/farmAction'
+
 import { useMutation } from '@apollo/client';
-import { UPDATE_A_PROFILE } from '../../data/graphl_mutation'
+import { UPDATE_A_PROFILE, ADD_NEW_FARM } from '../../data/graphl_mutation'
 
 const finishscreen = (props) => {
-    const [updateProfile, { data, loading, error }] = useMutation(UPDATE_A_PROFILE);
+
     const dispatch = useDispatch()
     const profile = useSelector(state => state.User.profile)
     const farm = useSelector(state => state.Farm.farm)
 
-    useEffect(() => {
-        if (data) {
-            dispatch(profile_update(data))
-        }
-    }, [data])
+    // useEffect(() => {
+    //     if (data) {
+    //         dispatch(profile_update(data))
+    //     }
+    //     console.log(error, profile);
+    // }, [data,error])
 
     const submitForm = async () => {
+        const [updateProfile, { data: profileData, loading, error }] = useMutation(UPDATE_A_PROFILE);
+        await updateProfile({ variables: { ...profile, isProfile: true } })
+        if (profileData) {
+            dispatch(profile_update(profileData))
+            const [createfarm, { data: farmData }] = useMutation(ADD_NEW_FARM)
+            await createfarm(farmData)
+            dispatch(create_farm(farmData))
+            if (farmData){
+                
+            }
+        };
 
-        updateProfile({ variables: { ...profile, isProfile: true } })
 
     }
     const isImageProfile = profile.imageURL
@@ -74,8 +87,6 @@ const finishscreen = (props) => {
                 </View>
             </ScrollView>
         </SafeAreaView>
-
-
     );
 };
 

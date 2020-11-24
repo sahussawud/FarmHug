@@ -16,7 +16,6 @@ export const update_activity = (activity) =>{
     return {
         type: UPDATE_ACTIVITY,
         activity: activity
-
     }
 }
 

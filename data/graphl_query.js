@@ -2,21 +2,21 @@
 import gql from 'graphql-tag'
 
 export const getUserData =  gql`
-    query AddComment($id: ID!){
-        user(_id:$id){
-          _id
-          firstname
-          lastname
-          line_account
-          username
-          email
-          password
-          imageURL
-          type
-          role
-          farm_id
-        }
-      }
+query AddComment($id: ID!){
+  user(_id:$id){
+    _id
+    firstname
+    lastname
+    line_account
+    username
+    email
+    imageURL
+    type
+    role
+    farm_id,
+    isProfile
+  }
+}
       `
  
 export const farmdata =  gql`

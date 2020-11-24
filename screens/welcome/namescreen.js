@@ -35,12 +35,12 @@ const nameScreen = (props) => {
 
     const dispatch = useDispatch()
 
-    
 
     useEffect(()=>{
         const updateProfile = {
+            ...profile,
             imageURL: image,
-            username: name,
+            firstname: name,
             role: type,
         };
         dispatch(profile_update(updateProfile))

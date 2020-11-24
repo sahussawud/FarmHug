@@ -28,6 +28,7 @@ export const sign_in = (token) =>{
 }
 
 export const sign_out = () =>{
+    console.log('sign_out');
     return {
         type: SIGN_OUT
     }
