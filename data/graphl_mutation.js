@@ -46,19 +46,19 @@ export const ADD_NEW_USER = gql`
 `;
 
 
-export const UPDATE_PROFILE = gql`
-      mutation{
-        updateUser(_id:"5fba81465144000017a23fee",input:{
-          firstname: "phophon02"
-          lastname: "Insee"
-          line_account: ""
-          username: "Lnwlil007"
-          email: "Lnwlil@email.com"
-          password: "000000"
-          imageURL: ""
-          type: "cow-maneger"
-          role: Employee
-          farm_id: ""
+export const UPDATE_A_PROFILE = gql`
+      mutation updateProfile($_id: ID!, $firstname: String! , $lastname: String!, $line_account: String!, $username: String!, $email: String!, $password: String!, $imageURL: String!, $type: String!, $role: String!, $farm_id: ID!){
+        updateUser(_id:$_id,input:{
+          firstname: $firstname
+          lastname: $lastname
+          line_account: $line_account
+          username: $username
+          email: $email
+          password: $password
+          imageURL:  $imageURL
+          type: $type
+          role: $role
+          farm_id: $farm_id
       }){
         _id
         firstname
