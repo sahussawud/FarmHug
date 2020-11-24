@@ -276,7 +276,7 @@ export const DELETE_A_COWPROPERTY = gql`
 `;
 
 export const ADD_NEW_ACTIVITY = gql`
-  mutation addNewActivity($name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: String!, $creater_id: ID!) {
+  mutation addNewActivity($name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: StatusInput!, $creater_id: ID!) {
     createActivity(input:{
       name :$name
       farm_id :$farm_id
@@ -305,7 +305,7 @@ export const ADD_NEW_ACTIVITY = gql`
 `;
 
 export const UPDATE_ACTIVITY = gql`
-  mutation updateActivity($_id:ID!, $name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: String!, $creater_id: ID!) {
+  mutation updateActivity($_id:ID!, $name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: StatusInput!, $creater_id: ID!) {
     updateActivity(_id:$_id, input:{
       name :$name
       farm_id :$farm_id
