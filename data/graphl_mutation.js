@@ -224,36 +224,6 @@ export const ADD_NEW_COWPROPERTY = gql`
   }
 `;
 
-export const ADD_NEW_MANY_COWPROPERTY = gql`
-  mutation addNewCowproperty($name: String!,  $type: String!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
-    createCowproperty(input:{
-      name :$name
-      type :$type
-      gene :$gene
-      weight :$weight
-      height :$height
-      farm_id :$farm_id
-      stall_id :$stall_id
-      breed :$breed
-      dob :$dob
-      sex :$sex
-      imageUrl :$imageUrl
-    }){
-      _id
-      name
-      type
-      gene
-      weight
-      height
-      farm_id
-      stall_id
-      breed
-      dob
-      sex
-      imageUrl
-    }
-  }
-`;
 
 export const UPDATE_COWPROPERTY = gql`
   mutation updateCowproperty($_id: ID!, $name: String!,  $type: String!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
@@ -448,6 +418,72 @@ export const DELETE_STALL = gql`
           manure
           updatedAt
           area
+        }
+      }
+`;
+
+export const ADD_NEW_POST = gql`
+  mutation addNewPost($farm_id: ID!,  $user_id: ID!, $topic: String!, $detail: String!, $isPublic: Boolean!, $comments: String!, $createdAt: String!, $updatedAt: String!) {
+    createPost(input:{
+      farm_id: $farm_id
+      user_id: $user_id
+      topic: $topic
+      detail: $detail
+      isPublic: $isPublic
+      comments: $comments
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }){
+      _id
+      farm_id
+      user_id
+      topic
+      detail
+      isPublic
+      comments
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const UPDATE_POST = gql`
+  mutation updatePost($_id: ID!, $farm_id: ID!,  $user_id: ID!, $topic: String!, $detail: String!, $isPublic: Boolean!, $comments: String!, $createdAt: String!, $updatedAt: String!) {
+    updatePost(_id:$_id, input:{
+      farm_id: $farm_id
+      user_id: $user_id
+      topic: $topic
+      detail: $detail
+      isPublic: $isPublic
+      comments: $comments
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }){
+      _id
+      farm_id
+      user_id
+      topic
+      detail
+      isPublic
+      comments
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const DELETE_POST = gql`
+      mutation deletePost($_id: ID!){
+        deletePost(_id: $_id){
+          _id
+          farm_id
+          user_id
+          topic
+          detail
+          isPublic
+          comments
+          createdAt
+          updatedAt
         }
       }
 `;
