@@ -487,3 +487,59 @@ export const DELETE_POST = gql`
         }
       }
 `;
+
+export const ADD_NEW_COMMENT = gql`
+  mutation addNewComment($farm_id: ID!,  $user_id: ID!, $post_id: ID!, $detail: String!, $createdAt: String!, $updatedAt: String!) {
+    createComment(input:{
+      farm_id: ID
+      user_id: ID
+      post_id: ID
+      detail: String
+      createdAt: String
+      updatedAt: String
+    }){
+      _id
+      farm_id
+      user_id
+      post_id
+      detail
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const UPDATE_COMMENT = gql`
+  mutation updateComment($_id: ID!, $farm_id: ID!,  $user_id: ID!, $post_id: ID!, $detail: String!, $createdAt: String!, $updatedAt: String!) {
+    updateComment(_id:$_id, input:{
+      farm_id: $farm_id
+      user_id: $user_id
+      post_id: $post_id
+      detail: $detail
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }){
+      _id
+      farm_id
+      user_id
+      post_id
+      detail
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const DELETE_COMMENT = gql`
+      mutation deleteComment($_id: ID!){
+        deleteComment(_id: $_id){
+          _id
+          farm_id
+          user_id
+          post_id
+          detail
+          createdAt
+          updatedAt
+        }
+      }
+`;
