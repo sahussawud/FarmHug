@@ -19,7 +19,7 @@ class activity {
       this.id = uuidv4();
       this.name = name;
       this.farm_id = farm_id;
-      this.cage_id = animal_id;
+      this.animal_id = animal_id;
       this.stall_id = stall_id;
       this.detail = detail;
       this.type = type;
