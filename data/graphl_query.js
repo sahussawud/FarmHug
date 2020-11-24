@@ -68,7 +68,7 @@ export const activitydata =  gql`
       _id
       name
       farm_id
-      cage_id
+      animal_id
       stall_id
       type
       detail

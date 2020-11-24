@@ -74,4 +74,357 @@ export const UPDATE_A_PROFILE = gql`
     		farm_id
       }
     }
-      `
+      `;
+
+export const DELETE_A_USER = gql`
+      mutation deleteProfile($_id: ID!){
+        deleteUser(_id: $_id){
+          _id
+          firstname
+          lastname
+          line_account
+          username
+          email
+          password
+          imageURL
+          type
+          role
+          farm_id
+        }
+      }
+`;
+
+export const ADD_NEW_FARM = gql`
+  mutation addNewFarm($name: String!,  $address: String!, $description: String!, $distance: Float!, $imageURL: String!, $area: String!, $type: String!, $location: String!, $capacity: Int!, $cow: Int!, $createdAt: String!, $watercheck: Int!, $foodConsume: Int!, $employee: Int!) {
+    createFarm(input:{
+      name: $name
+      address: $address
+      description: $description
+      distance: $distance
+      imageURL: $imageURL
+      area: $area
+      type: $type
+      location: $location
+      capacity: $capacity
+      cow: $cow
+      createdAt: $createdAt
+      watercheck: $watercheck
+      foodConsume: $foodConsume
+      employee: $employee
+    }){
+      _id
+      name
+      address
+      description
+      distance
+      imageURL
+      area
+      type
+      location
+      capacity
+      cow
+      createdAt
+      watercheck
+      foodConsume
+      employee
+    }
+  }
+`;
+
+export const UPDATE_FARM = gql`
+mutation updateFarm($_id: ID!, $name: String!,  $address: String!, $description: String!, $distance: Float!, $imageURL: String!, $area: String!, $type: String!, $location: String!, $capacity: Int!, $cow: Int!, $createdAt: String!, $watercheck: Int!, $foodConsume: Int!, $employee: Int!) {
+  updateFarm(_id: $_id, input:{
+    name: $name
+    address: $address
+    description: $description
+    distance: $distance
+    imageURL: $imageURL
+    area: $area
+    type: $type
+    location: $location
+    capacity: $capacity
+    cow: $cow
+    createdAt: $createdAt
+    watercheck: $watercheck
+    foodConsume: $foodConsume
+    employee: $employee
+  }){
+    _id
+    name
+    address
+    description
+    distance
+    imageURL
+    area
+    type
+    location
+    capacity
+    cow
+    createdAt
+    watercheck
+    foodConsume
+    employee
+  }
+}
+`;
+
+export const DELETE_A_FARM = gql`
+      mutation deleteFarm($_id: ID!){
+        deleteFarm(_id: $_id){
+          _id
+          name
+          address
+          description
+          distance
+          imageURL
+          area
+          type
+          location
+          capacity
+          cow
+          createdAt
+          watercheck
+          foodConsume
+          employee
+        }
+      }
+`;
+
+export const ADD_NEW_COWPROPERTY = gql`
+  mutation addNewCowproperty($name: String!,  $type: String!, $stall: Int!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
+    createCowproperty(input:{
+      name :$name
+      type :$type
+      stall :$stall
+      gene :$gene
+      weight :$weight
+      height :$height
+      farm_id :$farm_id
+      stall_id :$stall_id
+      breed :$breed
+      dob :$dob
+      sex :$sex
+      imageUrl :$imageUrl
+    }){
+      _id
+      name
+      address
+      description
+      distance
+      imageURL
+      area
+      type
+      location
+      capacity
+      cow
+      createdAt
+      watercheck
+      foodConsume
+      employee
+    }
+  }
+`;
+
+export const UPDATE_COWPROPERTY = gql`
+  mutation updateCowproperty($_id: ID!, $name: String!,  $type: String!, $stall: Int!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
+    updateCowproperty(_id: $_id, input:{
+      name :$name
+      type :$type
+      stall :$stall
+      gene :$gene
+      weight :$weight
+      height :$height
+      farm_id :$farm_id
+      stall_id :$stall_id
+      breed :$breed
+      dob :$dob
+      sex :$sex
+      imageUrl :$imageUrl
+    }){
+      _id
+      name
+      address
+      description
+      distance
+      imageURL
+      area
+      type
+      location
+      capacity
+      cow
+      createdAt
+      watercheck
+      foodConsume
+      employee
+    }
+  }
+`;
+
+export const DELETE_A_COWPROPERTY = gql`
+      mutation deleteCowproperty($_id: ID!){
+        deleteCowproperty(_id: $_id){
+          _id
+          name
+          address
+          description
+          distance
+          imageURL
+          area
+          type
+          location
+          capacity
+          cow
+          createdAt
+          watercheck
+          foodConsume
+          employee
+        }
+      }
+`;
+
+export const ADD_NEW_ACTIVITY = gql`
+  mutation addNewActivity($name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: String!, $creater_id: ID!) {
+    createActivity(input:{
+      name :$name
+      farm_id :$farm_id
+      animal_id :$animal_id
+      stall_id :$stall_id
+      type :$type
+      detail  :$detail
+      alertDate :$alertDate
+      updatedAt  :$updatedAt
+      status  :$status
+      creater_id  :$creater_id
+    }){
+      _id
+      name
+      farm_id
+      animal_id
+      stall_id
+      type
+      detail
+      alertDate
+      updatedAt
+      status
+      creater_id
+    }
+  }
+`;
+
+export const UPDATE_ACTIVITY = gql`
+  mutation updateActivity($_id:ID!, $name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: String!, $creater_id: ID!) {
+    updateActivity(_id:$_id, input:{
+      name :$name
+      farm_id :$farm_id
+      animal_id :$animal_id
+      stall_id :$stall_id
+      type :$type
+      detail  :$detail
+      alertDate :$alertDate
+      updatedAt  :$updatedAt
+      status  :$status
+      creater_id  :$creater_id
+    }){
+      _id
+      name
+      farm_id
+      animal_id
+      stall_id
+      type
+      detail
+      alertDate
+      updatedAt
+      status
+      creater_id
+    }
+  }
+`;
+
+export const DELETE_ACTIVITY = gql`
+      mutation deleteActivity($_id: ID!){
+        deleteActivity(_id: $_id){
+          _id
+          name
+          farm_id
+          animal_id
+          stall_id
+          type
+          detail
+          alertDate
+          updatedAt
+          status
+          creater_id
+        }
+      }
+`;
+
+export const ADD_NEW_STALL = gql`
+  mutation addNewStall($name: String!,  $currentAnimal: Int!, $maximumAnimal: Int!, $farm_id: ID!, $food: Int!, $water: Int!, $manure: Int!, $updatedAt: String!, $area: String!) {
+    createStall(input:{
+      name :$name
+      currentAnimal  :$currentAnimal
+      maximumAnimal :$maximumAnimal
+      farm_id :$farm_id
+      food   :$food
+      water   :$water
+      manure   :$manure
+      updatedAt   :$updatedAt
+      area :$area
+    }){
+      _id
+      name
+      currentAnimal
+      maximumAnimal
+      farm_id
+      food
+      water
+      manure
+      updatedAt
+      area
+    }
+  }
+`;
+
+export const UPDATE_STALL = gql`
+  mutation updateStall($_id:ID!, $name: String!,  $currentAnimal: Int!, $maximumAnimal: Int!, $farm_id: ID!, $food: Int!, $water: Int!, $manure: Int!, $updatedAt: String!, $area: String!) {
+    updateStall(_id:$_id, input:{
+      name :$name
+      currentAnimal  :$currentAnimal
+      maximumAnimal :$maximumAnimal
+      farm_id :$farm_id
+      food   :$food
+      water   :$water
+      manure   :$manure
+      updatedAt   :$updatedAt
+      area :$area
+    }){
+      _id
+      name
+      currentAnimal
+      maximumAnimal
+      farm_id
+      food
+      water
+      manure
+      updatedAt
+      area
+    }
+  }
+`;
+
+export const DELETE_STALL = gql`
+      mutation deleteStall($_id: ID!){
+        deleteStall(_id: $_id){
+          _id
+          name
+          currentAnimal
+          maximumAnimal
+          farm_id
+          food
+          water
+          manure
+          updatedAt
+          area
+        }
+      }
+`;
