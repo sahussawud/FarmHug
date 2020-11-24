@@ -1,6 +1,8 @@
 // import User from '../../models/user';
 import { USER } from '../../data/data-dummy'
 import { PROFILE_UPDATE, SIGN_IN, SIGN_OUT, RESTORE_TOKEN, PROFILE_SETUP } from '../actions/userAction'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createAlert} from '../../data/fetching'
 
 const initialUser = USER
 
@@ -35,6 +37,9 @@ const userReducer = (state = initialState, action) => {
                 
             };
         case SIGN_IN:
+            AsyncStorage.setItem('token',action.token).catch(err=>{
+                createAlert('เกิดปัญหาในการเข้าสู่ระบบ', "")
+            })
             return {
                 ...state,
                 authentication:{
@@ -45,6 +50,7 @@ const userReducer = (state = initialState, action) => {
                
             };
         case SIGN_OUT:
+            AsyncStorage.setItem('token', '')
             return {
                 ...state,
                 authentication:{

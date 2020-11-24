@@ -21,27 +21,26 @@ import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { profile_setup } from '../../store/actions/userAction'
-import {  useMutation } from '@apollo/client';
-import { UPDATE_PROFILE } from '../../data/graphl_mutation'
+import { profile_setup, profile_update } from '../../store/actions/userAction'
+import { useMutation } from '@apollo/client';
+import { UPDATE_A_PROFILE } from '../../data/graphl_mutation'
 
 const finishscreen = (props) => {
-    const [updateProfile, { data, loading, error }] = useMutation(UPDATE_PROFILE);
+    const [updateProfile, { data, loading, error }] = useMutation(UPDATE_A_PROFILE);
     const dispatch = useDispatch()
-    const profile = useSelector(state=> state.User.profile)
-    const farm = useSelector(state=> state.Farm.farm)
+    const profile = useSelector(state => state.User.profile)
+    const farm = useSelector(state => state.Farm.farm)
 
-    useEffect(()=>{
-        if(data){
-            dispatch(profile_setup())
+    useEffect(() => {
+        if (data) {
+            dispatch(profile_update(data))
         }
-    },[data])
+    }, [data])
 
     const submitForm = async () => {
-        const status = 200
-        const mocktoken = 'iloveyou'
-        updateProfile({variables:{ ...profile }})
-        
+
+        updateProfile({ variables: { ...profile, isProfile: true } })
+
     }
     const isImageProfile = profile.imageURL
 
@@ -55,16 +54,16 @@ const finishscreen = (props) => {
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>พร้อมสำหรับใช้งานฟาร์มฮักเเล้วครับ</Text>
                     </View>
                     <View style={styles.inputArea}>
-                            <Image style={styles.uploadImg} source={ isImageProfile ? {uri :profile.imageURL}  : require('../../assets/farm_profile.jpg')} />
-                            <Text style={[theme.font]}>
-                                ชื่อ: {profile.username}
-                            </Text>
-                            <Text style={[theme.font]}>
-                                ฟาร์ม: {farm.name}
-                            </Text>
-                            <Text style={[theme.font]}>
-                                บทบาท: {profile.role == 'owner' ? 'เจ้าของฟาร์ม' : profile.role == 'employee' ? 'พนักงานในฟาร์ม' : 'ไม่ระบุ'}
-                            </Text>
+                        <Image style={styles.uploadImg} source={isImageProfile ? { uri: profile.imageURL } : require('../../assets/farm_profile.jpg')} />
+                        <Text style={[theme.font]}>
+                            ชื่อ: {profile.username}
+                        </Text>
+                        <Text style={[theme.font]}>
+                            ฟาร์ม: {farm.name}
+                        </Text>
+                        <Text style={[theme.font]}>
+                            บทบาท: {profile.role == 'owner' ? 'เจ้าของฟาร์ม' : profile.role == 'employee' ? 'พนักงานในฟาร์ม' : 'ไม่ระบุ'}
+                        </Text>
                     </View>
                     <View style={styles.buttonArea}>
                         <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm}>
