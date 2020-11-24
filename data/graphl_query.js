@@ -120,3 +120,37 @@ export const stalldata =  gql`
       }
     }
     `
+
+export const postdata =  gql`
+query AddComment($farm_id: ID!){
+  post(_id:$farm_id){
+    _id
+    name
+    currentAnimal
+    maximumAnimal
+    farm_id
+    food
+    water
+    manure
+    updatedAt
+    area
+    }
+  }
+  `
+
+export const commentdata =  gql`
+query AddComment($farm_id: ID!){
+  comment(_id:$farm_id){
+    _id
+    name
+    currentAnimal
+    maximumAnimal
+    farm_id
+    food
+    water
+    manure
+    updatedAt
+    area
+    }
+  }
+  `

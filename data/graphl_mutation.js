@@ -95,7 +95,7 @@ export const DELETE_A_USER = gql`
 `;
 
 export const ADD_NEW_FARM = gql`
-  mutation addNewFarm($name: String!,  $address: String!, $description: String!, $imageURL: String!, $area: String!, $type: String!, $location: Location!, $createdAt: String!) {
+  mutation addNewFarm($name: String!,  $address: String!, $description: String!, $imageURL: String!, $area: String!, $type: String!, $location: LocationInput!, $createdAt: String!) {
     createFarm(input:{
       name: $name
       address: $address
@@ -117,7 +117,10 @@ export const ADD_NEW_FARM = gql`
       imageURL
       area
       type
-      location
+      location{
+        latitude
+        longitude
+      }
       capacity
       cow
       createdAt
@@ -129,7 +132,7 @@ export const ADD_NEW_FARM = gql`
 `;
 
 export const UPDATE_FARM = gql`
-mutation updateFarm($_id: ID!, $name: String!,  $address: String!, $description: String!, $distance: Float!, $imageURL: String!, $area: String!, $type: String!, $location: String!, $capacity: Int!, $cow: Int!, $createdAt: String!, $watercheck: Int!, $foodConsume: Int!, $employee: Int!) {
+mutation updateFarm($_id: ID!, $name: String!,  $address: String!, $description: String!, $distance: Float!, $imageURL: String!, $area: String!, $type: String!, $location: LocationInput!, $capacity: Int!, $cow: Int!, $createdAt: String!, $watercheck: Int!, $foodConsume: Int!, $employee: Int!) {
   updateFarm(_id: $_id, input:{
     name: $name
     address: $address
@@ -154,7 +157,10 @@ mutation updateFarm($_id: ID!, $name: String!,  $address: String!, $description:
     imageURL
     area
     type
-    location
+    location{
+        latitude
+        longitude
+      }
     capacity
     cow
     createdAt
@@ -218,6 +224,7 @@ export const ADD_NEW_COWPROPERTY = gql`
   }
 `;
 
+
 export const UPDATE_COWPROPERTY = gql`
   mutation updateCowproperty($_id: ID!, $name: String!,  $type: String!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
     updateCowproperty(_id: $_id, input:{
@@ -269,7 +276,7 @@ export const DELETE_A_COWPROPERTY = gql`
 `;
 
 export const ADD_NEW_ACTIVITY = gql`
-  mutation addNewActivity($name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: String!, $creater_id: ID!) {
+  mutation addNewActivity($name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: StatusInput!, $creater_id: ID!) {
     createActivity(input:{
       name :$name
       farm_id :$farm_id
@@ -298,7 +305,7 @@ export const ADD_NEW_ACTIVITY = gql`
 `;
 
 export const UPDATE_ACTIVITY = gql`
-  mutation updateActivity($_id:ID!, $name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: String!, $creater_id: ID!) {
+  mutation updateActivity($_id:ID!, $name: String!,  $farm_id: ID!, $animal_id: ID!, $stall_id: ID!, $type: String!, $detail: String!, $alertDate: String!, $updatedAt: String!, $status: StatusInput!, $creater_id: ID!) {
     updateActivity(_id:$_id, input:{
       name :$name
       farm_id :$farm_id
@@ -411,6 +418,128 @@ export const DELETE_STALL = gql`
           manure
           updatedAt
           area
+        }
+      }
+`;
+
+export const ADD_NEW_POST = gql`
+  mutation addNewPost($farm_id: ID!,  $user_id: ID!, $topic: String!, $detail: String!, $isPublic: Boolean!, $comments: String!, $createdAt: String!, $updatedAt: String!) {
+    createPost(input:{
+      farm_id: $farm_id
+      user_id: $user_id
+      topic: $topic
+      detail: $detail
+      isPublic: $isPublic
+      comments: $comments
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }){
+      _id
+      farm_id
+      user_id
+      topic
+      detail
+      isPublic
+      comments
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const UPDATE_POST = gql`
+  mutation updatePost($_id: ID!, $farm_id: ID!,  $user_id: ID!, $topic: String!, $detail: String!, $isPublic: Boolean!, $comments: String!, $createdAt: String!, $updatedAt: String!) {
+    updatePost(_id:$_id, input:{
+      farm_id: $farm_id
+      user_id: $user_id
+      topic: $topic
+      detail: $detail
+      isPublic: $isPublic
+      comments: $comments
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }){
+      _id
+      farm_id
+      user_id
+      topic
+      detail
+      isPublic
+      comments
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const DELETE_POST = gql`
+      mutation deletePost($_id: ID!){
+        deletePost(_id: $_id){
+          _id
+          farm_id
+          user_id
+          topic
+          detail
+          isPublic
+          comments
+          createdAt
+          updatedAt
+        }
+      }
+`;
+
+export const ADD_NEW_COMMENT = gql`
+  mutation addNewComment($farm_id: ID!,  $user_id: ID!, $post_id: ID!, $detail: String!, $createdAt: String!, $updatedAt: String!) {
+    createComment(input:{
+      farm_id: $farm_id
+      user_id: $user_id
+      post_id: $post_id
+      detail: $detail
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }){
+      _id
+      farm_id
+      user_id
+      post_id
+      detail
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const UPDATE_COMMENT = gql`
+  mutation updateComment($_id: ID!, $farm_id: ID!,  $user_id: ID!, $post_id: ID!, $detail: String!, $createdAt: String!, $updatedAt: String!) {
+    updateComment(_id:$_id, input:{
+      farm_id: $farm_id
+      user_id: $user_id
+      post_id: $post_id
+      detail: $detail
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }){
+      _id
+      farm_id
+      user_id
+      post_id
+      detail
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const DELETE_COMMENT = gql`
+      mutation deleteComment($_id: ID!){
+        deleteComment(_id: $_id){
+          _id
+          farm_id
+          user_id
+          post_id
+          detail
+          createdAt
+          updatedAt
         }
       }
 `;
