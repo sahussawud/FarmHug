@@ -491,12 +491,12 @@ export const DELETE_POST = gql`
 export const ADD_NEW_COMMENT = gql`
   mutation addNewComment($farm_id: ID!,  $user_id: ID!, $post_id: ID!, $detail: String!, $createdAt: String!, $updatedAt: String!) {
     createComment(input:{
-      farm_id: ID
-      user_id: ID
-      post_id: ID
-      detail: String
-      createdAt: String
-      updatedAt: String
+      farm_id: $farm_id
+      user_id: $user_id
+      post_id: $post_id
+      detail: $detail
+      createdAt: $createdAt
+      updatedAt: $updatedAt
     }){
       _id
       farm_id
