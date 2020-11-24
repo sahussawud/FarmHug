@@ -47,20 +47,12 @@ export const ADD_NEW_USER = gql`
 
 
 export const UPDATE_A_PROFILE = gql`
-<<<<<<< HEAD
-<<<<<<< HEAD
-      mutation updateProfile($_id: ID!, $firstname: String! , $lastname: String!, $line_account: String!, $username: String!, $email: String!, $password: String!, $imageURL: String!, $type: RoleInput!, $role: String!, $farm_id: ID!, $isProfile : Boolean!){
-=======
-=======
 enum RoleInput{
   Owner
   Employee
   NONE
 }
-
->>>>>>> d43589b7153f3fa5878c0b8dcd84aa55a5b5ed1f
       mutation updateProfile($_id: ID!, $firstname: String! , $lastname: String!, $line_account: String!, $username: String!, $email: String!, $password: String!, $imageURL: String!, $type: String!, $role: RoleInput!, $farm_id: ID!, $isProfile : Boolean!){
->>>>>>> 4d3eaa85a8cd219d15df3c4bdebf3d47a6e6dac2
         updateUser(_id:$_id,input:{
           firstname: $firstname
           lastname: $lastname
