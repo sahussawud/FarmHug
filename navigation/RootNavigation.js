@@ -9,9 +9,9 @@ import SetupNavigation from './setupNavigation'
 import { useSelector} from 'react-redux'
 
 const RootNavigation = (props)=>{
-  const User = useSelector(state=> state.User.authentication)
+  const User = useSelector(state=> state.User)
   return(
-    User.userToken && !User.isProfile ? <SetupNavigation/> : User.userToken && User.isProfile ? <FarmhugNavigation/> : <AuthenticationNavigation/> 
+    User.authentication.userToken && !User.profile.isProfile ? <SetupNavigation/> : User.authentication.userToken && User.profile.isProfile ? <FarmhugNavigation/> : <AuthenticationNavigation/> 
   )
 }
 

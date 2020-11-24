@@ -11,7 +11,8 @@ import {
     SafeAreaView,
     ScrollView,
     ActivityIndicator,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Platform
 } from "react-native";
 
 import logo from "../../assets/logo.png"
@@ -103,7 +104,7 @@ const farmLocationScreen = (props) => {
                         <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>ยินดีต้อนรับ</Text>
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold' }}>เล่าเกี่ยวกับฟาร์มของคุณให้เราฟังหน่อย</Text>
                     </View>
-                    <View style={styles.inputArea}>
+                    { Platform.OS !== "web"?(<View style={styles.inputArea}>
                         <Text style={{ ...theme.font, fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}>เเตะเเผนที่เพื่อให้ <FontAwesome5 name="map-marker-alt" size={24} color="red" style={{ textAlign:'center', top: '2%',left:'2%'}} /> เเสดงสถานที่ตั้งของฟาร์ม  </Text>
                         <MapView
                             provider={"google"}
@@ -137,7 +138,9 @@ const farmLocationScreen = (props) => {
                             maxLength={255}
                         />
 
-                    </View>
+                    </View>): (<View style={styles.inputArea}>
+                        <Text>ไม่รองรับบนเเพทฟอร์มนี้</Text>
+                    </View>)}
                     <View style={styles.buttonArea}>
                         <TouchableOpacity style={[styles.button, theme.defaultButton]} onPress={submitForm}>
                             <Text style={{ ...theme.font, textAlign: 'center' }}>ถัดไป</Text>

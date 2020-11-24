@@ -56,8 +56,8 @@ const userReducer = (state = initialState, action) => {
         case PROFILE_SETUP:
             return {
                 ...state,
-                authentication:{
-                    ...state.authentication,
+                profile:{
+                    ...state.profile,
                     isProfile: true
                 }
             };

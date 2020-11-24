@@ -41,7 +41,6 @@ import ActivityRenderComponent from '../../components/activity/ActivityRenderCom
 import moment from 'moment'
 
 import TopBarProfile from '../../components/header/topBarProfile';
-import * as RootNavigation from '../../navigation/RootNavigation';
 
 const homeScreen = (props) => {
     const Farm = useSelector(state => state.Farm)

@@ -20,7 +20,6 @@ import logo from "../../assets/home/farmer.png"
 import style from "../../themes/default";
 import theme from "../../themes/default"
 
-import SelectInput from 'react-native-select-input-ios'
 import { FARMS } from '../../data/data-dummy'
 import { useSelector } from 'react-redux';
 import TopBarProfile from '../../components/header/topBarProfile'

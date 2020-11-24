@@ -12,39 +12,54 @@ import {
     Linking,
     KeyboardAvoidingView,
     StatusBar
-    
+
 } from "react-native";
 import logo from "../../assets/logo.png"
 import theme from "../../themes/default"
 import { useDispatch } from 'react-redux';
-import {sign_in} from '../../store/actions/userAction'
+import { sign_in, profile_update } from '../../store/actions/userAction'
+import { getUserData } from '../../data/graphl_query'
+
+import { signinPath, createAlert } from '../../data/fetching'
+import axios from 'axios'
+import { useMutation, useQuery } from '@apollo/client';
 
 
 const LoginScreen = (props) => {
+ 
     const dispatch = useDispatch()
     const [payload, setPayload] = useState({ username: null, password: null })
 
     const LoginSubmit = () => {
-        const status = 200
-        const mocktoken = 'iloveyou'
-        if(status == 200){
-            dispatch(sign_in(mocktoken))
-        }
+
+        axios.post(signinPath, { username: payload.username, password: payload.password }).then(response => {
+            if (response.status === 200) {
+                dispatch(profile_update(response.data.profile))
+                dispatch(sign_in(response.data.token))
+            }
+        }).catch(error => {
+            console.log(error.request);
+            createAlert('เข้าสู่ระบบไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง')
+        })
+        // if(status == 200){
+        //     dispatch(sign_in(mocktoken))
+        // }
     }
 
-    return (
 
-        <KeyboardAvoidingView 
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-        style={styles.screen}>
+
+    return (
+        <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            style={styles.screen}>
             <StatusBar backgroundColor="white" barStyle={'dark-content'} />
             <View style={styles.topArea}>
                 <Image source={logo} style={styles.logo} />
                 {/* <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>เข้าสู่ระบบ</Text> */}
             </View>
             <View style={styles.inputArea}>
-                <TextInput placeholder="อีเมล" style={[styles.input, theme.font]} value={payload.username} onChangeText={t=> setPayload(prev=> ({...prev, username: t}))}/>
-                <TextInput placeholder="รหัสผ่าน" style={[styles.input, theme.font]} value={payload.password} onChangeText={t=> setPayload(prev=> ({...prev, password: t}))} secureTextEntry/>
+                <TextInput placeholder="ชื่อผู้ใช้" style={[styles.input, theme.font]} value={payload.username} onChangeText={t => setPayload(prev => ({ ...prev, username: t }))} />
+                <TextInput placeholder="รหัสผ่าน" style={[styles.input, theme.font]} value={payload.password} onChangeText={t => setPayload(prev => ({ ...prev, password: t }))} secureTextEntry />
                 {/* <Text style={{ textDecorationLine: 'underline', ...theme.font }}
                     onPress={() => Linking.openURL('http://google.com')}>
                     ลืมรหัสผ่าน?

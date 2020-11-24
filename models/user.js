@@ -24,6 +24,7 @@ class User {
       this.line_account = line_account || '';
       this.imageURL = imageURL || '';
       this.role = role || '';
+      this.isProfile= false;
     }
   }
   

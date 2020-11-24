@@ -11,14 +11,40 @@ import userReducer from './store/reducers/userReducer';
 import farmReducer from './store/reducers/farmReducer';
 import activityReducer from './store/reducers/activityReducer'
 import { restore_token } from './store/actions/userAction'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {  ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 import RootNavigation from './navigation/RootNavigation'
 // import { navigationRef } from './navigation/RootNavigation'
 
+import { HttpLink, createHttpLink  } from 'apollo-link-http'
+// import ApolloClient from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+
+// const httpLink = createHttpLink({
+//   uri: 'https://cors-anywhere.herokuapp.com/https://farm-hug-api.herokuapp.com/graphql',
+// });
+
+const httpLink = createHttpLink({
+  uri: 'https://farm-hug-api.herokuapp.com/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token =  AsyncStorage.getItem('token');
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? token : "",
+    }
+  }
+});
+
 const client = new ApolloClient({
-  uri: 'https://cors-anywhere.herokuapp.com/https://farm-hug-api.herokuapp.com/graphql',
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 })
 
@@ -34,21 +60,21 @@ export default function App() {
 
   const store = createStore(rootReducer);
 
-  useEffect(() => {
-    // Fetch the token from storage then navigate to our appropriate place
-    const bootstrapAsync = async () => {
-      let userToken;
-      try {
-        userToken = await AsyncStorage.getItem('userToken');
-      } catch (e) {
-        // Restoring token failed
-        console.log(e);
-      }
+  // useEffect(() => {
+  //   // Fetch the token from storage then navigate to our appropriate place
+  //   const bootstrapAsync = async () => {
+  //     let userToken;
+  //     try {
+  //       userToken = await AsyncStorage.getItem('userToken');
+  //     } catch (e) {
+  //       // Restoring token failed
+  //       console.log(e);
+  //     }
 
-      dispatch(restore_token(userToken));
-    };
-    bootstrapAsync();
-  }, []);
+  //     dispatch(restore_token(userToken));
+  //   };
+  //   bootstrapAsync();
+  // }, []);
 
   let [fontsLoaded] = useFonts({
     'Kanit': require('./assets/fonts/Kanit-Light.ttf'),

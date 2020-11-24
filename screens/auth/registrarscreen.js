@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -16,7 +16,13 @@ import {
 import logo from "../../assets/logo.png"
 import theme from "../../themes/default"
 
+import axios from 'axios'
+import { registerPath,createAlert } from '../../data/fetching'
+
+
 const RegistarScreen = (props) => {
+
+
     const [payload, setPayload] = useState({
         username: undefined,
         password: undefined,
@@ -25,25 +31,31 @@ const RegistarScreen = (props) => {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    const createAlert = (title, msg) =>
-        Alert.alert(
-            title,
-            msg,
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ],
-            { cancelable: false }
-        );
+    
 
-    const submitForm = () => {
+    const submitForm = async () => {
         //simple validate
         if (!isEnabled) {
             createAlert('ลงทะเบียนไม่สำเร็จ', 'กรุณายอมรับข้อตกลงการใช้')
         } else if (payload.password !== payload.repassword) {
             createAlert('ลงทะเบียนไม่สำเร็จ', 'ยืนยันรหัสผ่านไม่ถูกต้อง')
-        } 
-        if (isEnabled && (payload.password === payload.repassword)){
-            props.navigation.goBack()
+        }
+        if (isEnabled && (payload.password === payload.repassword)) {
+
+            axios.post(registerPath, { username: payload.username, password:payload.repassword }).then(response => {
+              if (response.status === 200) {
+                    createAlert('สร้างผู้ใช้สำเร็จ', 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง')
+                    props.navigation.goBack()
+                }
+            }).catch(error => {
+                console.log(error.request.status);
+                if(error.request.status === 400){
+                    createAlert('มีปัญหาบางอย่างเกิดขึ้น', 'มีชื่อผู้ใช้นี้อยู่เเล้ว')
+                }
+                
+            })
+
+
         }
     }
 
@@ -57,10 +69,10 @@ const RegistarScreen = (props) => {
                         <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>สมัครสมาชิก</Text>
                     </View>
                     <View style={styles.inputArea}>
-                        <TextInput placeholder="ชื่อผู้ใช้" style={[styles.input, theme.font]} value={payload.username} onChangeText={t=> setPayload(prev=> ({ ...prev,username: t }))} />
+                        <TextInput placeholder="ชื่อผู้ใช้" style={[styles.input, theme.font]} value={payload.username} onChangeText={t => setPayload(prev => ({ ...prev, username: t }))} />
                         {/* <TextInput placeholder="อีเมล" style={[styles.input, theme.font]}  value={payload.email}/> */}
-                        <TextInput placeholder="รหัสผ่าน" style={[styles.input, theme.font]} secureTextEntry  value={payload.password} onChangeText={t=> setPayload(prev=> ({ ...prev,password: t }))}/>
-                        <TextInput placeholder="ยืนยันรหัสผ่าน" style={[styles.input, theme.font]} secureTextEntry  value={payload.repassword} onChangeText={t=> setPayload(prev=> ({ ...prev,repassword: t }))} />
+                        <TextInput placeholder="รหัสผ่าน" style={[styles.input, theme.font]} secureTextEntry value={payload.password} onChangeText={t => setPayload(prev => ({ ...prev, password: t }))} />
+                        <TextInput placeholder="ยืนยันรหัสผ่าน" style={[styles.input, theme.font]} secureTextEntry value={payload.repassword} onChangeText={t => setPayload(prev => ({ ...prev, repassword: t }))} />
                         <View style={styles.privacyaccept}>
                             <Switch
                                 style={{ marginRight: '5%' }}

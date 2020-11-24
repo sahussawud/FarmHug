@@ -22,22 +22,26 @@ const preview = require('../../assets/farm_profile.jpg');
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { profile_setup } from '../../store/actions/userAction'
+import {  useMutation } from '@apollo/client';
+import { UPDATE_PROFILE } from '../../data/graphl_mutation'
 
 const finishscreen = (props) => {
+    const [updateProfile, { data, loading, error }] = useMutation(UPDATE_PROFILE);
     const dispatch = useDispatch()
     const profile = useSelector(state=> state.User.profile)
     const farm = useSelector(state=> state.Farm.farm)
-    // const [image, setImage] = useState(preview);
-    // const [name, setName] = useState("สงบ สุขสบาย");
-    // const [farm, setFarm] = useState("สุขสงบฟาร์ม");
-    // const [role, setType] = useState("เจ้าของฟาร์ม");
 
-    const submitForm = () => {
+    useEffect(()=>{
+        if(data){
+            dispatch(profile_setup())
+        }
+    },[data])
+
+    const submitForm = async () => {
         const status = 200
         const mocktoken = 'iloveyou'
-        if(status == 200){
-            dispatch(profile_setup())
-        } 
+        updateProfile({variables:{ ...profile }})
+        
     }
     const isImageProfile = profile.imageURL
 
