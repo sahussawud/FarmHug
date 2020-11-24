@@ -95,7 +95,7 @@ export const DELETE_A_USER = gql`
 `;
 
 export const ADD_NEW_FARM = gql`
-  mutation addNewFarm($name: String!,  $address: String!, $description: String!, $imageURL: String!, $area: String!, $type: String!, $location: Location!, $createdAt: String!) {
+  mutation addNewFarm($name: String!,  $address: String!, $description: String!, $imageURL: String!, $area: String!, $type: String!, $location: LocationInput!, $createdAt: String!) {
     createFarm(input:{
       name: $name
       address: $address
@@ -117,7 +117,10 @@ export const ADD_NEW_FARM = gql`
       imageURL
       area
       type
-      location
+      location{
+        latitude
+        longitude
+      }
       capacity
       cow
       createdAt
@@ -129,7 +132,7 @@ export const ADD_NEW_FARM = gql`
 `;
 
 export const UPDATE_FARM = gql`
-mutation updateFarm($_id: ID!, $name: String!,  $address: String!, $description: String!, $distance: Float!, $imageURL: String!, $area: String!, $type: String!, $location: String!, $capacity: Int!, $cow: Int!, $createdAt: String!, $watercheck: Int!, $foodConsume: Int!, $employee: Int!) {
+mutation updateFarm($_id: ID!, $name: String!,  $address: String!, $description: String!, $distance: Float!, $imageURL: String!, $area: String!, $type: String!, $location: LocationInput!, $capacity: Int!, $cow: Int!, $createdAt: String!, $watercheck: Int!, $foodConsume: Int!, $employee: Int!) {
   updateFarm(_id: $_id, input:{
     name: $name
     address: $address
@@ -154,7 +157,10 @@ mutation updateFarm($_id: ID!, $name: String!,  $address: String!, $description:
     imageURL
     area
     type
-    location
+    location{
+        latitude
+        longitude
+      }
     capacity
     cow
     createdAt
@@ -188,6 +194,37 @@ export const DELETE_A_FARM = gql`
 `;
 
 export const ADD_NEW_COWPROPERTY = gql`
+  mutation addNewCowproperty($name: String!,  $type: String!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
+    createCowproperty(input:{
+      name :$name
+      type :$type
+      gene :$gene
+      weight :$weight
+      height :$height
+      farm_id :$farm_id
+      stall_id :$stall_id
+      breed :$breed
+      dob :$dob
+      sex :$sex
+      imageUrl :$imageUrl
+    }){
+      _id
+      name
+      type
+      gene
+      weight
+      height
+      farm_id
+      stall_id
+      breed
+      dob
+      sex
+      imageUrl
+    }
+  }
+`;
+
+export const ADD_NEW_MANY_COWPROPERTY = gql`
   mutation addNewCowproperty($name: String!,  $type: String!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
     createCowproperty(input:{
       name :$name
