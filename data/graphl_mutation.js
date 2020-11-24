@@ -29,6 +29,7 @@ export const ADD_NEW_USER = gql`
       type: ""
       role: Employee
       farm_id: ""
+      isProfile: false
     }){
       _id
       firstname
@@ -41,17 +42,13 @@ export const ADD_NEW_USER = gql`
       type
       role
       farm_id
+      isProfile
     }
   }
 `;
 
 
 export const UPDATE_A_PROFILE = gql`
-enum RoleInput{
-  Owner
-  Employee
-  NONE
-}
       mutation updateProfile($_id: ID!, $firstname: String! , $lastname: String!, $line_account: String!, $username: String!, $email: String!, $password: String!, $imageURL: String!, $type: String!, $role: RoleInput!, $farm_id: ID!, $isProfile : Boolean!){
         updateUser(_id:$_id,input:{
           firstname: $firstname
@@ -76,7 +73,8 @@ enum RoleInput{
         imageURL
         type
         role
-    		farm_id
+        farm_id
+        isProfile
       }
     }
       `;
@@ -95,6 +93,7 @@ export const DELETE_A_USER = gql`
           type
           role
           farm_id
+          isProfile
         }
       }
 `;
@@ -196,11 +195,10 @@ export const DELETE_A_FARM = gql`
 `;
 
 export const ADD_NEW_COWPROPERTY = gql`
-  mutation addNewCowproperty($name: String!,  $type: String!, $stall: Int!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
+  mutation addNewCowproperty($name: String!,  $type: String!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
     createCowproperty(input:{
       name :$name
       type :$type
-      stall :$stall
       gene :$gene
       weight :$weight
       height :$height
@@ -213,29 +211,25 @@ export const ADD_NEW_COWPROPERTY = gql`
     }){
       _id
       name
-      address
-      description
-      distance
-      imageURL
-      area
       type
-      location
-      capacity
-      cow
-      createdAt
-      watercheck
-      foodConsume
-      employee
+      gene
+      weight
+      height
+      farm_id
+      stall_id
+      breed
+      dob
+      sex
+      imageUrl
     }
   }
 `;
 
 export const UPDATE_COWPROPERTY = gql`
-  mutation updateCowproperty($_id: ID!, $name: String!,  $type: String!, $stall: Int!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
+  mutation updateCowproperty($_id: ID!, $name: String!,  $type: String!, $gene: String!, $weight: Float!, $height: Float!, $farm_id: ID!, $stall_id: ID!, $breed: String!, $dob: String!, $sex: String!, $imageUrl: String!) {
     updateCowproperty(_id: $_id, input:{
       name :$name
       type :$type
-      stall :$stall
       gene :$gene
       weight :$weight
       height :$height
@@ -248,19 +242,16 @@ export const UPDATE_COWPROPERTY = gql`
     }){
       _id
       name
-      address
-      description
-      distance
-      imageURL
-      area
       type
-      location
-      capacity
-      cow
-      createdAt
-      watercheck
-      foodConsume
-      employee
+      gene
+      weight
+      height
+      farm_id
+      stall_id
+      breed
+      dob
+      sex
+      imageUrl
     }
   }
 `;
@@ -270,19 +261,16 @@ export const DELETE_A_COWPROPERTY = gql`
         deleteCowproperty(_id: $_id){
           _id
           name
-          address
-          description
-          distance
-          imageURL
-          area
           type
-          location
-          capacity
-          cow
-          createdAt
-          watercheck
-          foodConsume
-          employee
+          gene
+          weight
+          height
+          farm_id
+          stall_id
+          breed
+          dob
+          sex
+          imageUrl
         }
       }
 `;
