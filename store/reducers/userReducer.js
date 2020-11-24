@@ -50,9 +50,7 @@ const userReducer = (state = initialState, action) => {
             };
         case SIGN_OUT:
             AsyncStorage.setItem('token', '')
-            return {
-                state: initialState 
-            };
+            return initialState 
         case PROFILE_SETUP:
             return {
                 ...state,

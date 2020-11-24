@@ -18,6 +18,30 @@ query AddComment($id: ID!){
   }
 }
       `
+export const getFarms = gql`
+query{
+  farms{
+    _id
+    name
+    address
+    description
+    distance
+    imageURL
+    area
+    type
+    location{
+        latitude
+        longitude
+    }
+    capacity
+    cow
+    createdAt
+    watercheck
+    foodConsume
+    employee
+    }
+  }
+`
  
 export const farmdata =  gql`
   query AddComment($id: ID!){

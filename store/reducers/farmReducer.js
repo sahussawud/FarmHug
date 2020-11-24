@@ -56,10 +56,7 @@ const farmReducer = (state = initialState, action) => {
             }
 
         case UPDATE_ANIMAL:
-            // const animalIndex = state.animal.findIndex(an=> an.id === action.animal.id)
-            // const updateAnimals = state.animal.filter(an=> an.id === action.animal.id)
-            // updateAnimals.splice(animalIndex, 0, action.animal)
-            // console.log('farmReducer ', action.animal, updateAnimals, animalIndex);
+
             const updateAnimals = []
             for (let index = 0; index < state.animal.length; index++) {
                 if(state.animal[index].id === action.animal.id){
