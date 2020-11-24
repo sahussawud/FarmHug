@@ -22,35 +22,39 @@ const preview = require('../../assets/farm_profile.jpg');
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { profile_update } from '../../store/actions/userAction'
-import { create_farm } from '../../store/actions/farmAction'
+import { create_farm, } from '../../store/actions/farmAction'
 
 import { useMutation } from '@apollo/client';
-import { UPDATE_A_PROFILE, ADD_NEW_FARM } from '../../data/graphl_mutation'
+import { UPDATE_A_PROFILE, ADD_NEW_FARM, ADD_NEW_STALL, ADD_NEW_COWPROPERTY } from '../../data/graphl_mutation'
 
 const finishscreen = (props) => {
 
     const dispatch = useDispatch()
     const profile = useSelector(state => state.User.profile)
     const farm = useSelector(state => state.Farm.farm)
+    const stalls = useSelector(state => state.Farm.stall)
+    const animal = useSelector(state => state.Farm.animal)
 
-    // useEffect(() => {
-    //     if (data) {
-    //         dispatch(profile_update(data))
-    //     }
-    //     console.log(error, profile);
-    // }, [data,error])
+    const [updateProfile, { data: profileData }] = useMutation(UPDATE_A_PROFILE);
+    const [createfarm, { data: farmData }] = useMutation(ADD_NEW_FARM)
 
     const submitForm = async () => {
-        const [updateProfile, { data: profileData, loading, error }] = useMutation(UPDATE_A_PROFILE);
+
         await updateProfile({ variables: { ...profile, isProfile: true } })
         if (profileData) {
             dispatch(profile_update(profileData))
-            const [createfarm, { data: farmData }] = useMutation(ADD_NEW_FARM)
+
             await createfarm(farmData)
             dispatch(create_farm(farmData))
-            if (farmData){
-                
-            }
+            // if (farmData){
+            //     // const [ createStall , {data, error}] = useMutation(ADD_NEW_STALL)
+            //     // stalls.map(stall=>{
+            //     //     if (error) {
+            //     //         console.log(error);
+            //     //     }
+            //     //     createStall(stall)
+            //     // })
+            // }
         };
 
 

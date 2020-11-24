@@ -26,23 +26,27 @@ const preview = require('../../assets/farm_profile.jpg');
 
 
 import { useDispatch } from 'react-redux';
-import { update_farm } from '../../store/actions/farmAction'
+import { create_farm, update_farm } from '../../store/actions/farmAction'
 
 import { useCallback } from "react";
 import { ANIMALS, FARMS, STALLS } from "../../data/data-dummy";
+import { useQuery } from "@apollo/client";
+import { getFarms } from "../../data/graphl_query";
 
 
 const employeeScreen = (props) => {
     const dispatch = useDispatch();
+    const {data,loading} = useQuery(getFarms)
 
     const [searchbox, setSearchbox] = useState('')
     const [farms, setFarms] = useState([]);
 
-    const selectfarm = (farm_id) => {
-        const selectFarm = FARMS.find(farm=> farm.id === farm_id)
-        const farmStall = STALLS.find(stall=> stall.farm_id=== farm_id)
-        const farmAnimal = ANIMALS.find(animal=> animal.farm_id === farm_id)
-        dispatch(update_farm(selectFarm, farmStall, farmAnimal))
+    const selectfarm = (farm) => {
+        // const selectFarm = FARMS.find(farm=> farm.id === farm_id)
+        // const farmStall = STALLS.find(stall=> stall.farm_id=== farm_id)
+        // const farmAnimal = ANIMALS.find(animal=> animal.farm_id === farm_id)
+        // dispatch(update_farm(selectFarm, farmStall, farmAnimal))
+        dispatch(create_farm(farm))
         props.navigation.navigate("finishscreen")
     }
 
@@ -57,13 +61,16 @@ const employeeScreen = (props) => {
     },[searchbox])
 
     useEffect(()=>{
-        setFarms(FARMS)
-    },[])
+        if(data){
+           setFarms(data.farms) 
+        }
+        
+    },[data, loading])
     const renderFarmList = (itemData) => (
-        <TouchableOpacity style={{ marginBottom: 10 }} onPress={()=>selectfarm(itemData.item.id)}>
+        <TouchableOpacity style={{ marginBottom: 10 }} onPress={()=>selectfarm(itemData.item)}>
             <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'black', borderWidth: 1, padding: 10, borderRadius: 10 }}>
                 <View style={styles.uploadImg}>
-                    <Image style={styles.uploadImg} source={{ uri: itemData.item.imgUrl }} />
+                    <Image style={styles.uploadImg} source={itemData.item.imageURL ? { uri: itemData.item.imageURL } :preview} />
                 </View>
                 <View style={{ flexDirection: 'column', alignContent: 'center' }}>
                     <Text style={{ ...theme.font, fontSize: 25, fontWeight: 'bold' }}>{itemData.item.name}</Text>
