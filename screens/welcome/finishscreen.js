@@ -21,7 +21,7 @@ import Constants from 'expo-constants';
 const preview = require('../../assets/farm_profile.jpg');
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { profile_update } from '../../store/actions/userAction'
+import { profile_setup, profile_update } from '../../store/actions/userAction'
 import { create_farm, } from '../../store/actions/farmAction'
 
 import { useMutation } from '@apollo/client';
@@ -38,24 +38,50 @@ const finishscreen = (props) => {
     const [updateProfile, { data: profileData }] = useMutation(UPDATE_A_PROFILE);
     const [createfarm, { data: farmData }] = useMutation(ADD_NEW_FARM)
 
+    // useEffect(() => {
+    //     if (profileData) {
+    //         if (farmData) {
+    //             dispatch(create_farm({ ...farmData.createFarm }))
+
+    //         }
+    //         if (profileData) {
+    //             dispatch(profile_update(profileData.updateUser))
+    //         }
+
+    //     }
+    // }, [farmData, profileData])
+
     const submitForm = async () => {
+        if (profile.role == 'owner') {
+            const newfarm = {
+                name: farm.name,
+                address: farm.address,
+                description: farm.description,
+                imageURL: farm.imgUrl,
+                area: farm.area,
+                createdAt: farm.createdAt,
+                location: { latitude: farm.location.latitude, longitude: farm.location.longitude }
+            }
+            console.log('newfarm', newfarm, profile);
+            try {
+                await createfarm({ variables: newfarm })
+                await updateProfile({ variables: { ...profile, farm_id: farmData.createFarm._id, isProfile: true } })
+                console.log('reach',);
+                if (farmData) {
+                    dispatch(create_farm({ ...farmData.createFarm }))
+    
+                }
+                if (profileData) {
+                    dispatch(profile_update(profileData.updateUser))
+                }
+                dispatch(profile_setup())
+                props.navigation.navigate('homeScreen')
 
-        await updateProfile({ variables: { ...profile, isProfile: true } })
-        if (profileData) {
-            dispatch(profile_update(profileData))
+            } catch (error) {
+                console.log(JSON.stringify(error, null, 2))
+            };
 
-            await createfarm(farmData)
-            dispatch(create_farm(farmData))
-            // if (farmData){
-            //     // const [ createStall , {data, error}] = useMutation(ADD_NEW_STALL)
-            //     // stalls.map(stall=>{
-            //     //     if (error) {
-            //     //         console.log(error);
-            //     //     }
-            //     //     createStall(stall)
-            //     // })
-            // }
-        };
+        }
 
 
     }

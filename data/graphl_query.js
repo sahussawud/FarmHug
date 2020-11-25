@@ -1,7 +1,7 @@
 
 import gql from 'graphql-tag'
 
-export const getUserData =  gql`
+export const getUserData = gql`
 query AddComment($id: ID!){
   user(_id:$id){
     _id
@@ -42,30 +42,33 @@ query{
     }
   }
 `
- 
-export const farmdata =  gql`
-  query AddComment($id: ID!){
-    farm(_id:$id){
-      _id
-      name
-      address
-      description
-      distance
-      imageURL
-      area
-      type
-      location
-      capacity
-      cow
-      createdAt
-      watercheck
-      foodConsume
-      employee
-      }
+
+export const farmdata = gql`
+query AddComment($id: ID!){
+  farm(_id:$id){
+    _id
+    name
+    address
+    description
+    distance
+    imageURL
+    area
+    type
+    location {
+        latitude
+        longitude
     }
+    capacity
+    cow
+    createdAt
+    watercheck
+    foodConsume
+    employee
+    }
+  }
     `
 
-export const cowpropertydata =  gql`
+export const cowpropertydata = gql`
   query AddComment($farm_id: ID!){
     cowproperty(_id:$farm_id){
       _id
@@ -86,7 +89,7 @@ export const cowpropertydata =  gql`
     `
 
 
-export const activitydata =  gql`
+export const activitydata = gql`
   query AddComment($farm_id: ID!){
     activity(_id:$farm_id){
       _id
@@ -104,7 +107,7 @@ export const activitydata =  gql`
     }
     `
 
-export const stalldata =  gql`
+export const stalldata = gql`
   query AddComment($farm_id: ID!){
     stall(_id:$farm_id){
       _id
@@ -121,36 +124,48 @@ export const stalldata =  gql`
     }
     `
 
-export const postdata =  gql`
+export const postdata = gql`
 query AddComment($farm_id: ID!){
   post(_id:$farm_id){
     _id
-    name
-    currentAnimal
-    maximumAnimal
-    farm_id
-    food
-    water
-    manure
-    updatedAt
-    area
+          farm_id
+          user_id
+          topic
+          detail
+          isPublic
+          comments
+          createdAt
+          updatedAt
     }
   }
   `
 
-export const commentdata =  gql`
+export const manypostdata = gql`
+query manypostdata{
+  posts{
+    _id
+          farm_id
+          user_id
+          topic
+          detail
+          isPublic
+          comments
+          createdAt
+          updatedAt
+    }
+  }
+  `
+
+export const commentdata = gql`
 query AddComment($farm_id: ID!){
   comment(_id:$farm_id){
     _id
-    name
-    currentAnimal
-    maximumAnimal
     farm_id
-    food
-    water
-    manure
+    user_id
+    post_id
+    detail
+    createdAt
     updatedAt
-    area
     }
   }
   `

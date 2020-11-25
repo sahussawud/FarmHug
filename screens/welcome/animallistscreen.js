@@ -42,7 +42,7 @@ const AnimalListScreen = (props) => {
     }
 
     const renderAnimalList = (itemData) => {
-        console.log(itemData.item);
+        // console.log(itemData.item);
         const colorstatus = colorStatus(itemData.item.currentAnimal, itemData.item.maximumAnimal);
         return (
             <View style={{ marginBottom: 10 }} >

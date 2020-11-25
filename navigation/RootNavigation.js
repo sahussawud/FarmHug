@@ -1,6 +1,6 @@
 // RootNavigation.js
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 
 import AuthenticationNavigation from './authenticationNavigation'
@@ -21,12 +21,15 @@ const RootNavigation = (props) => {
     if (token) {
       const id = await AsyncStorage.getItem('_id')
       const { data, error } = useQuery(getUserData, { variables: { id: id } })
+      console.log('RootNavigation',data);
       if (data) {
         dispatch(profile_update(data.user))
         }
-
     }
   }
+  useEffect(()=>{
+    restoreUser()
+  },[])
   console.log(User);
   return (
     User.authentication.userToken && !User.profile.isProfile ? <SetupNavigation /> : User.authentication.userToken && User.profile.isProfile ? <FarmhugNavigation /> : <AuthenticationNavigation />

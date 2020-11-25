@@ -50,16 +50,17 @@ const farmLocationScreen = (props) => {
     }, [farm])
 
     const updateValueHandle =  useCallback(()=>{
-        console.log(farm)
+        // console.log(farm)
         dispatch(create_farm({
+            ...farm,
             location: location,
             address: address
         }))
     })
 
-    useEffect(()=>{
-        updateValueHandle()
-      },[dispatch,location, address]);
+    // useEffect(()=>{
+    //     updateValueHandle()
+    //   },[dispatch, location, address]);
 
     const [errorMsg, setErrorMsg] = useState(null);
 
@@ -71,20 +72,22 @@ const farmLocationScreen = (props) => {
         }
 
         let location = await Location.getCurrentPositionAsync({});
-        console.log(location);
+        // console.log(location);
         setLocation(prev=> ({ ...prev, latitude:location.coords.latitude, longitude: location.coords.longitude}));
         setLoading(false);
     }
 
     const updateLocation = useCallback(({latitude, longitude})=>{
-        console.log('updateLocation');
+        // console.log('updateLocation');
         setLoading(true);
         setLocation({latitude, longitude, latitudeDelta: 2, longitudeDelta:2 })
         setLoading(false);
     })
 
     const submitForm = () => {
+        updateValueHandle()
         props.navigation.navigate("stallSetupScreen")
+        console.log(farm);
     }
 
     let text = 'Waiting..';

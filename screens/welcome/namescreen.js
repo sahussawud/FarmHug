@@ -39,8 +39,8 @@ const nameScreen = (props) => {
     useEffect(()=>{
         const updateProfile = {
             ...profile,
-            imageURL: image,
-            firstname: name,
+            imageURL: image || "",
+            firstname: name || "",
             role: type,
         };
         dispatch(profile_update(updateProfile))
@@ -66,7 +66,7 @@ const nameScreen = (props) => {
         });
 
         if (!result.cancelled) {
-            console.log(result.uri);
+            // console.log(result.uri);
             setImage(result.uri);
         }
     };

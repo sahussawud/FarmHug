@@ -42,7 +42,7 @@ const stallSetupScreen = (props) => {
     const [capacity, setCapacity] = useState(1);
 
     const updateValueHandle =  useCallback(()=>{
-        console.log(stall)
+        // console.log(stall)
         dispatch(create_stall(stall))
     })
 

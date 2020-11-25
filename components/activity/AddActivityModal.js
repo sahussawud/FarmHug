@@ -57,7 +57,7 @@ const AddActivityModal = (props) => {
   }, [segmentActivity])
 
   useEffect(() => {
-    console.log(activityType);
+    // console.log(activityType);
     if (activityType === 'farm') {
       setSegmentActivity(0)
     } else if (activityType === 'animal') {

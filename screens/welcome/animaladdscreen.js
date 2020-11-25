@@ -42,7 +42,7 @@ const animaladdscreen = (props) => {
 
     const isUpdateTask = props.navigation.getParam("type") === 'edit' ? true : false;
     useEffect(() => {
-        console.log(props.navigation.getParam("animal"), );
+        // console.log(props.navigation.getParam("animal"), );
         if (props.navigation.getParam("type") === 'edit') {
             console.log('useEffect animalAddscreen');
             const updateAnimal = props.navigation.getParam("animal")
@@ -98,7 +98,7 @@ const animaladdscreen = (props) => {
     }
 
     const updatesubmit = useCallback(() =>{
-        console.log('updatesubmit', animal);
+        // console.log('updatesubmit', animal);
         dispatch(update_animal(animal));
         props.navigation.navigate("animallistscreen")
     })

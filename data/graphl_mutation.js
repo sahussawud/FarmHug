@@ -95,40 +95,35 @@ export const DELETE_A_USER = gql`
 `;
 
 export const ADD_NEW_FARM = gql`
-  mutation addNewFarm($name: String!,  $address: String!, $description: String!, $imageURL: String!, $area: String!, $type: String!, $location: LocationInput!, $createdAt: String!) {
-    createFarm(input:{
-      name: $name
-      address: $address
-      description: $description
-      imageURL: $imageURL
-      area: $area
-      type: $type
-      location: $location
-      cow: $cow
-      createdAt: $createdAt
-      watercheck: 0
-      foodConsume: 0
-      employee: 0
-    }){
-      _id
-      name
-      address
-      description
-      imageURL
-      area
-      type
-      location{
-        latitude
-        longitude
-      }
-      capacity
-      cow
-      createdAt
-      watercheck
-      foodConsume
-      employee
+mutation addNewFarm($name: String!,  $address: String!, $description: String!, $imageURL: String!, $area: String!, $location: LocationInput!, $createdAt: String!) {
+  createFarm(input:{
+    name: $name
+    address: $address
+    description: $description
+    imageURL: $imageURL
+    area: $area
+    location: $location
+    createdAt: $createdAt
+  }){
+    _id
+    name
+    address
+    description
+    imageURL
+    area
+    type
+    location{
+      latitude
+      longitude
     }
+    capacity
+    cow
+    createdAt
+    watercheck
+    foodConsume
+    employee
   }
+}
 `;
 
 export const UPDATE_FARM = gql`
@@ -423,16 +418,14 @@ export const DELETE_STALL = gql`
 `;
 
 export const ADD_NEW_POST = gql`
-  mutation addNewPost($farm_id: ID!,  $user_id: ID!, $topic: String!, $detail: String!, $isPublic: Boolean!, $comments: String!, $createdAt: String!, $updatedAt: String!) {
+  mutation addNewPost($farm_id: ID!,  $user_id: ID!, $topic: String!, $detail: String!, $isPublic: Boolean!, $createdAt: String!) {
     createPost(input:{
       farm_id: $farm_id
       user_id: $user_id
       topic: $topic
       detail: $detail
       isPublic: $isPublic
-      comments: $comments
       createdAt: $createdAt
-      updatedAt: $updatedAt
     }){
       _id
       farm_id
@@ -489,14 +482,13 @@ export const DELETE_POST = gql`
 `;
 
 export const ADD_NEW_COMMENT = gql`
-  mutation addNewComment($farm_id: ID!,  $user_id: ID!, $post_id: ID!, $detail: String!, $createdAt: String!, $updatedAt: String!) {
+  mutation addNewComment($farm_id: ID!,  $user_id: ID!, $post_id: ID!, $detail: String!, $createdAt: String!) {
     createComment(input:{
       farm_id: $farm_id
       user_id: $user_id
       post_id: $post_id
       detail: $detail
       createdAt: $createdAt
-      updatedAt: $updatedAt
     }){
       _id
       farm_id

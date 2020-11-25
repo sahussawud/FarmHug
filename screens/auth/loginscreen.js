@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -16,20 +16,28 @@ import {
 } from "react-native";
 import logo from "../../assets/logo.png"
 import theme from "../../themes/default"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sign_in, profile_update } from '../../store/actions/userAction'
-import { getUserData } from '../../data/graphl_query'
+import { farmdata, getUserData } from '../../data/graphl_query'
 
 import { signinPath, createAlert } from '../../data/fetching'
 import axios from 'axios'
-import { useMutation, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { create_farm } from "../../store/actions/farmAction";
 
 
 const LoginScreen = (props) => {
- 
+    const profile = useSelector(state => state.User.profile)
     const dispatch = useDispatch()
+    const { data, loading, refetch } = useQuery(farmdata, { variables: { id: profile.farm_id } })
+
     const [payload, setPayload] = useState({ username: null, password: null })
+    useEffect(() => {
+        if (data) {
+            dispatch(create_farm(data.farm))
+        }
+    }, [data])
 
     const LoginSubmit = () => {
 
@@ -37,11 +45,13 @@ const LoginScreen = (props) => {
             if (response.status === 200) {
                 console.log(response.data.profile);
                 dispatch(profile_update(response.data.profile))
+                refetch()
                 dispatch(sign_in(response.data.token))
+                console.log('farmData', response.data.profile.farm_id);
                 await AsyncStorage.setItem('_id', response.data.profile._id)
             }
         }).catch(error => {
-            console.log(error.request);
+            console.log(JSON.stringify(error, null, 2))
             createAlert('เข้าสู่ระบบไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง')
         })
         // if(status == 200){

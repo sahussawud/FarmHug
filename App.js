@@ -41,6 +41,7 @@ export default function App() {
 
   const httpLink = createHttpLink({
     uri: 'https://farm-hug-api.herokuapp.com/graphql',
+    
   });
   
   const authLink = setContext(async (_, { headers }) => {
@@ -58,7 +59,7 @@ export default function App() {
   
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
   })
 
   let [fontsLoaded] = useFonts({

@@ -47,8 +47,9 @@ const ownerScreen = (props) => {
     }, [farm])
 
     useEffect(()=>{
-        console.log(image, name, description);
+        // console.log(image, name, description);
         dispatch(create_farm({
+            ...farm,
             imgUrl: image,
             name: name,
             description: description,
@@ -81,7 +82,7 @@ const ownerScreen = (props) => {
     };
 
     const submitForm = () => {
-        console.log('submitForm : ',farm);
+        // console.log('submitForm : ',farm);
         props.navigation.navigate("farmLocationScreen")
     }
 

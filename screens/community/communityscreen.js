@@ -30,30 +30,39 @@ import SegmentedControl from '@react-native-community/segmented-control';
 import { useSelector } from 'react-redux';
 import PostComponent from '../community/components/postComponent'
 
-import { POSTS } from '../../data/data-dummy'
+// import { POSTS } from '../../data/data-dummy'
+
+import { manypostdata } from '../../data/graphl_query'
+import { useQuery } from "@apollo/client";
+
 const CommunityScreen = (props) => {
-    const User = useSelector(state=> state.User.profile)
+    const [POSTS, setPost] = useState([])
+    const { data , loading, error } = useQuery(manypostdata)
+    const User = useSelector(state => state.User.profile)
     const segmentValue = ['ระเเวกฟาร์ม', 'ฟาร์มของฉัน'];
     const [selectSegment, setselectSegment] = useState(0);
 
-    const submitForm = () => {}
+    useEffect(()=>{
+        console.log(data);
+        data ? setPost(data.posts) : setPost([])
+    },[data])
 
-    const addPost = () =>{
-        props.navigation.navigate('postScreen', { type: 'post'})
+    const addPost = () => {
+        props.navigation.navigate('postScreen', { type: 'post' })
     }
 
     const renderSegmentContent = (value) => {
-        if(value===0){
-           return (<PostComponent posts={POSTS} navigation={props.navigation} isComment={false}/>) 
-        }else{
-            const myFarmPost = POSTS.filter(post=> post.farm_id === User.farm_id)
-            return (<PostComponent posts={myFarmPost} navigation={props.navigation} isComment={false}/>)
+        if (value === 0) {
+            return (<PostComponent posts={POSTS} navigation={props.navigation} isComment={false} />)
+        } else {
+            const myFarmPost = POSTS.filter(post => post.farm_id === User.farm_id)
+            return (<PostComponent posts={myFarmPost} navigation={props.navigation} isComment={false} />)
         }
     }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-            <TopBarProfile navigation={props.navigation}/>
+            <TopBarProfile navigation={props.navigation} />
             <View style={{ flex: 0.15, paddingHorizontal: 10 }}>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     <View style={styles.layback1}>
@@ -74,7 +83,7 @@ const CommunityScreen = (props) => {
                         <View style={styles.layback2} >
                             <ScrollView style={{ width: '100%', borderRadius: 10, backgroundColor: 'white' }}>
                                 <View>
-                                {selectSegment===0 ? renderSegmentContent(0) :renderSegmentContent(1)}
+                                    {selectSegment === 0 ? renderSegmentContent(0) : renderSegmentContent(1)}
                                 </View>
                             </ScrollView>
 
@@ -84,7 +93,7 @@ const CommunityScreen = (props) => {
             </View>
 
             <TouchableOpacity style={{ position: 'absolute', bottom: 10, right: 10, width: 60, height: 60, borderRadius: 30, backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}
-            onPress={addPost}
+                onPress={addPost}
             >
                 <MaterialIcons name="add" size={40} color="white" />
             </TouchableOpacity>

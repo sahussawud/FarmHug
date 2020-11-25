@@ -14,10 +14,7 @@ import {
     FlatList,
     fixed
 } from "react-native";
-import { AntDesign, Ionicons } from '@expo/vector-icons';
-import { Picker } from '@react-native-community/picker';
-import logo from "../../assets/home/farmer.png"
-import style from "../../themes/default";
+
 import theme from "../../themes/default"
 
 import { FARMS } from '../../data/data-dummy'
@@ -25,6 +22,11 @@ import { useSelector } from 'react-redux';
 import TopBarProfile from '../../components/header/topBarProfile'
 import Post from '../../models/post'
 import Comment from '../../models/comments'
+import {createAlert} from '../../data/fetching'
+
+import {ADD_NEW_COMMENT,ADD_NEW_POST} from '../../data/graphl_mutation'
+import { useMutation } from "@apollo/client";
+
 
 
 const postScreen = (props) => {
@@ -32,12 +34,38 @@ const postScreen = (props) => {
     const User = useSelector(state=> state.User.profile)
     const post_id = props.navigation.getParam('post_id')
 
-    const [post, setPost] = useState(new Post());
-    const [comment, setComment] = useState(new Comment(undefined, User.farm_id, post_id, User.id))
+    const [addNewPost, {data:postData, error:postError}] = useMutation(ADD_NEW_POST)
+    const [addNewComment, {data:commentData, error:commentError}] = useMutation(ADD_NEW_COMMENT)
+    const [post, setPost] = useState(new Post(undefined, false, User.farm_id, User._id, "", "", 0, new Date().toUTCString()));
+    const [comment, setComment] = useState(new Comment(undefined, User.farm_id, post_id, User._id, "", '',new Date().toUTCString()))
+    useEffect(()=>{
+        if(postData || commentData){
+           props.navigation.goBack() 
+        }
+        if(postError){
+            createAlert('เกิดปัญหาขึ้น', 'ไม่สามารถโพสต์ได้')
+        }
+        if (commentError) {
+            createAlert('เกิดปัญหาขึ้น', 'ไม่สามารถคอมเมนท์ได้')
+        }
+    },[postData,commentData,postError,commentError
 
+    ])
 
-    const submitForm = () => {
-        props.navigation.navigate("postScreen")
+    const submitForm = async() => {
+        try {
+           if(type==="post"){
+            console.log(post);
+            await addNewPost({variables: post})
+        }else if(type==='comment'){
+            await addNewComment({variables:comment})
+          
+        } 
+        } catch (error) {
+            console.log(JSON.stringify(error, null, 2))
+        }
+        
+       
     }
 
     const changePost = (bodyChange) =>{
