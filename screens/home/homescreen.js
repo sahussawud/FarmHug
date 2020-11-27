@@ -34,8 +34,7 @@ import wait from "../../assets/home/wait.png"
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 // const preview = require('../../assets/farm_profile.jpg');
-import { Fontisto } from '@expo/vector-icons';
-import { FARMS } from '../../data/data-dummy'
+// import { FARMS } from '../../data/data-dummy'
 import { useSelector } from 'react-redux';
 import ActivityRenderComponent from '../../components/activity/ActivityRenderComponent'
 import moment from 'moment'

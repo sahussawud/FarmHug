@@ -1,7 +1,7 @@
 
 import Farm from '../../models/farms'
 import { CREATE_FARM, CREATE_STALL, CREATE_ANIMAL, UPDATE_FARM, DELETE_ANIMAL, UPDATE_ANIMAL } from '../actions/farmAction'
-import { FARMS, ANIMALS, STALLS} from '../../data/data-dummy'
+// import { FARMS, ANIMALS, STALLS} from '../../data/data-dummy'
 
 const initialFarm = new Farm()
 

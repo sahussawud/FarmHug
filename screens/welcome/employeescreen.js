@@ -29,7 +29,7 @@ import { useDispatch } from 'react-redux';
 import { create_farm, update_farm } from '../../store/actions/farmAction'
 
 import { useCallback } from "react";
-import { ANIMALS, FARMS, STALLS } from "../../data/data-dummy";
+// import { ANIMALS, FARMS, STALLS } from "../../data/data-dummy";
 import { useQuery } from "@apollo/client";
 import { getFarms } from "../../data/graphl_query";
 
@@ -52,7 +52,7 @@ const employeeScreen = (props) => {
 
     const findMatchFarm = useCallback(() =>{
         //Temporary mockup data
-        const matchfarm = FARMS.filter(farm=> farm.name.includes(searchbox) || farm.address.includes(searchbox))
+        const matchfarm = farms.filter(farm=> farm.name.includes(searchbox) || farm.address.includes(searchbox))
         setFarms(matchfarm)
     })
     

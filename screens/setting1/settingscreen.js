@@ -39,7 +39,7 @@ import { profile_update, sign_out } from '../../store/actions/userAction'
 import { create_farm } from '../../store/actions/farmAction'
 
 
-import { FARMS } from '../../data/data-dummy'
+// import { FARMS } from '../../data/data-dummy'
 const settingScreen = (props) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.User.profile)

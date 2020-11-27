@@ -30,7 +30,7 @@ import SegmentedControl from '@react-native-community/segmented-control';
 import { useSelector } from 'react-redux';
 import MailComponent from './components/mailComponent'
 
-import { POSTS } from '../../data/data-dummy'
+// import { POSTS } from '../../data/data-dummy'
 const MailScreen = (props) => {
     const segmentValue = ['ระเเวกฟาร์ม', 'ภายในฟาร์ม', 'โพสต์ของฉัน'];
     const [selectSegment, setselectSegment] = useState(0);
@@ -40,7 +40,7 @@ const MailScreen = (props) => {
     const submitForm = () => { }
 
     const renderSegmentContent = () => {
-        return (<MailComponent posts={POSTS}/>)
+        return (<MailComponent posts={[]}/>)
     }
 
     return (

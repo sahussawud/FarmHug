@@ -32,7 +32,7 @@ import StallRender from '../../components/stall/StallRender';
 import ActivityRenderComponent from '../../components/activity/ActivityRenderComponent'
 import { useSelector } from 'react-redux';
 
-import { ANIMALS, FARMS, STALLS, ACTIVITIES } from '../../data/data-dummy'
+// import { ANIMALS, FARMS, STALLS, ACTIVITIES } from '../../data/data-dummy'
 const cattleScreen = (props) => {
     const animal = useSelector(state=> state.Farm.animal)
     const stall = useSelector(state=> state.Farm.stall)

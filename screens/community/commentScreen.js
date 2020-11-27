@@ -22,16 +22,16 @@ import SegmentedControl from '@react-native-community/segmented-control';
 import { useSelector } from 'react-redux';
 import PostComponent from '../community/components/postComponent'
 import CommentComponent from '../community/components/commentComponent'
-import { COMMENTS } from '../../data/data-dummy'
+// import { COMMENTS } from '../../data/data-dummy'
 
 const CommentScreen = (props) => {
     const [commment, setComment] = useState([])
     const post = props.navigation.getParam('post')
 
-    useEffect(()=>{
-        const thisPostComment = COMMENTS.filter(comment => comment.post_id === post.id)
-        setComment(thisPostComment)
-    },[])
+    // useEffect(()=>{
+    //     const thisPostComment = COMMENTS.filter(comment => comment.post_id === post.id)
+    //     setComment(thisPostComment)
+    // },[])
 
     const addPost = () =>{
         props.navigation.navigate('postScreen', { type: 'comment', post_id: post.id })

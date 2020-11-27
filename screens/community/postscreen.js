@@ -17,7 +17,7 @@ import {
 
 import theme from "../../themes/default"
 
-import { FARMS } from '../../data/data-dummy'
+// import { FARMS } from '../../data/data-dummy'
 import { useSelector } from 'react-redux';
 import TopBarProfile from '../../components/header/topBarProfile'
 import Post from '../../models/post'
