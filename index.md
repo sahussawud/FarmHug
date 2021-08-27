@@ -1,16 +1,21 @@
-## FarmHug
+## FarmHug - Cattle Management Application
+
+
+![image](https://user-images.githubusercontent.com/43010244/131153557-1454d55b-6a31-4d5c-8bf8-312000e63937.png)
 
 เเอพพลิเคชันบริหารฟาร์มสำหรับเกษตรกรโคเนื้อ 
 
 ### Problem
 
-ในปัจจุบันเทคโนโลยีเป็นส่วนนึ่งของการใช้ชีวิตประจำวันเราจึงจะนำเทคโนโลยีเหล่านี้มาประยุทต์ใช้กับเกษตรปศุสัตว์โดย Application ที่จะสร้างจะเข้ามาช่วยในการพัฒนาและบริหารฟาร์มโดยที่เราจะมุ่งเน้นที่โคเนื้อ
+ในปัจจุบันการดำเนินธุรกิจนั้นเทคโนโลยีเข้ามาเป็นส่วนหนึ่ง เพื่อเพิ่มความสะดวกสบายมากขึ้นโดยเฉพาะ อุปกรณ์พกพาไม่ว่าจะ Tablet Smartphone ที่ไม่ว่าจะไปที่ไหนต้องใช้สิ่งเหล่านี้เสมอ ดังนั้นเราจึงคิดที่จะนำเทคโนโลยีเหล่านี้มาเป็นส่วนหนึ่งให้กับชาวเกษตรปศุสัตว์ที่จะทำการวิเคราะห์ข้อมูลที่ทางผู้ใช้นั้นได้นำเข้ามาเกี่ยวกับการบริหารเลี้ยงดูสัตว์ในฟาร์ม โดย โครงงานนี้จะเริ่มโฟกัสไปที่ โคเนื้อ ที่ประเทศไทยนั้นนิยมเลี้ยงมากในทั่วทุกภาคของประเทศไทย และ Application ของเราจะทำการเก็บข้อมูลพวก อาหาร น้ำและการเลี้ยงดูนั้นเหมาะสมหรือไม่และยังช่วยให้ผู้ใช้ได้มีการจดบันทึกความคืบหน้าของฟาร์ม นำข้อมูลเหล่านั้นมาต่อยอดในการพัฒนาการเลี้ยง การขยาย เเละ มีการเเบ่งปันองค์ความรู้ไปสู่ community ของเกษตรกรได้
 
+Nowadays, Busineses are operated by technology. To add more convenience, especially Mobile devices, whether Tablet or Smartphone, wherever you go, you always need these things. Therefore, we think to bring these technologies as part of the livestock farmers to analyze the data that users bring about the management of farm animals. This project will begin to focus on Beef cattle in Thailand are very popular in all regions of Thailand and our application will collect information such as food, water and rearing is appropriate or not and also allows users to keep a record of the progress of the farm. The information can be used to further develop the farming, expand and share knowledge to the community of farmers. 
+      
 ### Propose
 
-- ผู้ใช้งานสามารถวิเคราะห์ข้อมูลต่างๆได้ง่ายมากยิ่งขึ้นจากการแสดงผลสถานะต่างๆในหน้าจอหลัก
-- เพื่ออำนวยความสะดวกคาดการณ์ประมาณอาหาร วัตถุดิบที่ต้องใช้จัดเตรียม
-- เป็นพื้นที่ในการเเชร์ผลงานแลกเปลี่ยนความรู้สามารถส่งผลให้เกษตรกรรายอื่นนำความรู้ไปต่อยอด
+- ผู้ใช้งานสามารถวิเคราะห์ข้อมูลต่างๆได้ง่ายมากยิ่งขึ้นจากการแสดงผลสถานะต่างๆในหน้าจอหลัก  - Users can analyze information more easily from the status display on the main screen.
+- เพื่ออำนวยความสะดวกคาดการณ์ประมาณอาหาร วัตถุดิบที่ต้องใช้จัดเตรียม - To facilitate food estimation predictions Raw materials needed to prepare
+- เป็นพื้นที่ในการเเชร์ผลงานแลกเปลี่ยนความรู้สามารถส่งผลให้เกษตรกรรายอื่นนำความรู้ไปต่อยอด - It is an area for sharing results, exchanging knowledge, which can result in other farmers applying their knowledge to the next level. 
 
 ### TechStack
 
