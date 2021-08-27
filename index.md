@@ -1,37 +1,41 @@
-## Welcome to GitHub Pages
+## FarmHug
 
-You can use the [editor on GitHub](https://github.com/sahussawud/FarmHug/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+เเอพพลิเคชันบริหารฟาร์มสำหรับเกษตรกรโคเนื้อ 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Problem
 
-### Markdown
+ในปัจจุบันเทคโนโลยีเป็นส่วนนึ่งของการใช้ชีวิตประจำวันเราจึงจะนำเทคโนโลยีเหล่านี้มาประยุทต์ใช้กับเกษตรปศุสัตว์โดย Application ที่จะสร้างจะเข้ามาช่วยในการพัฒนาและบริหารฟาร์มโดยที่เราจะมุ่งเน้นที่โคเนื้อ
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Propose
 
-```markdown
-Syntax highlighted code block
+- ผู้ใช้งานสามารถวิเคราะห์ข้อมูลต่างๆได้ง่ายมากยิ่งขึ้นจากการแสดงผลสถานะต่างๆในหน้าจอหลัก
+- เพื่ออำนวยความสะดวกคาดการณ์ประมาณอาหาร วัตถุดิบที่ต้องใช้จัดเตรียม
+- เป็นพื้นที่ในการเเชร์ผลงานแลกเปลี่ยนความรู้สามารถส่งผลให้เกษตรกรรายอื่นนำความรู้ไปต่อยอด
 
-# Header 1
-## Header 2
-### Header 3
+### TechStack
 
-- Bulleted
-- List
+![image](https://user-images.githubusercontent.com/43010244/131152556-d01d48aa-59d4-4b17-9e28-b69664dd4f9e.png)
 
-1. Numbered
-2. List
+- React-native
+- Graphql (Apollo)
+- MongoDB
 
-**Bold** and _Italic_ and `Code` text
+### App Overview
 
-[Link](url) and ![Image](src)
-```
+![image](https://user-images.githubusercontent.com/43010244/131150748-c7931029-6b73-44a0-a116-1949228f3f0b.png)
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+![image](https://user-images.githubusercontent.com/43010244/131150784-c3604f90-6767-42cb-bf44-b295b48755ac.png)
 
-### Jekyll Themes
+![image](https://user-images.githubusercontent.com/43010244/131150820-0627633e-f772-4df0-83f5-7dcc14489b36.png)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/sahussawud/FarmHug/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+![image](https://user-images.githubusercontent.com/43010244/131150838-84df91a8-0470-4322-bb95-a9e81f31ca14.png)
 
-### Support or Contact
+![image](https://user-images.githubusercontent.com/43010244/131150863-fa7b1b66-7e41-49d2-949d-ce2e438cb227.png)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+![image](https://user-images.githubusercontent.com/43010244/131150882-35515456-3830-493e-895b-d05ce44344d2.png)
+
+![image](https://user-images.githubusercontent.com/43010244/131150921-d31e259c-e7fe-4ea9-8b37-cb2af07dae7b.png)
+
+![image](https://user-images.githubusercontent.com/43010244/131150944-0ad0685f-af29-4871-b3cc-4ae7183417c4.png)
+
+
